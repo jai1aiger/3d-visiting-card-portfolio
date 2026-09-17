@@ -17,8 +17,8 @@
 
   <!-- Quick Action & WhatsApp Connect Badges -->
   <p align="center">
-    <a href="tel:9676700488">
-      <img src="https://img.shields.io/badge/Support-9676700488-00E5FF?style=for-the-badge&logo=headset&logoColor=black" alt="Support" />
+    <a href="https://vtkro-3d-portfolio.vercel.app" target="_blank">
+      <img src="https://img.shields.io/badge/LIVE_3D_PORTFOLIO-vtkro--3d--portfolio.vercel.app-00E5FF?style=for-the-badge&logo=vercel&logoColor=black" alt="Live 3D Portfolio on Vercel" />
     </a>
     <a href="https://wa.me/919676700488?text=Hi%20VTKRO%20Support,%20I%20want%20to%20build%20my%20business%20website" target="_blank">
       <img src="https://img.shields.io/badge/Instant_WhatsApp_Setup-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp Setup" />

@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Blending Techniques — Portfolio Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050508;
+      --accent: #7c6af7;
+      --accent2: #c471ed;
+      --accent3: #12c2e9;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+      --card: #10101a;
+      --border: rgba(124,106,247,0.18);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO with floating character ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 80px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 60% at 80% 50%, rgba(124,106,247,0.13) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 20% 50%, rgba(18,194,233,0.07) 0%, transparent 70%);
+    }
+
+    /* ─── LEFT: Text ─── */
+    .hero-text { position: relative; z-index: 2; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 16px;
+      background: rgba(124,106,247,0.08);
+      border: 1px solid var(--border); border-radius: 100px;
+      font-size: 12px; font-weight: 600; color: var(--accent);
+      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 28px;
+    }
+    .badge .dot { width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.5s infinite; }
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(44px, 5.5vw, 80px);
+      font-weight: 800; line-height: 1.08; letter-spacing: -3px;
+      margin-bottom: 20px;
+    }
+    h1 .grad {
+      background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      font-size: 18px; line-height: 1.75; color: var(--muted);
+      max-width: 480px; margin-bottom: 40px;
+    }
+    .btn {
+      display: inline-block; padding: 14px 32px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 12px; color: #fff;
+      font-size: 15px; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+      box-shadow: 0 8px 28px rgba(124,106,247,0.3);
+      border: none; transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(124,106,247,0.45); }
+
+    /* ─── RIGHT: Video Stage ─── */
+    .video-stage {
+      position: relative; z-index: 2;
+      display: flex; justify-content: center; align-items: center;
+    }
+
+    /* ── TECHNIQUE 1: WebM Alpha (transparent bg) ── */
+    .char-wrap {
+      position: relative;
+      width: 420px; height: 520px;
+    }
+
+    /* The actual video — transparent WebM */
+    .char-video {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      /* This makes the video transparent when using WebM with alpha */
+      mix-blend-mode: normal;
+      /* Drop shadow so character feels grounded */
+      filter: drop-shadow(0 24px 48px rgba(124,106,247,0.4))
+              drop-shadow(0 4px 12px rgba(0,0,0,0.6));
+      position: relative; z-index: 3;
+    }
+
+    /* Floating orb behind character — environmental integration */
+    .char-orb {
+      position: absolute;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle,
+        rgba(124,106,247,0.25) 0%,
+        rgba(196,113,237,0.12) 50%,
+        transparent 70%);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      animation: pulse-orb 4s ease-in-out infinite;
+    }
+    @keyframes pulse-orb {
+      0%,100% { transform: translate(-50%,-50%) scale(1); opacity:.7; }
+      50% { transform: translate(-50%,-50%) scale(1.12); opacity:1; }
+    }
+
+    /* Ground shadow ellipse */
+    .char-shadow {
+      position: absolute;
+      bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      width: 200px; height: 24px;
+      background: rgba(124,106,247,0.25);
+      border-radius: 50%;
+      filter: blur(18px);
+      z-index: 2;
+      animation: shadow-pulse 4s ease-in-out infinite;
+    }
+    @keyframes shadow-pulse {
+      0%,100%{opacity:.5;width:200px} 50%{opacity:.8;width:220px}
+    }
+
+    /* Floating particles around character */
+    .particle {
+      position: absolute;
+      width: 4px; height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: float-particle linear infinite;
+      opacity: 0;
+    }
+    @keyframes float-particle {
+      0% { opacity: 0; transform: translateY(0) scale(0); }
+      20% { opacity: 1; transform: translateY(-20px) scale(1); }
+      80% { opacity: .5; }
+      100% { opacity: 0; transform: translateY(-120px) scale(.5); }
+    }
+
+    /* ─── SECTION: Techniques ─── */
+    .section { padding: 100px 60px; }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+    }
+    .section-h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 800; letter-spacing: -2px;
+      margin-bottom: 16px;
+    }
+    .section-line {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px; margin-bottom: 60px;
+    }
+
+    /* ─── TECHNIQUES GRID ─── */
+    .techniques { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .tech-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden;
+      transition: transform .3s, border-color .3s;
+    }
+    .tech-card:hover { transform: translateY(-6px); border-color: var(--accent); }
+    .tech-preview {
+      height: 260px; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tech-label {
+      position: absolute; top: 12px; left: 12px;
+      padding: 5px 12px;
+      background: rgba(5,5,8,.85); border: 1px solid var(--border);
+      border-radius: 100px; font-size: 11px; font-weight: 700;
+      color: var(--accent); text-transform: uppercase; letter-spacing: 1px;
+    }
+    .tech-body { padding: 22px; }
+    .tech-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px; font-weight: 700; margin-bottom: 8px;
+    }
+    .tech-desc { color: var(--muted); font-size: 13px; line-height: 1.7; margin-bottom: 16px; }
+    .code-block {
+      background: rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.06);
+      border-radius: 10px; padding: 14px 16px;
+      font-family: 'Courier New', monospace; font-size: 11.5px;
+      color: #a8b4d8; line-height: 1.7; overflow-x: auto;
+    }
+    .code-block .c-purple { color: #c471ed; }
+    .code-block .c-blue { color: #12c2e9; }
+    .code-block .c-green { color: #58d68d; }
+    .code-block .c-yellow { color: #f7dc6f; }
+
+    /* ─── TECHNIQUE 1 PREVIEW: WebM Alpha ─── */
+    #prev1 {
+      background: linear-gradient(135deg, #0d0d1a, #1a1a3e);
+    }
+    .prev1-char {
+      width: 130px; height: 200px;
+      position: relative;
+    }
+    /* Fake transparent character using CSS */
+    .prev1-body {
+      width: 60px; height: 120px;
+      background: linear-gradient(180deg, #f5cba7, #f0a07a);
+      border-radius: 12px 12px 8px 8px;
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      box-shadow: 0 12px 40px rgba(124,106,247,0.5);
+    }
+    .prev1-head {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, #f5cba7, #e8a87c);
+      border-radius: 50%;
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      box-shadow: 0 8px 24px rgba(124,106,247,0.4);
+    }
+    .prev1-glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(124,106,247,0.3), transparent 70%);
+    }
+    /* Floating animation */
+    .float-anim { animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-12px)} }
+
+    /* ─── TECHNIQUE 2 PREVIEW: CSS Screen Mode ─── */
+    #prev2 {
+      background: linear-gradient(135deg, #050508, #0d1a0d);
+    }
+    .prev2-video {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 80px;
+      mix-blend-mode: screen;
+      position: relative;
+    }
+    .prev2-overlay {
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 60% 40%, rgba(18,194,233,0.2), transparent 60%);
+    }
+
+    /* ─── TECHNIQUE 3 PREVIEW: Canvas Chroma Key ─── */
+    #prev3 {
+      background: linear-gradient(135deg, #0a0a1a, #1a0a2e);
+    }
+
+    /* ─── TECHNIQUE 4 PREVIEW: CSS Blend Multiply ─── */
+    #prev4 {
+      background: #fff url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.08'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .multiply-char {
+      font-size: 80px; mix-blend-mode: multiply;
+    }
+
+    /* ─── TECHNIQUE 5 PREVIEW: Backdrop Filter ─── */
+    #prev5 {
+      background: linear-gradient(135deg, #7c6af7, #c471ed);
+    }
+    .backdrop-char {
+      font-size: 70px;
+      padding: 16px;
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(10px) saturate(180%);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px;
+    }
+
+    /* ─── TECHNIQUE 6 PREVIEW: Luminosity ─── */
+    #prev6 {
+      background: linear-gradient(135deg, #12c2e9, #7c6af7, #c471ed);
+    }
+    .lumi-char { font-size: 80px; mix-blend-mode: luminosity; }
+
+    /* ─── HOW TO GET TRANSPARENT VIDEO ─── */
+    .steps { padding: 80px 60px; background: #0d0d14; }
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 24px; margin-top: 60px; }
+    .step-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+    }
+    .step-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px; font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      line-height: 1; margin-bottom: 16px;
+    }
+    .step-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+    .step-desc { color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .step-tool {
+      margin-top: 14px; display: inline-block;
+      padding: 5px 14px;
+      background: rgba(124,106,247,.1); border: 1px solid var(--border);
+      border-radius: 100px; font-size: 12px; font-weight: 600; color: var(--accent);
+    }
+
+    /* ─── LIVE DEMO SECTION ─── */
+    .demo-section {
+      padding: 100px 60px;
+      background: var(--bg);
+      text-align: center;
+    }
+    .demo-canvas-wrap {
+      max-width: 700px; margin: 60px auto 0;
+      position: relative; border-radius: 20px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #0d0d1a, #1a0d2e, #0d1a1a);
+    }
+    .demo-canvas-wrap canvas { display: block; width: 100%; }
+    .demo-controls {
+      display: flex; gap: 12px; justify-content: center;
+      flex-wrap: wrap; margin-top: 24px;
+    }
+    .blend-btn {
+      padding: 10px 22px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all .2s;
+    }
+    .blend-btn:hover, .blend-btn.active {
+      background: rgba(124,106,247,.15);
+      border-color: var(--accent); color: var(--accent);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 28px 60px;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between;
+      color: var(--muted); font-size: 13px;
+    }
+    footer em { color: var(--accent); font-style: normal; }
+
+    @media(max-width:900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; padding: 100px 20px 60px; }
+      .video-stage { margin-top: 40px; }
+      .char-wrap { width: 280px; height: 360px; }
+      section, .section, .steps, .demo-section, footer { padding-left: 20px; padding-right: 20px; }
+      .techniques { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ───── HERO: Character merged with environment ───── -->
+<section class="hero">
+  <div class="hero-glow"></div>
+
+  <!-- Left: Text -->
+  <div class="hero-text">
+    <div class="badge"><div class="dot"></div> AI Portfolio Character</div>
+    <h1>
+      Meet Your<br/>
+      <span class="grad">Digital Host</span><br/>
+      That Blends In
+    </h1>
+    <p class="subtitle">
+      A realistic AI character placed directly in your portfolio — no boxy video frame, no ugly borders. Merges seamlessly with the dark environment using transparency blending.
+    </p>
+    <a href="#techniques" class="btn">Explore Techniques ↓</a>
+  </div>
+
+  <!-- Right: Video stage with environmental blending -->
+  <div class="video-stage">
+    <div class="char-wrap" id="charWrap">
+
+      <!-- Atmospheric orb behind character -->
+      <div class="char-orb"></div>
+
+      <!-- Ground shadow -->
+      <div class="char-shadow"></div>
+
+      <!-- Floating particles -->
+      <div class="particle" style="left:20%;bottom:30%;animation-duration:3s;animation-delay:0s"></div>
+      <div class="particle" style="left:35%;bottom:20%;animation-duration:4s;animation-delay:1s;background:var(--accent2)"></div>
+      <div class="particle" style="left:70%;bottom:25%;animation-duration:3.5s;animation-delay:.5s;background:var(--accent3)"></div>
+      <div class="particle" style="left:80%;bottom:35%;animation-duration:5s;animation-delay:2s"></div>
+      <div class="particle" style="left:15%;bottom:50%;animation-duration:4s;animation-delay:1.5s;background:var(--accent2)"></div>
+
+      <!--
+        ══════════════════════════════════════════════
+        REAL USAGE: Replace this emoji with your video
+        ══════════════════════════════════════════════
+        <video autoplay loop muted playsinline
+               class="char-video"
+               style="mix-blend-mode: screen;">
+          <source src="your-character.webm" type="video/webm">
+          <source src="your-character.mov"  type="video/quicktime">
+        </video>
+        ══════════════════════════════════════════════
+      -->
+
+      <!-- DEMO: CSS-rendered human figure (replace with real video) -->
+      <div id="demoChar" style="
+        position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+        width: 220px; height: 420px;
+        z-index: 3; filter: drop-shadow(0 24px 48px rgba(124,106,247,0.6));
+        animation: float-char 4s ease-in-out infinite;
+      ">
+        <!-- Head -->
+        <div style="
+          width: 90px; height: 90px; border-radius: 50%;
+          background: linear-gradient(135deg,#f5cba7,#e8a87c);
+          margin: 0 auto; position: relative;
+          box-shadow: 0 0 40px rgba(124,106,247,0.4);
+        ">
+          <!-- Face features -->
+          <div style="position:absolute;top:28px;left:16px;width:12px;height:14px;background:#4a2c0a;border-radius:50%"></div>
+          <div style="position:absolute;top:28px;right:16px;width:12px;height:14px;background:#4a2c0a;border-radius:50%"></div>
+          <div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:28px;height:8px;background:#c97e50;border-radius:0 0 14px 14px"></div>
+          <!-- Hair -->
+          <div style="position:absolute;top:-8px;left:10px;right:10px;height:30px;background:#2c1a0e;border-radius:50% 50% 0 0"></div>
+        </div>
+
+        <!-- Neck -->
+        <div style="width:22px;height:18px;background:#f0b07a;margin:0 auto;"></div>
+
+        <!-- Shirt / Body -->
+        <div style="
+          width: 100px; height: 140px;
+          background: linear-gradient(180deg, #7c6af7, #5a4fd6);
+          border-radius: 8px 8px 4px 4px;
+          margin: 0 auto;
+          position: relative;
+          box-shadow: 0 8px 32px rgba(124,106,247,0.3);
+        ">
+          <!-- Collar -->
+          <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:30px;height:20px;background:#f0b07a;border-radius:0 0 50% 50%"></div>
+          <!-- Shirt detail -->
+          <div style="position:absolute;top:30px;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(255,255,255,0.5);white-space:nowrap;font-weight:600">FULL STACK</div>
+        </div>
+
+        <!-- Arms -->
+        <div style="display:flex;justify-content:space-between;width:130px;margin:-140px auto 0;pointer-events:none">
+          <div style="width:20px;height:110px;background:linear-gradient(180deg,#7c6af7,#5a4fd6);border-radius:10px;transform:rotate(-6deg);animation:arm-l 4s ease-in-out infinite"></div>
+          <div style="width:20px;height:110px;background:linear-gradient(180deg,#7c6af7,#5a4fd6);border-radius:10px;transform:rotate(6deg);animation:arm-r 4s ease-in-out infinite"></div>
+        </div>
+
+        <!-- Pants -->
+        <div style="
+          width: 100px; height: 100px;
+          background: linear-gradient(180deg,#1a1a3e,#0d0d24);
+          margin: 0 auto;
+          display: flex; gap: 4px;
+        ">
+          <div style="flex:1;background:linear-gradient(180deg,#1e1e4a,#0d0d2a);border-radius:0 0 6px 6px"></div>
+          <div style="flex:1;background:linear-gradient(180deg,#1e1e4a,#0d0d2a);border-radius:0 0 6px 6px"></div>
+        </div>
+
+        <!-- Shoes -->
+        <div style="display:flex;justify-content:space-between;width:110px;margin:0 auto">
+          <div style="width:48px;height:20px;background:#111;border-radius:6px 8px 8px 4px"></div>
+          <div style="width:48px;height:20px;background:#111;border-radius:8px 6px 4px 8px"></div>
+        </div>
+      </div>
+
+      <!-- Speech bubble -->
+      <div id="speechBubble" style="
+        position: absolute; top: 20px; right: -20px;
+        background: rgba(124,106,247,0.15);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--border);
+        border-radius: 16px 16px 16px 4px;
+        padding: 12px 16px;
+        font-size: 13px; color: var(--text);
+        max-width: 200px;
+        z-index: 10;
+        animation: bubble 0.5s ease forwards;
+      ">
+        👋 Hi! I'm your AI portfolio host. Ask me anything!
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes float-char {
+    0%,100%{transform:translateX(-50%) translateY(0)}
+    50%{transform:translateX(-50%) translateY(-14px)}
+  }
+  @keyframes arm-l {
+    0%,100%{transform:rotate(-6deg)}
+    50%{transform:rotate(-14deg)}
+  }
+  @keyframes arm-r {
+    0%,100%{transform:rotate(6deg)}
+    50%{transform:rotate(14deg)}
+  }
+  @keyframes bubble {
+    from{opacity:0;transform:scale(.8) translateY(8px)}
+    to{opacity:1;transform:scale(1) translateY(0)}
+  }
+</style>
+
+<!-- ───── TECHNIQUES ───── -->
+<div id="techniques" class="section">
+  <div class="section-title">// Integration Methods</div>
+  <h2 class="section-h2">6 Ways to Merge Video<br/>with Your Environment</h2>
+  <div class="section-line"></div>
+
+  <div class="techniques">
+
+    <!-- 1: WebM Alpha -->
+    <div class="tech-card">
+      <div class="tech-preview" id="prev1">
+        <span class="tech-label">⭐ Best</span>
+        <div class="prev1-char">
+          <div class="prev1-glow"></div>
+          <div class="prev1-head float-anim"></div>
+          <div class="prev1-body" style="animation:float-body 3s ease-in-out infinite"></div>
+        </div>
+      </div>
+      <div class="tech-body">
+        <div class="tech-name">✅ WebM Alpha Channel</div>
+        <p class="tech-desc">Export your video as WebM with VP9 codec + alpha channel. Background is literally transparent — works like a PNG but for video.</p>
+        <div class="code-block">
+<span class="c-purple">&lt;video</span> <span class="c-blue">autoplay loop muted playsinline</span><span class="c-purple">&gt;</span>
+  <span class="c-purple">&lt;source</span> <span class="c-yellow">src=</span><span class="c-green">"char.webm"</span>
+          <span class="c-yellow">type=</span><span class="c-green">"video/webm"</span><span class="c-purple">/&gt;</span>
+<span class="c-purple">&lt;/video&gt;</span>
+
+<span class="c-blue">/* CSS */</span>
+video {
+  <span class="c-yellow">filter:</span> drop-shadow(0 20px 40px
+    rgba(<span class="c-green">124,106,247,.5</span>));
+}
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: CSS Screen Blend -->
+    <div class="tech-card">
+      <div class="tech-preview" id="prev2">
+        <span class="tech-label">🎨 CSS Blend</span>
+        <div class="prev2-overlay"></div>
+        <div style="font-size:80px;mix-blend-mode:screen;animation:float-char 3s ease-in-out infinite;filter:brightness(1.2)">🧑‍💻</div>
+      </div>
+      <div class="tech-body">
+        <div class="tech-name">🌟 mix-blend-mode: screen</div>
+        <p class="tech-desc">Video shot on BLACK background. CSS `screen` blend mode removes black pixels, leaving only the character. Works great on dark portfolios!</p>
+        <div class="code-block">
+video {
+  <span class="c-yellow">mix-blend-mode:</span> <span class="c-green">screen</span>;
+  <span class="c-yellow">background:</span> <span class="c-green">transparent</span>;
+}
+
+<span class="c-blue">/* Character pops out of dark bg */</span>
+<span class="c-blue">/* Black = invisible */</span>
+<span class="c-blue">/* Light = visible ✨ */</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3: Canvas Chroma Key -->
+    <div class="tech-card">
+      <div class="tech-preview" id="prev3">
+        <span class="tech-label">🟢 Chroma Key</span>
+        <canvas id="chromaCanvas" width="300" height="200" style="width:100%;height:100%"></canvas>
+      </div>
+      <div class="tech-body">
+        <div class="tech-name">🎬 Canvas Chroma Key (Green Screen)</div>
+        <p class="tech-desc">Film on GREEN background. JavaScript removes all green pixels in real-time using Canvas API. Industry standard for film & TV.</p>
+        <div class="code-block">
+<span class="c-blue">// Remove green pixels</span>
+pixels.<span class="c-purple">forEach</span>((r, g, b, a) => {
+  if (g > <span class="c-green">100</span> && g > r*<span class="c-green">1.4</span>
+      && g > b*<span class="c-green">1.4</span>) {
+    a = <span class="c-green">0</span>; <span class="c-blue">// transparent!</span>
+  }
+});
+        </div>
+      </div>
+    </div>
+
+    <!-- 4: Multiply Blend -->
+    <div class="tech-card">
+      <div class="tech-preview" id="prev4"
+           style="background:linear-gradient(135deg,#e8e0ff,#f0e8ff)">
+        <span class="tech-label">✖️ Multiply</span>
+        <div class="multiply-char" style="animation:float-char 3s ease-in-out infinite">🧑‍💻</div>
+      </div>
+      <div class="tech-body">
+        <div class="tech-name">✖️ mix-blend-mode: multiply</div>
+        <p class="tech-desc">Video shot on WHITE background. CSS `multiply` removes white pixels. Best for light-themed portfolios or pastel backgrounds.</p>
+        <div class="code-block">
+video {
+  <span class="c-yellow">mix-blend-mode:</span> <span class="c-green">multiply</span>;
+}
+
+<span class="c-blue">/* White bg = invisible */</span>
+<span class="c-blue">/* Dark pixels = visible */</span>
+
+<span class="c-blue">/* Best for: light themes */</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5: Backdrop Filter -->
+    <div class="tech-card">
+      <div class="tech-preview" id="prev5">
+        <span class="tech-label">💎 Glass</span>
+        <div style="position:relative;animation:float-char 3s ease-in-out infinite">
+          <div style="font-size:72px">🧑‍💻</div>
+          <div style="
+            position:absolute;inset:-12px;
+            background:rgba(255,255,255,.1);
+            backdrop-filter:blur(8px);
+            border:1px solid rgba(255,255,255,.25);
+            border-radius:16px;
+            z-index:-1;
+          "></div>
+        </div>
+      </div>
+      <div class="tech-body">
+        <div class="tech-name">💎 Glassmorphism Blend</div>
+        <p class="tech-desc">Place character inside a frosted glass container. Background blurs through the glass. Character appears embedded in the scene.</p>
+        <div class="code-block">
+.char-wrap {
+  <span class="c-yellow">background:</span> rgba(<span class="c-green">255,255,255,.08</span>);
+  <span class="c-yellow">backdrop-filter:</span> blur(<span class="c-green">12px</span>);
+  <span class="c-yellow">border:</span> 1px solid rgba(<span class="c-green">255,255,255,.15</span>);
+  <span class="c-yellow">border-radius:</span> <span class="c-green">24px</span>;
+}
+        </div>
+      </div>
+    </div>
+
+    <!-- 6: Luminosity -->
+    <div class="tech-card">
+      <div class="tech-preview" id="prev6">
+        <span class="tech-label">🌈 Luminosity</span>
+        <div style="font-size:80px;mix-blend-mode:luminosity;animation:float-char 3s ease-in-out infinite">🧑‍💻</div>
+      </div>
+      <div class="tech-body">
+        <div class="tech-name">🌈 mix-blend-mode: luminosity</div>
+        <p class="tech-desc">Character takes on the colors of the background gradient. Creates a surreal, futuristic effect where character absorbs environment colors.</p>
+        <div class="code-block">
+video {
+  <span class="c-yellow">mix-blend-mode:</span> <span class="c-green">luminosity</span>;
+}
+
+<span class="c-blue">/* Character absorbs bg color */</span>
+<span class="c-blue">/* Great for colorful portfolios */</span>
+<span class="c-blue">/* Very futuristic look ✨ */</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ───── HOW TO GET TRANSPARENT VIDEO ───── -->
+<div class="steps">
+  <div class="section-title">// Step-by-Step Guide</div>
+  <h2 class="section-h2">How to Create Your<br/>Transparent AI Character</h2>
+  <div class="section-line"></div>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="step-title">Generate AI Video</div>
+      <p class="step-desc">Use an AI tool to create a realistic talking video of yourself (or a character). Use green screen background for easy removal.</p>
+      <div class="step-tool">D-ID / HeyGen / SadTalker</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="step-title">Remove Background</div>
+      <p class="step-desc">Remove the green/black background using FFmpeg to export WebM with alpha channel, or use online tools like unscreen.com</p>
+      <div class="step-tool">FFmpeg / Unscreen.com</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="step-title">Convert to WebM</div>
+      <p class="step-desc">Convert to WebM VP9 format with alpha channel using FFmpeg command for full transparency support in Chrome/Firefox/Edge.</p>
+      <div class="step-tool">ffmpeg -pix_fmt yuva420p</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <div class="step-title">Embed in Portfolio</div>
+      <p class="step-desc">Place the video in your HTML with autoplay, loop, muted. Apply CSS drop-shadow and position it floating over the dark background.</p>
+      <div class="step-tool">&lt;video autoplay loop muted&gt;</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">05</div>
+      <div class="step-title">Add AI Chatbot</div>
+      <p class="step-desc">Connect to OpenAI/Gemini API so visitors can talk to the character. Character responds with text bubbles or voice synthesis.</p>
+      <div class="step-tool">OpenAI / Gemini API</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">06</div>
+      <div class="step-title">Add Environmental FX</div>
+      <p class="step-desc">Add glowing orbs, floating particles, ground shadow using CSS. These make the character feel truly embedded in the environment.</p>
+      <div class="step-tool">CSS Animations + GSAP</div>
+    </div>
+  </div>
+
+  <!-- FFmpeg command box -->
+  <div style="margin-top:48px;background:rgba(0,0,0,.6);border:1px solid var(--border);border-radius:16px;padding:28px 32px;">
+    <div style="font-size:13px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">// FFmpeg Command — Convert to Transparent WebM</div>
+    <div class="code-block" style="font-size:13px">
+<span style="color:#58d68d"># Step 1: Export frames from AI video (with green screen)</span>
+ffmpeg -i your_ai_video.mp4 -vf "<span style="color:#c471ed">chromakey=0x00FF00:0.3:0.1</span>" frames/%04d.png
+
+<span style="color:#58d68d"># Step 2: Rebuild as transparent WebM</span>
+ffmpeg -framerate 30 -i frames/%04d.png \
+  -c:v libvpx-vp9 \
+  -pix_fmt <span style="color:#c471ed">yuva420p</span> \
+  -b:v 0 -crf 30 \
+  character.webm
+
+<span style="color:#58d68d"># OR: One-liner from video directly</span>
+ffmpeg -i input.mp4 -vf "<span style="color:#c471ed">chromakey=black:0.1:0.0</span>" \
+  -c:v libvpx-vp9 -pix_fmt yuva420p character.webm
+    </div>
+  </div>
+</div>
+
+<!-- ───── INTERACTIVE BLEND DEMO ───── -->
+<div class="demo-section">
+  <div class="section-title">// Live Demo</div>
+  <h2 class="section-h2">Try Different Blend Modes</h2>
+  <div class="section-line" style="margin:0 auto 20px"></div>
+  <p style="color:var(--muted);font-size:16px">Click buttons below to see how blend modes change how the character merges with the background</p>
+
+  <div class="demo-canvas-wrap">
+    <canvas id="blendDemo" width="700" height="350"></canvas>
+  </div>
+  <div class="demo-controls">
+    <button class="blend-btn active" onclick="setBlend('screen')">Screen</button>
+    <button class="blend-btn" onclick="setBlend('multiply')">Multiply</button>
+    <button class="blend-btn" onclick="setBlend('overlay')">Overlay</button>
+    <button class="blend-btn" onclick="setBlend('luminosity')">Luminosity</button>
+    <button class="blend-btn" onclick="setBlend('color-dodge')">Color Dodge</button>
+    <button class="blend-btn" onclick="setBlend('difference')">Difference</button>
+    <button class="blend-btn" onclick="setBlend('normal')">Normal (Alpha)</button>
+  </div>
+</div>
+
+<footer>
+  <div>Video Blending Demo — <em>Portfolio Integration Guide</em></div>
+  <div>Made with <em>CSS + Canvas + GSAP</em></div>
+</footer>
+
+<script>
+// ── Canvas Chroma Key Demo ──
+const chromaCanvas = document.getElementById('chromaCanvas');
+const ctx = chromaCanvas.getContext('2d');
+let t = 0;
+
+function drawChromaDemo() {
+  const w = chromaCanvas.width;
+  const h = chromaCanvas.height;
+  t += 0.02;
+
+  // Dark background
+  ctx.fillStyle = '#0a0a1a';
+  ctx.fillRect(0, 0, w, h);
+
+  // Grid lines (environment)
+  ctx.strokeStyle = 'rgba(124,106,247,0.1)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < w; i += 30) {
+    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, h); ctx.stroke();
+  }
+  for (let i = 0; i < h; i += 30) {
+    ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(w, i); ctx.stroke();
+  }
+
+  // Glow orb
+  const grd = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, 100);
+  grd.addColorStop(0, 'rgba(124,106,247,0.3)');
+  grd.addColorStop(1, 'transparent');
+  ctx.fillStyle = grd;
+  ctx.fillRect(0, 0, w, h);
+
+  // Floating character with green screen effect
+  const cy = h/2 + Math.sin(t) * 15;
+
+  // "Green screen" effect demonstration
+  ctx.save();
+  ctx.globalAlpha = 0.3;
+  ctx.fillStyle = '#00ff00';
+  ctx.fillRect(w/2 - 60, cy - 80, 120, 160);
+  ctx.restore();
+
+  // After chroma key removal — just the character
+  ctx.save();
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.font = '72px serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.shadowColor = 'rgba(124,106,247,0.8)';
+  ctx.shadowBlur = 30;
+  ctx.fillText('🧑‍💻', w/2, cy);
+  ctx.restore();
+
+  // Label
+  ctx.fillStyle = 'rgba(88,214,141,0.8)';
+  ctx.font = '11px Inter, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('► Green pixels removed by JS', 12, h - 14);
+
+  requestAnimationFrame(drawChromaDemo);
+}
+drawChromaDemo();
+
+// ── Blend Demo Canvas ──
+const blendCanvas = document.getElementById('blendDemo');
+const bctx = blendCanvas.getContext('2d');
+let bt = 0;
+let currentBlend = 'screen';
+
+function setBlend(mode) {
+  currentBlend = mode;
+  document.querySelectorAll('.blend-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function drawBlendDemo() {
+  const w = blendCanvas.width;
+  const h = blendCanvas.height;
+  bt += 0.015;
+
+  // Background — gradient environment
+  const bgGrd = bctx.createLinearGradient(0, 0, w, h);
+  bgGrd.addColorStop(0, '#0d0d1a');
+  bgGrd.addColorStop(0.5, '#1a0d2e');
+  bgGrd.addColorStop(1, '#0d1a1a');
+  bctx.fillStyle = bgGrd;
+  bctx.fillRect(0, 0, w, h);
+
+  // Animated background waves
+  for (let i = 0; i < 3; i++) {
+    const grd = bctx.createRadialGradient(
+      w * (0.2 + i * 0.3) + Math.sin(bt + i) * 40,
+      h/2 + Math.cos(bt * 0.7 + i) * 30,
+      0,
+      w * (0.2 + i * 0.3), h/2, 180
+    );
+    const colors = ['rgba(124,106,247,0.2)', 'rgba(196,113,237,0.15)', 'rgba(18,194,233,0.15)'];
+    grd.addColorStop(0, colors[i]);
+    grd.addColorStop(1, 'transparent');
+    bctx.fillStyle = grd;
+    bctx.fillRect(0, 0, w, h);
+  }
+
+  // Particles
+  for (let i = 0; i < 15; i++) {
+    const px = (i / 15) * w + Math.sin(bt * 0.8 + i) * 30;
+    const py = h * 0.3 + Math.cos(bt * 0.6 + i * 0.7) * (h * 0.3);
+    const pr = 1.5 + Math.sin(bt + i) * 1;
+    bctx.beginPath();
+    bctx.arc(px, py, pr, 0, Math.PI * 2);
+    bctx.fillStyle = `hsla(${250 + i * 20}, 80%, 70%, 0.6)`;
+    bctx.fill();
+  }
+
+  // Character with blend mode
+  const charX = w / 2;
+  const charY = h / 2 + Math.sin(bt) * 18;
+
+  bctx.save();
+  bctx.globalCompositeOperation = currentBlend === 'normal' ? 'source-over' : currentBlend;
+  bctx.shadowColor = 'rgba(124,106,247,0.9)';
+  bctx.shadowBlur = 40;
+  bctx.font = `${100 + Math.sin(bt * 0.5) * 5}px serif`;
+  bctx.textAlign = 'center';
+  bctx.textBaseline = 'middle';
+  bctx.fillText('🧑‍💻', charX, charY);
+  bctx.restore();
+
+  // Ground glow
+  bctx.save();
+  const ggrd = bctx.createRadialGradient(charX, h - 40, 0, charX, h - 40, 80);
+  ggrd.addColorStop(0, 'rgba(124,106,247,0.3)');
+  ggrd.addColorStop(1, 'transparent');
+  bctx.fillStyle = ggrd;
+  bctx.globalAlpha = 0.6 + Math.sin(bt) * 0.2;
+  bctx.fillRect(0, 0, w, h);
+  bctx.restore();
+
+  // Blend mode label
+  bctx.fillStyle = 'rgba(124,106,247,0.8)';
+  bctx.font = 'bold 13px Inter, sans-serif';
+  bctx.textAlign = 'left';
+  bctx.fillText(`mix-blend-mode: ${currentBlend}`, 16, h - 16);
+
+  requestAnimationFrame(drawBlendDemo);
+}
+drawBlendDemo();
+
+// ── Rotating speech bubbles ──
+const messages = [
+  "👋 Hi! I'm your AI portfolio host!",
+  "💼 I have 5+ years of experience!",
+  "⚛️ I specialize in React & Next.js",
+  "🤖 Powered by GPT-4 + ElevenLabs",
+  "✨ Ask me about any project!",
+  "🚀 I blend right into your portfolio!"
+];
+let msgIdx = 0;
+const bubble = document.getElementById('speechBubble');
+setInterval(() => {
+  msgIdx = (msgIdx + 1) % messages.length;
+  bubble.style.opacity = 0;
+  bubble.style.transform = 'scale(0.9)';
+  bubble.style.transition = 'all 0.3s';
+  setTimeout(() => {
+    bubble.textContent = messages[msgIdx];
+    bubble.style.opacity = 1;
+    bubble.style.transform = 'scale(1)';
+  }, 300);
+}, 3000);
+</script>
+<style>
+@keyframes float-body{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-12px)}}
+</style>
+</body>
+</html>

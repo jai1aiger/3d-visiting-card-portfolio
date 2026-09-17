@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinetix 3D Physiotherapy & Sports Rehabilitation</title>
+
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Three.js for 3D Background Mesh & Particles -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #060b13;
+      --bg-card: rgba(13, 23, 38, 0.82);
+      --border-card: rgba(0, 210, 255, 0.22);
+      --cyan: #00d2ff;
+      --emerald: #10b981;
+      --purple: #8b5cf6;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --glow-cyan: 0 0 35px rgba(0, 210, 255, 0.35);
+      --glow-card: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 210, 255, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ─── 3D Interactive WebGL Canvas ─── */
+    #three-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.65;
+    }
+
+    /* ─── App Container ─── */
+    .app-wrapper {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ─── Navigation Header ─── */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 60px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(6, 11, 19, 0.7);
+      backdrop-filter: blur(15px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--cyan), var(--emerald));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+      color: #000;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .brand-text h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+
+    .brand-text p {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #cbd5e1;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00d2ff, #0099ff);
+      color: #050b14;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 11px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 210, 255, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 210, 255, 0.55);
+      filter: brightness(1.1);
+    }
+
+    .btn-whatsapp {
+      background: #25d366;
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 11px 22px;
+      border-radius: 30px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 18px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-whatsapp:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+    }
+
+    /* ─── Hero / Header Intro ─── */
+    .hero-intro {
+      text-align: center;
+      padding: 40px 20px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      border-radius: 30px;
+      background: rgba(0, 210, 255, 0.1);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .hero-intro h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #ffffff 40%, #a5f3fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-intro p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ─── 3D Slider Section ─── */
+    .slider-container {
+      position: relative;
+      width: 100%;
+      padding: 30px 0 60px;
+      perspective: 1400px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .slider-stage {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      height: 520px;
+      transform-style: preserve-3d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slide-card {
+      position: absolute;
+      width: 820px;
+      max-width: 90vw;
+      height: 480px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 24px;
+      padding: 36px;
+      backdrop-filter: blur(25px);
+      box-shadow: var(--glow-card);
+      transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.65s ease, filter 0.65s ease;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 30px;
+      user-select: none;
+      transform-origin: center center;
+    }
+
+    /* 3D Slide States */
+    .slide-card.active {
+      transform: translateX(0) translateZ(0) rotateY(0deg);
+      opacity: 1;
+      filter: blur(0px) brightness(1);
+      z-index: 30;
+      border-color: var(--cyan);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 210, 255, 0.25);
+    }
+
+    .slide-card.prev {
+      transform: translateX(-480px) translateZ(-240px) rotateY(28deg);
+      opacity: 0.45;
+      filter: blur(2px) brightness(0.7);
+      z-index: 20;
+    }
+
+    .slide-card.next {
+      transform: translateX(480px) translateZ(-240px) rotateY(-28deg);
+      opacity: 0.45;
+      filter: blur(2px) brightness(0.7);
+      z-index: 20;
+    }
+
+    .slide-card.far-prev {
+      transform: translateX(-780px) translateZ(-450px) rotateY(40deg);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .slide-card.far-next {
+      transform: translateX(780px) translateZ(-450px) rotateY(-40deg);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Left info of slide */
+    .slide-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .slide-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .badge-spine { background: rgba(0, 210, 255, 0.15); color: #00d2ff; border: 1px solid rgba(0, 210, 255, 0.3); }
+    .badge-knee { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-shoulder { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-gait { background: rgba(236, 72, 153, 0.15); color: #ec4899; border: 1px solid rgba(236, 72, 153, 0.3); }
+    .badge-tech { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.3); }
+
+    .slide-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .slide-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .slide-metrics {
+      display: flex;
+      gap: 20px;
+      padding: 12px 18px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      margin-bottom: 18px;
+    }
+
+    .metric-item span {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .metric-item strong {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .slide-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .slide-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Right visual representation */
+    .slide-visual {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .slide-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .slide-card:hover .slide-visual img {
+      transform: scale(1.05);
+    }
+
+    .visual-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(6, 11, 19, 0.9) 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+    }
+
+    .visual-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 6px 14px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* ─── Slider Navigation Controls ─── */
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 30px;
+      z-index: 50;
+    }
+
+    .control-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .control-btn:hover {
+      background: var(--cyan);
+      color: #000;
+      border-color: var(--cyan);
+      box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
+      transform: scale(1.08);
+    }
+
+    .dots-nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 32px;
+      height: 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.18);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      width: 54px;
+      background: linear-gradient(90deg, var(--cyan), var(--emerald));
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+    }
+
+    /* ─── Trust & Clinical Credentials Bar ─── */
+    .trust-bar {
+      max-width: 1200px;
+      margin: 20px auto 70px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .trust-card {
+      background: rgba(13, 23, 38, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      padding: 24px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .trust-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 210, 255, 0.3);
+    }
+
+    .trust-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .trust-card h4 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .trust-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      background: rgba(4, 8, 14, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      header { padding: 18px 24px; }
+      .trust-bar { grid-template-columns: repeat(2, 1fr); }
+      .slide-card {
+        grid-template-columns: 1fr;
+        height: auto;
+        padding: 24px;
+      }
+      .slide-visual { height: 200px; }
+      .slider-stage { height: 600px; }
+      .slide-card.prev { transform: translateX(-240px) translateZ(-160px) rotateY(20deg); }
+      .slide-card.next { transform: translateX(240px) translateZ(-160px) rotateY(-20deg); }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Three.js Ambient Medical Particles & Wave Canvas -->
+  <canvas id="three-canvas"></canvas>
+
+  <div class="app-wrapper">
+
+    <!-- Header Navigation -->
+    <header>
+      <a href="#" class="brand">
+        <div class="brand-logo">K</div>
+        <div class="brand-text">
+          <h1>KINETIX 3D</h1>
+          <p>Sports Rehab & Biomechanics</p>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <div class="stat-pill">
+          <i class="fa-solid fa-certificate" style="color:#00d2ff;"></i>
+          <span>IAP & CSP Accredited</span>
+        </div>
+        <a href="https://wa.me/YOUR_PHONE_NUMBER?text=Hello%20Kinetix%20Clinic,%20I%20would%20like%20to%20book%20a%20consultation" class="btn-whatsapp" target="_blank">
+          <i class="fa-brands fa-whatsapp"></i> WhatsApp Booking
+        </a>
+        <a href="tel:YOUR_PHONE_NUMBER" class="btn-primary">
+          <i class="fa-solid fa-calendar-check"></i> Call Direct
+        </a>
+      </div>
+    </header>
+
+    <!-- Hero Intro -->
+    <section class="hero-intro">
+      <div class="hero-tag">
+        <i class="fa-solid fa-cubes"></i> Interactive 3D Clinical Showcase
+      </div>
+      <h2>Engineered for Motion. Precision Recovery.</h2>
+      <p>
+        Combining 3D kinematic motion capture, non-surgical decompression, and evidence-based sports therapy to eliminate chronic joint and spine conditions without surgery.
+      </p>
+    </section>
+
+    <!-- 3D Slider Section -->
+    <section class="slider-container">
+      <div class="slider-stage" id="slider-stage">
+
+        <!-- SLIDE 1: 3D Spine -->
+        <div class="slide-card active" data-index="0">
+          <div class="slide-info">
+            <div>
+              <span class="slide-badge badge-spine">
+                <i class="fa-solid fa-bone"></i> SLIDE 01 • SPINE BIOMECHANICS
+              </span>
+              <h3 class="slide-title">3D Spinal Decompression & Disc Restoration</h3>
+              <p class="slide-desc">
+                Targeted computer-controlled negative intra-discal pressure generation to retract herniated discs, decompress pinched sciatica nerves, and restore natural spinal lordosis.
+              </p>
+            </div>
+            <div>
+              <div class="slide-metrics">
+                <div class="metric-item">
+                  <span>Relief Success</span>
+                  <strong style="color: #10b981;">96.2%</strong>
+                </div>
+                <div class="metric-item">
+                  <span>Avg. Timeline</span>
+                  <strong>4 - 6 Wks</strong>
+                </div>
+                <div class="metric-item">
+                  <span>Non-Invasive</span>
+                  <strong style="color: #00d2ff;">100%</strong>
+                </div>
+              </div>
+              <div class="slide-tags">
+                <span class="slide-tag">Herniated Discs</span>
+                <span class="slide-tag">Sciatica Pain</span>
+                <span class="slide-tag">Cervical Radiculopathy</span>
+                <span class="slide-tag">Core Transversus</span>
+              </div>
+            </div>
+          </div>
+          <div class="slide-visual">
+            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=80" alt="Spine Biomechanics" />
+            <div class="visual-overlay">
+              <span class="visual-badge">
+                <i class="fa-solid fa-eye"></i> 3D Pressure Decompression
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 2: 3D Knee & ACL -->
+        <div class="slide-card next" data-index="1">
+          <div class="slide-info">
+            <div>
+              <span class="slide-badge badge-knee">
+                <i class="fa-solid fa-person-running"></i> SLIDE 02 • KNEE & ACL KINEMATICS
+              </span>
+              <h3 class="slide-title">3D Knee Kinematics & Post-Op ACL Return</h3>
+              <p class="slide-desc">
+                Dynamic 3D valgus and rotational angle tracking during cutting and deceleration drills. Integrated with Blood Flow Restriction (BFR) training for accelerated hypertrophy.
+              </p>
+            </div>
+            <div>
+              <div class="slide-metrics">
+                <div class="metric-item">
+                  <span>Return to Sport</span>
+                  <strong style="color: #10b981;">100%</strong>
+                </div>
+                <div class="metric-item">
+                  <span>BFR Strength</span>
+                  <strong style="color: #00d2ff;">+40%</strong>
+                </div>
+                <div class="metric-item">
+                  <span>Re-injury Risk</span>
+                  <strong style="color: #10b981;">< 3%</strong>
+                </div>
+              </div>
+              <div class="slide-tags">
+                <span class="slide-tag">ACL / PCL Repair</span>
+                <span class="slide-tag">Meniscus Rehab</span>
+                <span class="slide-tag">Patellofemoral Pain</span>
+                <span class="slide-tag">BFR Therapy</span>
+              </div>
+            </div>
+          </div>
+          <div class="slide-visual">
+            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80" alt="Knee Rehabilitation" />
+            <div class="visual-overlay">
+              <span class="visual-badge">
+                <i class="fa-solid fa-chart-line"></i> Dynamic Valgus Tracking
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 3: 3D Shoulder -->
+        <div class="slide-card far-next" data-index="2">
+          <div class="slide-info">
+            <div>
+              <span class="slide-badge badge-shoulder">
+                <i class="fa-solid fa-hand-fist"></i> SLIDE 03 • SHOULDER & ROTATOR CUFF
+              </span>
+              <h3 class="slide-title">Scapular Rhythm Recalibration & Mobility</h3>
+              <p class="slide-desc">
+                Solving frozen shoulder and subacromial impingement via joint glide arthrokinematics, dry needling to trigger zones, and isokinetic rotator cuff strengthening.
+              </p>
+            </div>
+            <div>
+              <div class="slide-metrics">
+                <div class="metric-item">
+                  <span>Mobility Gain</span>
+                  <strong style="color: #10b981;">94%</strong>
+                </div>
+                <div class="metric-item">
+                  <span>Pain Drop</span>
+                  <strong style="color: #f59e0b;">80% in 3 Wks</strong>
+                </div>
+                <div class="metric-item">
+                  <span>Session Length</span>
+                  <strong>45 Mins</strong>
+                </div>
+              </div>
+              <div class="slide-tags">
+                <span class="slide-tag">Frozen Shoulder</span>
+                <span class="slide-tag">Impingement Syndrome</span>
+                <span class="slide-tag">Rotator Cuff Tear</span>
+                <span class="slide-tag">Dry Needling</span>
+              </div>
+            </div>
+          </div>
+          <div class="slide-visual">
+            <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&auto=format&fit=crop&q=80" alt="Shoulder Mobility" />
+            <div class="visual-overlay">
+              <span class="visual-badge">
+                <i class="fa-solid fa-arrows-up-down-left-right"></i> Scapulohumeral Rhythm
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 4: 3D Gait -->
+        <div class="slide-card far-next" data-index="3">
+          <div class="slide-info">
+            <div>
+              <span class="slide-badge badge-gait">
+                <i class="fa-solid fa-shoe-prints"></i> SLIDE 04 • 3D GAIT & KINETIC CHAIN
+              </span>
+              <h3 class="slide-title">240 FPS Multi-Angle Gait & Force-Plate Lab</h3>
+              <p class="slide-desc">
+                Diagnosing micro-asymmetries across foot-strike, knee flexion, and pelvic tilt. Ideal for marathon runners, plantar fasciitis recovery, and post-stroke gait re-education.
+              </p>
+            </div>
+            <div>
+              <div class="slide-metrics">
+                <div class="metric-item">
+                  <span>Symmetry Score</span>
+                  <strong style="color: #10b981;">98%</strong>
+                </div>
+                <div class="metric-item">
+                  <span>Strain Drop</span>
+                  <strong style="color: #00d2ff;">-65%</strong>
+                </div>
+                <div class="metric-item">
+                  <span>Camera Rate</span>
+                  <strong>240 FPS</strong>
+                </div>
+              </div>
+              <div class="slide-tags">
+                <span class="slide-tag">Plantar Fasciitis</span>
+                <span class="slide-tag">Running Biomechanics</span>
+                <span class="slide-tag">Force Plate Matrix</span>
+                <span class="slide-tag">Custom Insoles</span>
+              </div>
+            </div>
+          </div>
+          <div class="slide-visual">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&auto=format&fit=crop&q=80" alt="Gait Analysis" />
+            <div class="visual-overlay">
+              <span class="visual-badge">
+                <i class="fa-solid fa-wave-square"></i> Force-Plate Ground Kinetics
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 5: Medical Suite -->
+        <div class="slide-card far-next" data-index="4">
+          <div class="slide-info">
+            <div>
+              <span class="slide-badge badge-tech">
+                <i class="fa-solid fa-bolt"></i> SLIDE 05 • ADVANCED MODALITIES
+              </span>
+              <h3 class="slide-title">Non-Invasive Regenerative Technology</h3>
+              <p class="slide-desc">
+                High-energy Focused Shockwave for stubborn calcifications, AlterG Anti-Gravity treadmills for weightless movement, and Class-IV Deep Tissue Laser for cellular repair.
+              </p>
+            </div>
+            <div>
+              <div class="slide-metrics">
+                <div class="metric-item">
+                  <span>Shockwave Tech</span>
+                  <strong style="color: #8b5cf6;">Focused</strong>
+                </div>
+                <div class="metric-item">
+                  <span>Cellular ATP</span>
+                  <strong style="color: #10b981;">+300%</strong>
+                </div>
+                <div class="metric-item">
+                  <span>AlterG Weight</span>
+                  <strong style="color: #00d2ff;">Down to 20%</strong>
+                </div>
+              </div>
+              <div class="slide-tags">
+                <span class="slide-tag">Focused Shockwave</span>
+                <span class="slide-tag">Class-IV Laser</span>
+                <span class="slide-tag">AlterG Treadmill</span>
+                <span class="slide-tag">Cryo-Compression</span>
+              </div>
+            </div>
+          </div>
+          <div class="slide-visual">
+            <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&auto=format&fit=crop&q=80" alt="Technology Suite" />
+            <div class="visual-overlay">
+              <span class="visual-badge">
+                <i class="fa-solid fa-microchip"></i> Medical-Grade Equipment
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Controls -->
+      <div class="slider-controls">
+        <button class="control-btn" id="prev-btn" aria-label="Previous Slide">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <div class="dots-nav" id="dots-nav">
+          <div class="dot active" data-index="0"></div>
+          <div class="dot" data-index="1"></div>
+          <div class="dot" data-index="2"></div>
+          <div class="dot" data-index="3"></div>
+          <div class="dot" data-index="4"></div>
+        </div>
+        <button class="control-btn" id="next-btn" aria-label="Next Slide">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- Trust & Clinical Performance Stats -->
+    <section class="trust-bar">
+      <div class="trust-card">
+        <div class="trust-icon" style="color: #10b981;"><i class="fa-solid fa-heart-pulse"></i></div>
+        <h4>15,000+</h4>
+        <p>Successful Recoveries</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon" style="color: #00d2ff;"><i class="fa-solid fa-shield-halved"></i></div>
+        <h4>98.4%</h4>
+        <p>Surgery Avoided Rate</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon" style="color: #f59e0b;"><i class="fa-solid fa-star"></i></div>
+        <h4>4.9 / 5.0</h4>
+        <p>Google Verified Reviews</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon" style="color: #8b5cf6;"><i class="fa-solid fa-user-doctor"></i></div>
+        <h4>14+ Years</h4>
+        <p>Orthopedic Clinical Mastery</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 Kinetix Advanced Physiotherapy & Spine Clinic • Universal 3D Clinical System</p>
+      <div style="display: flex; gap: 20px;">
+        <a href="tel:YOUR_PHONE_NUMBER" style="color: var(--cyan); text-decoration: none; font-size: 13px; font-weight: 600;">
+          <i class="fa-solid fa-phone"></i> Direct Line
+        </a>
+        <a href="https://wa.me/YOUR_PHONE_NUMBER" style="color: #25d366; text-decoration: none; font-size: 13px; font-weight: 600;">
+          <i class="fa-brands fa-whatsapp"></i> Quick WhatsApp
+        </a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- 3D Background Mesh & Carousel Engine -->
+  <script>
+    /* ─── Three.js Ambient Particle Grid ─── */
+    const canvas = document.getElementById('three-canvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Particle Cloud mimicking Neural/Cellular connections
+    const particlesCount = 350;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particlesCount * 3);
+    const colors = new Float32Array(particlesCount * 3);
+
+    const color1 = new THREE.Color('#00d2ff');
+    const color2 = new THREE.Color('#10b981');
+
+    for (let i = 0; i < particlesCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 25;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 25;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+
+      const mixed = color1.clone().lerp(color2, Math.random());
+      colors[i * 3] = mixed.r;
+      colors[i * 3 + 1] = mixed.g;
+      colors[i * 3 + 2] = mixed.b;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const material = new THREE.PointsMaterial({
+      size: 0.12,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.7,
+      blending: THREE.AdditiveBlending
+    });
+
+    const particleSystem = new THREE.Points(geometry, material);
+    scene.add(particleSystem);
+
+    camera.position.z = 12;
+
+    // Mouse movement response
+    let mouseX = 0;
+    let mouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 0.8;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 0.8;
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      particleSystem.rotation.y += 0.0012;
+      particleSystem.rotation.x += 0.0006;
+
+      camera.position.x += (mouseX * 4 - camera.position.x) * 0.04;
+      camera.position.y += (-mouseY * 4 - camera.position.y) * 0.04;
+      camera.lookAt(scene.position);
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    /* ─── 3D Slide Carousel Engine ─── */
+    const slides = document.querySelectorAll('.slide-card');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+
+    function update3DSlides() {
+      slides.forEach((slide, i) => {
+        slide.className = 'slide-card';
+        const diff = (i - currentIndex + totalSlides) % totalSlides;
+
+        if (diff === 0) {
+          slide.classList.add('active');
+        } else if (diff === 1) {
+          slide.classList.add('next');
+        } else if (diff === totalSlides - 1) {
+          slide.classList.add('prev');
+        } else if (diff === 2) {
+          slide.classList.add('far-next');
+        } else {
+          slide.classList.add('far-prev');
+        }
+      });
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+      });
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      update3DSlides();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      update3DSlides();
+    }
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        currentIndex = parseInt(dot.getAttribute('data-index'));
+        update3DSlides();
+      });
+    });
+
+    // Clicking a side card directly navigates to it
+    slides.forEach((slide, index) => {
+      slide.addEventListener('click', () => {
+        if (index !== currentIndex) {
+          currentIndex = index;
+          update3DSlides();
+        }
+      });
+    });
+
+    // Keyboard Arrow Keys navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    // 3D Tilt Parallax on Active Slide
+    const activeCards = document.querySelectorAll('.slide-card');
+    activeCards.forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        if (!card.classList.contains('active')) return;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const rotateX = (-y / (rect.height / 2)) * 7;
+        const rotateY = (x / (rect.width / 2)) * 7;
+        card.style.transform = `translateX(0) translateZ(30px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        if (card.classList.contains('active')) {
+          card.style.transform = 'translateX(0) translateZ(0) rotateY(0deg)';
+        }
+      });
+    });
+
+    // Auto-advance slides every 6 seconds
+    let autoSlideInterval = setInterval(nextSlide, 6500);
+    const container = document.querySelector('.slider-container');
+    container.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+    container.addEventListener('mouseleave', () => {
+      clearInterval(autoSlideInterval);
+      autoSlideInterval = setInterval(nextSlide, 6500);
+    });
+  </script>
+</body>
+</html>

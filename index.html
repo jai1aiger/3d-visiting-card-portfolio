@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VTKRO | Next-Gen 3D Website Architecture</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-dark: #040711;
+      --bg-surface: rgba(8, 14, 28, 0.85);
+      --bg-card: rgba(11, 20, 38, 0.92);
+      --cyan: #00e5ff;
+      --cyan-glow: rgba(0, 229, 255, 0.4);
+      --electric-blue: #0070f3;
+      --plasma-green: #00ffaa;
+      --purple-accent: #7928ca;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-card: rgba(0, 229, 255, 0.22);
+      --card-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.9), 0 0 45px rgba(0, 229, 255, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    body, h1, h2, h3, h4, h5, h6, p, span, a, button, input, div, strong, sub, em, label {
+      font-family: 'Times New Roman', Times, serif !important;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Times New Roman', Times, serif !important;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ─── PROCEDURAL CIRCUIT BOARD & PLASMA CANVAS ─── */
+    #circuit-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ─── SLIGHTLY BLURRED BACKDROP FILTER OVER CIRCUIT ─── */
+    .circuit-blur-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background: radial-gradient(circle at 50% 30%, rgba(4, 7, 17, 0.6) 0%, rgba(4, 7, 17, 0.88) 100%);
+    }
+
+    /* ─── APP SHELL ─── */
+    .app-shell {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ─── NAVIGATION BAR ─── */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: rgba(4, 7, 17, 0.82);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .brand-official-logo {
+      height: 46px;
+      width: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.4);
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: #000;
+    }
+
+    .brand-official-logo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 35px rgba(0, 229, 255, 0.7);
+    }
+
+    .brand-title h1 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .brand-title span {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--cyan);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--cyan);
+      text-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-action-glow {
+      background: linear-gradient(135deg, var(--cyan), #0099ff);
+      color: #040711;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 10px 22px;
+      border-radius: 30px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.45);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-action-glow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(0, 229, 255, 0.7);
+    }
+
+    .btn-whatsapp-pill {
+      background: rgba(37, 211, 102, 0.14);
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      color: #25d366;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-whatsapp-pill:hover {
+      background: #25d366;
+      color: #040711;
+      box-shadow: 0 0 25px rgba(37, 211, 102, 0.55);
+      transform: translateY(-2px);
+    }
+
+    .btn-support-pill {
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      color: #e2e8f0;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 9px 18px;
+      border-radius: 30px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-support-pill:hover {
+      background: rgba(0, 229, 255, 0.18);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.35);
+      transform: translateY(-2px);
+    }
+
+    /* ═════════════════════════════════════════════════
+       HERO SECTION — STABLE, FIXED VIDEO PANEL
+    ═════════════════════════════════════════════════ */
+    .hero-section {
+      padding: 60px 60px 50px;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      align-items: center;
+      gap: 50px;
+      position: relative;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      width: fit-content;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+    }
+
+    .pulse-emitter {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.8; }
+      50% { transform: scale(1.35); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.8; }
+    }
+
+    .hero-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 52px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+      color: #fff;
+    }
+
+    .gradient-headline {
+      background: linear-gradient(135deg, #ffffff 15%, var(--cyan) 60%, var(--electric-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .hero-subtitle {
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .hero-image-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 6px 0;
+    }
+
+    .image-pill-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 6px 14px;
+      border-radius: 24px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .image-pill-item img {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    /* ═════════════════════════════════════════════════
+       HOLOGRAPHIC PROJECTION DEVICE & FLOATING DISPLAY
+    ═════════════════════════════════════════════════ */
+    .hologram-system-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      perspective: 1200px;
+    }
+
+    /* Floating Frameless Holographic Projection */
+    .hologram-projection-stage {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      height: 600px;
+      border-radius: 24px;
+      overflow: hidden;
+      /* NO FRAME — pure holographic light floating in space */
+      border: none;
+      background: transparent;
+      box-shadow: 
+        0 0 50px rgba(0, 229, 255, 0.25),
+        0 0 90px rgba(0, 112, 243, 0.18);
+      filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.35));
+      transition: filter 0.4s ease, transform 0.4s ease, opacity 0.3s ease;
+      z-index: 5;
+    }
+
+    /* Holographic Scanlines & Digital Shimmer Overlay */
+    .hologram-scanlines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        rgba(0, 229, 255, 0) 50%,
+        rgba(0, 229, 255, 0.08) 50%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.03),
+        rgba(0, 255, 0, 0.01),
+        rgba(0, 0, 255, 0.03)
+      );
+      background-size: 100% 4px, 6px 100%;
+      opacity: 0.85;
+      mix-blend-mode: screen;
+      z-index: 6;
+      animation: holoFlicker 6s infinite;
+    }
+
+    @keyframes holoFlicker {
+      0%, 100% { opacity: 0.85; }
+      48% { opacity: 0.85; }
+      50% { opacity: 0.65; }
+      52% { opacity: 0.9; }
+      85% { opacity: 0.85; }
+      87% { opacity: 0.7; }
+    }
+
+    /* Ambient Holographic Vignette: melts the video into the atmosphere */
+    .hologram-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 7;
+      background: radial-gradient(ellipse 94% 94% at 50% 50%, transparent 68%, rgba(4, 7, 17, 0.88) 100%);
+      box-shadow: inset 0 0 45px rgba(4, 7, 17, 0.9);
+      mask-image: linear-gradient(to top, transparent 0%, black 5%, black 95%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, transparent 0%, black 5%, black 95%, transparent 100%);
+    }
+
+    /* The Video Element: Precision crop of bottom-right Gemini logo */
+    .hologram-video-element {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.12) translateY(-2.2%) translateX(-1%);
+      transform-origin: center center;
+      display: block;
+      transition: filter 0.3s ease;
+    }
+
+    /* Glitch / De-materialize Hologram Transition */
+    .hologram-projection-stage.dematerializing {
+      animation: holoGlitch 0.55s ease forwards;
+    }
+
+    @keyframes holoGlitch {
+      0% {
+        transform: scale(1);
+        filter: brightness(1) drop-shadow(0 0 20px rgba(0,229,255,0.4));
+        opacity: 1;
+      }
+      25% {
+        transform: scale(1.02) skewX(2deg);
+        filter: brightness(2.2) contrast(1.5) drop-shadow(0 0 45px #00e5ff);
+        opacity: 0.8;
+      }
+      50% {
+        transform: scale(0.98) skewX(-3deg);
+        filter: brightness(0.4) invert(0.2);
+        opacity: 0.4;
+      }
+      75% {
+        transform: scale(1.03) skewY(1deg);
+        filter: brightness(2.5) drop-shadow(0 0 60px #00e5ff);
+        opacity: 0.9;
+      }
+      100% {
+        transform: scale(1);
+        filter: brightness(1) drop-shadow(0 0 20px rgba(0,229,255,0.4));
+        opacity: 1;
+      }
+    }
+
+    /* Volumetric Projection Light Cone */
+    .hologram-light-cone {
+      width: 320px;
+      height: 70px;
+      margin-top: -15px;
+      margin-bottom: -15px;
+      background: linear-gradient(to bottom, rgba(0, 229, 255, 0.22) 0%, rgba(0, 112, 243, 0.08) 60%, transparent 100%);
+      clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+      filter: blur(4px);
+      pointer-events: none;
+      z-index: 4;
+      animation: beamPulse 3.5s ease-in-out infinite;
+    }
+
+    @keyframes beamPulse {
+      0%, 100% { opacity: 0.7; transform: scaleX(1); }
+      50% { opacity: 1; transform: scaleX(1.06); filter: blur(3px); }
+    }
+
+    /* Hologram Projector Device Pedestal (Physical Emitter) */
+    .hologram-device-pedestal {
+      position: relative;
+      width: 360px;
+      height: 65px;
+      z-index: 8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Cybernetic Metallic Ring Housing */
+    .pedestal-ring-outer {
+      position: relative;
+      width: 100%;
+      height: 38px;
+      background: linear-gradient(180deg, #132238 0%, #060c18 100%);
+      border: 1.5px solid rgba(0, 229, 255, 0.4);
+      border-radius: 50px;
+      box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.9),
+        0 0 30px rgba(0, 229, 255, 0.25),
+        inset 0 2px 4px rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Concentric Plasma Core Lens */
+    .pedestal-emitter-lens {
+      width: 140px;
+      height: 16px;
+      border-radius: 20px;
+      background: linear-gradient(90deg, #0070f3, #00e5ff, #00ffaa, #0070f3);
+      background-size: 200% 100%;
+      animation: lensGlow 4s linear infinite;
+      box-shadow: 0 0 25px #00e5ff, 0 0 10px #00ffaa;
+    }
+
+    @keyframes lensGlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    /* Device Base Ground Shadow */
+    .pedestal-ground-glow {
+      position: absolute;
+      bottom: -6px;
+      width: 300px;
+      height: 20px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(0, 229, 255, 0.45) 0%, transparent 70%);
+      filter: blur(8px);
+      pointer-events: none;
+    }
+
+    /* Hologram HUD Controller */
+    .hologram-controls-hud {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+      z-index: 10;
+      width: 100%;
+    }
+
+    /* Compact Hologram Volume Bar (Increase / Lower / Mute) */
+    .hologram-volume-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 16px;
+      background: rgba(4, 7, 17, 0.88);
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      border-radius: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 229, 255, 0.1);
+    }
+
+    .vol-icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--cyan);
+      cursor: pointer;
+      font-size: 13px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .vol-icon-btn:hover {
+      background: rgba(0, 229, 255, 0.2);
+      color: #fff;
+      transform: scale(1.15);
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.6);
+    }
+
+    .vol-icon-btn:active {
+      transform: scale(0.92);
+    }
+
+    .vol-slider-track {
+      width: 90px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      border: 1px solid rgba(0, 229, 255, 0.25);
+    }
+
+    .vol-slider-fill {
+      height: 100%;
+      width: 40%;
+      background: linear-gradient(90deg, #0070f3, #00e5ff, #00ffaa);
+      border-radius: 6px;
+      transition: width 0.15s ease;
+      box-shadow: 0 0 10px #00e5ff;
+    }
+
+    .vol-readout {
+      font-size: 11px;
+      font-weight: 700;
+      color: #e2e8f0;
+      font-family: 'Times New Roman', Times, serif;
+      min-width: 32px;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .holo-nav-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Preview Buttons to Change Videos */
+    .btn-holo-preview {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: 'Times New Roman', Times, serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .btn-holo-preview:hover {
+      border-color: var(--cyan);
+      color: #fff;
+      background: rgba(0, 229, 255, 0.12);
+      box-shadow: 0 0 16px rgba(0, 229, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-holo-preview.active {
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.28), rgba(0, 112, 243, 0.38));
+      border-color: var(--cyan);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+    }
+
+    .btn-holo-preview .preview-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #64748b;
+      transition: all 0.2s ease;
+    }
+
+    .btn-holo-preview.active .preview-dot {
+      background: var(--plasma-green);
+      box-shadow: 0 0 8px var(--plasma-green);
+    }
+
+    .btn-holo-nav {
+      background: rgba(0, 229, 255, 0.12);
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      color: var(--cyan);
+      padding: 9px 24px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-holo-nav:hover {
+      background: var(--cyan);
+      color: #040711;
+      box-shadow: 0 0 22px rgba(0, 229, 255, 0.8);
+      transform: translateY(-2px);
+    }
+
+    .btn-holo-nav:active {
+      transform: scale(0.96);
+    }
+
+    /* ═════════════════════════════════════════════════
+       STACKED 3D CARD DECK (CARDS GOING BEHIND EACH OTHER)
+    ═════════════════════════════════════════════════ */
+    .deck-section {
+      padding: 80px 20px 60px;
+      text-align: center;
+      position: relative;
+    }
+
+    .deck-header {
+      max-width: 800px;
+      margin: 0 auto 40px;
+    }
+
+    .deck-header h2 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .deck-header p {
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    /* 3D Stack Stage */
+    .card-deck-stage {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      height: 520px;
+      margin: 0 auto;
+      perspective: 1200px;
+      transform-style: preserve-3d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Stacked Deck Card Style */
+    .stacked-card {
+      position: absolute;
+      width: 840px;
+      max-width: 92vw;
+      height: 480px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-card);
+      border-radius: 24px;
+      padding: 36px;
+      backdrop-filter: blur(25px);
+      box-shadow: var(--card-shadow);
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 30px;
+      user-select: none;
+      cursor: pointer;
+      transform-origin: center center;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.65s ease, filter 0.65s ease, border-color 0.4s ease;
+    }
+
+    /* Positions in the Stack (Going directly behind each other) */
+    .stacked-card[data-pos="0"] {
+      /* Front / Active Card */
+      transform: translate3d(0, 0, 0) scale(1) rotateX(0deg);
+      opacity: 1;
+      filter: none;
+      z-index: 10;
+      border-color: var(--cyan);
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.95), 0 0 50px rgba(0, 229, 255, 0.3);
+    }
+
+    .stacked-card[data-pos="1"] {
+      /* Card 1 directly behind Card 0 */
+      transform: translate3d(0, -32px, -80px) scale(0.93) rotateX(2.5deg);
+      opacity: 0.82;
+      filter: blur(0.5px) brightness(0.85);
+      z-index: 9;
+      border-color: rgba(0, 229, 255, 0.18);
+    }
+
+    .stacked-card[data-pos="2"] {
+      /* Card 2 behind Card 1 */
+      transform: translate3d(0, -64px, -160px) scale(0.86) rotateX(5deg);
+      opacity: 0.58;
+      filter: blur(1.5px) brightness(0.7);
+      z-index: 8;
+      border-color: rgba(0, 229, 255, 0.12);
+    }
+
+    .stacked-card[data-pos="3"] {
+      /* Card 3 behind Card 2 */
+      transform: translate3d(0, -96px, -240px) scale(0.79) rotateX(7.5deg);
+      opacity: 0.32;
+      filter: blur(3px) brightness(0.55);
+      z-index: 7;
+      border-color: rgba(0, 229, 255, 0.08);
+      pointer-events: none;
+    }
+
+    .stacked-card[data-pos="hidden"] {
+      /* Hidden deeper in deck */
+      transform: translate3d(0, -120px, -320px) scale(0.72) rotateX(10deg);
+      opacity: 0;
+      filter: blur(5px);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Inside Card Structure */
+    .card-left-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+    }
+
+    .card-category-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      width: fit-content;
+      margin-bottom: 12px;
+      background: rgba(0, 229, 255, 0.12);
+      color: var(--cyan);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+    }
+
+    .card-category-badge img {
+      width: 14px;
+      height: 14px;
+      object-fit: contain;
+    }
+
+    .card-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .card-meta-row {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 14px;
+      padding: 12px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .meta-col span {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .meta-col strong {
+      font-size: 16px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .card-features-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .card-feature-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .card-feature-tag img {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+
+    .card-right-visual {
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-right-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .stacked-card:hover .card-right-visual img {
+      transform: scale(1.05);
+    }
+
+    .visual-corner-badge {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      background: rgba(4, 7, 17, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Deck Controls */
+    .deck-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .btn-deck-arrow {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-deck-arrow:hover {
+      background: var(--cyan);
+      color: #040711;
+      border-color: var(--cyan);
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.6);
+      transform: scale(1.08);
+    }
+
+    .deck-counter {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #cbd5e1;
+      letter-spacing: 1px;
+    }
+
+    /* ═════════════════════════════════════════════════
+       IMAGE-BASED FEATURE GRID (INSTEAD OF ICONS)
+    ═════════════════════════════════════════════════ */
+    .engine-section {
+      padding: 60px 60px 80px;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 26px;
+      backdrop-filter: blur(15px);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--cyan);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 229, 255, 0.2);
+    }
+
+    /* Image-based Visual Header for Features */
+    .feature-image-header {
+      width: 100%;
+      height: 140px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .feature-image-header img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .feature-card:hover .feature-image-header img {
+      transform: scale(1.08);
+    }
+
+    .feature-tag-overlay {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(4, 7, 17, 0.85);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--cyan);
+      backdrop-filter: blur(8px);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .feature-card h3 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ═════════════════════════════════════════════════
+       REFER & EARN SECTION
+    ═════════════════════════════════════════════════ */
+    .referral-banner {
+      max-width: 1200px;
+      margin: 20px auto 80px;
+      background: linear-gradient(135deg, rgba(0, 112, 243, 0.16), rgba(0, 229, 255, 0.12));
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      border-radius: 24px;
+      padding: 40px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .referral-text h3 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .referral-text p {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 650px;
+      line-height: 1.6;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: rgba(2, 4, 10, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-section { grid-template-columns: 1fr; padding: 40px 24px; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      header { padding: 18px 24px; }
+      .nav-links { display: none; }
+      .referral-banner { flex-direction: column; text-align: center; padding: 30px 24px; }
+      .stacked-card { grid-template-columns: 1fr; height: auto; padding: 24px; }
+      .card-right-visual { height: 200px; }
+      .card-deck-stage { height: 600px; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-title { font-size: 34px; }
+      .features-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Procedural Electronic Circuit Board Canvas -->
+  <canvas id="circuit-canvas"></canvas>
+
+  <!-- Slight Background Blur Layer -->
+  <div class="circuit-blur-layer"></div>
+
+  <div class="app-shell">
+
+    <!-- Header Navigation -->
+    <header>
+      <a href="#" class="brand">
+        <img src="vtkro-logo.png" alt="VTKRO Official Logo" class="brand-official-logo" />
+        <div class="brand-title">
+          <h1>VTKRO</h1>
+          <span>Virtual Tour Kro</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#templates">139+ Templates</a></li>
+        <li><a href="#video-tour">Video Overview</a></li>
+        <li><a href="#engine">Engine Architecture</a></li>
+        <li><a href="#refer-earn">Refer & Earn</a></li>
+      </ul>
+
+      <div class="header-actions">
+        <a href="tel:9676700488" class="btn-support-pill" title="Customer Support">
+          <i class="fa-solid fa-headset" style="color:var(--cyan);"></i> Support: +91 96767 00488
+        </a>
+        <a href="https://wa.me/919676700488?text=Hi%20VTKRO%20Support,%20I%20want%20to%20build%20a%20website%20for%20my%20business" class="btn-whatsapp-pill" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="16" height="16" alt="WhatsApp" /> WhatsApp Setup
+        </a>
+        <a href="https://www.vtkro.com/templates" class="btn-action-glow" target="_blank">
+          Build Free
+        </a>
+      </div>
+    </header>
+
+    <!-- ═════════════════════════════════════════════════
+         HERO SECTION — FIXED NON-MOVABLE VIDEO PANEL
+    ═════════════════════════════════════════════════ -->
+    <section class="hero-section" id="video-tour">
+      <div class="hero-content">
+        <div class="status-pill">
+          <div class="pulse-emitter"></div>
+          Zero Subscriptions • Lifetime Ownership
+        </div>
+
+        <h1 class="hero-title">
+          India's Most Affordable <br/>
+          <span class="gradient-headline">Website Builder.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Build a high-performance, mobile-first website for your business in minutes. Select from 139+ verified industry designs, auto-generate professional copy with AI, and launch with zero monthly fees.
+        </p>
+
+        <div class="hero-image-pills">
+          <div class="image-pill-item">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=100&auto=format&fit=crop&q=80" alt="6-Page Site" />
+            <span>6-Page Complete Site</span>
+          </div>
+          <div class="image-pill-item">
+            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=100&auto=format&fit=crop&q=80" alt="Hosting" />
+            <span>Free Lifetime Hosting</span>
+          </div>
+          <div class="image-pill-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+            <span>WhatsApp Commerce</span>
+          </div>
+          <div class="image-pill-item">
+            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=100&auto=format&fit=crop&q=80" alt="DPDP Security" />
+            <span>DPDP Act Compliant</span>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="https://www.vtkro.com/templates" class="btn-action-glow" target="_blank" style="padding: 13px 28px; font-size: 14px;">
+            Try For Free
+          </a>
+          <a href="https://wa.me/919676700488?text=Hi%20VTKRO%20Support,%20help%20me%20launch%20my%20business%20website" class="btn-whatsapp-pill" target="_blank" style="padding: 13px 24px; font-size: 14px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="18" height="18" alt="WhatsApp" /> Chat On WhatsApp
+          </a>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 12px; font-size: 13px;">
+          <span>
+            <i class="fa-solid fa-headset" style="color: var(--cyan); margin-right: 6px;"></i>
+            Customer Support: <a href="tel:9676700488" style="color: #fff; text-decoration: none; font-weight: 700;">+91 96767 00488</a>
+          </span>
+          <span>
+            <i class="fa-solid fa-phone" style="color: var(--plasma-green); margin-right: 6px;"></i>
+            Helpdesk: <a href="tel:+916263439523" style="color: #fff; text-decoration: none; font-weight: 700;">+91 62634 39523</a>
+          </span>
+        </div>
+      </div>
+
+      <!-- ═════════════════════════════════════════════════
+           FUTURISTIC HOLOGRAM PROJECTION SYSTEM & DEVICE
+      ═════════════════════════════════════════════════ -->
+      <div class="hologram-system-wrapper">
+        <!-- Floating Frameless Holographic Projection Stage -->
+        <div class="hologram-projection-stage" id="holo-stage">
+          <div class="hologram-scanlines"></div>
+          <div class="hologram-vignette"></div>
+          <video 
+            id="holo-video"
+            class="hologram-video-element" 
+            src="holo-1.mp4" 
+            autoplay 
+            muted 
+            playsinline
+            disablePictureInPicture
+            controlsList="nodownload noplaybackrate nofullscreen">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <!-- Volumetric Upward Projection Light Cone -->
+        <div class="hologram-light-cone"></div>
+
+        <!-- Cybernetic Emitter Pedestal Device -->
+        <div class="hologram-device-pedestal">
+          <div class="pedestal-ground-glow"></div>
+          <div class="pedestal-ring-outer">
+            <div class="pedestal-emitter-lens"></div>
+          </div>
+        </div>
+
+        <!-- Hologram HUD Controller: Volume Adjust Icons & Preview Buttons -->
+        <div class="hologram-controls-hud">
+          <!-- Short Icons to Increase and Lower Volume (Replacing Stream / 40% Vol text) -->
+          <div class="hologram-volume-control" title="Volume Controller">
+            <button class="vol-icon-btn" id="vol-mute-btn" title="Mute / Unmute">
+              <i class="fa-solid fa-volume-xmark" id="vol-speaker-icon"></i>
+            </button>
+            <button class="vol-icon-btn" id="vol-down-btn" title="Lower Volume (-10%)">
+              <i class="fa-solid fa-volume-low"></i>
+            </button>
+            <div class="vol-slider-track" id="vol-track" title="Click to adjust volume">
+              <div class="vol-slider-fill" id="vol-fill" style="width: 40%;"></div>
+            </div>
+            <button class="vol-icon-btn" id="vol-up-btn" title="Increase Volume (+10%)">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+            <span class="vol-readout" id="vol-display">40%</span>
+          </div>
+
+          <!-- Prev and Next Navigation Buttons Side by Side -->
+          <div class="holo-nav-row" style="gap: 16px;">
+            <button class="btn-holo-nav" id="holo-prev-btn" title="Previous Video">
+              <i class="fa-solid fa-chevron-left"></i> Prev
+            </button>
+            <button class="btn-holo-nav" id="holo-next-btn" title="Next Video">
+              Next <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════
+         STACKED 3D CARD DECK (CARDS GOING BEHIND EACH OTHER)
+    ═════════════════════════════════════════════════ -->
+    <section class="deck-section" id="templates">
+      <div class="deck-header">
+        <div class="status-pill" style="margin: 0 auto 14px;">
+          139+ Industry Templates • 67+ Categories
+        </div>
+        <h2>Engineered for Every Business Domain</h2>
+        <p>Explore real-time 3D stacked previews of our flagship designs. Cards go back-to-back in 3D depth — click or cycle through the deck.</p>
+      </div>
+
+      <div class="card-deck-stage" id="deck-stage">
+
+        <!-- CARD 0: Beast Mode Gym -->
+        <div class="stacked-card" data-pos="0" data-index="0">
+          <div class="card-left-info">
+            <div>
+              <span class="card-category-badge">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=50&auto=format&fit=crop&q=80" alt="Gym Badge" />
+                FITNESS & CROSSFIT
+              </span>
+              <h3 class="card-title">Beast Mode Fitness</h3>
+              <p class="card-desc">High-voltage dark gym layout with vibrant accents, trainer rosters, membership breakdown cards, and 1-tap WhatsApp workout trial bookings.</p>
+            </div>
+            <div>
+              <div class="card-meta-row">
+                <div class="meta-col">
+                  <span>Industry</span>
+                  <strong>Fitness & Crossfit</strong>
+                </div>
+                <div class="meta-col">
+                  <span>Conversion</span>
+                  <strong style="color: var(--cyan);">WhatsApp Ready</strong>
+                </div>
+                <div class="meta-col">
+                  <span>Speed</span>
+                  <strong style="color: var(--plasma-green);">99/100</strong>
+                </div>
+              </div>
+              <div class="card-features-row">
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=40&auto=format&fit=crop&q=80" alt="Dark" />
+                  Dark Theme
+                </span>
+                <span class="card-feature-tag">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+                  Trial Leads
+                </span>
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=40&auto=format&fit=crop&q=80" alt="Class" />
+                  Class Schedule
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="card-right-visual">
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&auto=format&fit=crop&q=80" alt="Beast Mode Gym Template" />
+            <div class="visual-corner-badge">
+              <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=40&auto=format&fit=crop&q=80" style="width:14px; height:14px; border-radius:3px;" alt="01" />
+              Template 01 of 05
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 1: Bake House -->
+        <div class="stacked-card" data-pos="1" data-index="1">
+          <div class="card-left-info">
+            <div>
+              <span class="card-category-badge" style="color:#ec4899; border-color:rgba(236,72,153,0.3); background:rgba(236,72,153,0.12);">
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=50&auto=format&fit=crop&q=80" alt="Bake Badge" />
+                BAKERY & CONFECTIONERY
+              </span>
+              <h3 class="card-title">Bake House Patisserie</h3>
+              <p class="card-desc">Artisanal modern bakery showcase with fresh confectionery visual carousels, custom cake order forms, and instant WhatsApp cart routing for home deliveries.</p>
+            </div>
+            <div>
+              <div class="card-meta-row">
+                <div class="meta-col">
+                  <span>Industry</span>
+                  <strong>Bakery & Cafe</strong>
+                </div>
+                <div class="meta-col">
+                  <span>Ordering</span>
+                  <strong style="color: #25d366;">Direct WhatsApp</strong>
+                </div>
+                <div class="meta-col">
+                  <span>Responsive</span>
+                  <strong style="color: var(--plasma-green);">100% Mobile</strong>
+                </div>
+              </div>
+              <div class="card-features-row">
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=40&auto=format&fit=crop&q=80" alt="Pastel" />
+                  Pastel Style
+                </span>
+                <span class="card-feature-tag">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Cart" />
+                  Instant Cart
+                </span>
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=40&auto=format&fit=crop&q=80" alt="Cloud Kitchen" />
+                  Cloud Kitchen
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="card-right-visual">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop&q=80" alt="Bake House Template" />
+            <div class="visual-corner-badge">
+              <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=40&auto=format&fit=crop&q=80" style="width:14px; height:14px; border-radius:3px;" alt="02" />
+              Template 02 of 05
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2: Glamour Salon -->
+        <div class="stacked-card" data-pos="2" data-index="2">
+          <div class="card-left-info">
+            <div>
+              <span class="card-category-badge" style="color:#f59e0b; border-color:rgba(245,158,11,0.3); background:rgba(245,158,11,0.12);">
+                <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=50&auto=format&fit=crop&q=80" alt="Salon Badge" />
+                LUXURY SPA & SALON
+              </span>
+              <h3 class="card-title">Glamour Luxury Salon</h3>
+              <p class="card-desc">Soft-luxury beauty lounge layout with curved pill borders, aesthetic typography, service pricing menus, and direct therapist calendar appointment reservations.</p>
+            </div>
+            <div>
+              <div class="card-meta-row">
+                <div class="meta-col">
+                  <span>Industry</span>
+                  <strong>Spa & Aesthetics</strong>
+                </div>
+                <div class="meta-col">
+                  <span>Booking Rate</span>
+                  <strong style="color: var(--plasma-green);">High Demand</strong>
+                </div>
+                <div class="meta-col">
+                  <span>SEO Ready</span>
+                  <strong style="color: var(--cyan);">Local Google</strong>
+                </div>
+              </div>
+              <div class="card-features-row">
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=40&auto=format&fit=crop&q=80" alt="Luxury" />
+                  Luxury Theme
+                </span>
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=40&auto=format&fit=crop&q=80" alt="Calendar" />
+                  Booking Sync
+                </span>
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=40&auto=format&fit=crop&q=80" alt="Treatment" />
+                  Treatment Menu
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="card-right-visual">
+            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&auto=format&fit=crop&q=80" alt="Glamour Salon Template" />
+            <div class="visual-corner-badge">
+              <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=40&auto=format&fit=crop&q=80" style="width:14px; height:14px; border-radius:3px;" alt="03" />
+              Template 03 of 05
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3: Zaika Catering -->
+        <div class="stacked-card" data-pos="3" data-index="3">
+          <div class="card-left-info">
+            <div>
+              <span class="card-category-badge" style="color:#10b981; border-color:rgba(16,185,129,0.3); background:rgba(16,185,129,0.12);">
+                <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=50&auto=format&fit=crop&q=80" alt="Cater Badge" />
+                CATERING & EVENTS
+              </span>
+              <h3 class="card-title">Zaika Premium Catering</h3>
+              <p class="card-desc">Wedding, bulk dining, and corporate event catering template. Features authentic regional cuisine filters, tasting bookings, and bulk guest price estimators.</p>
+            </div>
+            <div>
+              <div class="card-meta-row">
+                <div class="meta-col">
+                  <span>Industry</span>
+                  <strong>Events & Food</strong>
+                </div>
+                <div class="meta-col">
+                  <span>Region</span>
+                  <strong>Bhilai & Pan-India</strong>
+                </div>
+                <div class="meta-col">
+                  <span>Quotes</span>
+                  <strong style="color: var(--cyan);">Automated</strong>
+                </div>
+              </div>
+              <div class="card-features-row">
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=40&auto=format&fit=crop&q=80" alt="Wedding" />
+                  Wedding Menus
+                </span>
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=40&auto=format&fit=crop&q=80" alt="GST" />
+                  GST Invoicing
+                </span>
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=40&auto=format&fit=crop&q=80" alt="Bulk" />
+                  Bulk Orders
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="card-right-visual">
+            <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=800&auto=format&fit=crop&q=80" alt="Zaika Catering Template" />
+            <div class="visual-corner-badge">
+              <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=40&auto=format&fit=crop&q=80" style="width:14px; height:14px; border-radius:3px;" alt="04" />
+              Template 04 of 05
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4: Clinic Pro -->
+        <div class="stacked-card" data-pos="hidden" data-index="4">
+          <div class="card-left-info">
+            <div>
+              <span class="card-category-badge" style="color:#00e5ff; border-color:rgba(0,229,255,0.3); background:rgba(0,229,255,0.12);">
+                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=50&auto=format&fit=crop&q=80" alt="Clinic Badge" />
+                HEALTHCARE & CLINICS
+              </span>
+              <h3 class="card-title">Clinic Pro Healthcare</h3>
+              <p class="card-desc">Medical-grade digital clinic suite for doctors, physiotherapists, and specialists. Includes patient symptom inquiry forms, doctor credentials, and 1-tap call support.</p>
+            </div>
+            <div>
+              <div class="card-meta-row">
+                <div class="meta-col">
+                  <span>Industry</span>
+                  <strong>Medical & Dental</strong>
+                </div>
+                <div class="meta-col">
+                  <span>Trust Score</span>
+                  <strong style="color: var(--plasma-green);">Verified</strong>
+                </div>
+                <div class="meta-col">
+                  <span>Emergency</span>
+                  <strong style="color: var(--cyan);">1-Click Call</strong>
+                </div>
+              </div>
+              <div class="card-features-row">
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=40&auto=format&fit=crop&q=80" alt="Doctor" />
+                  Doctor Bios
+                </span>
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=40&auto=format&fit=crop&q=80" alt="Hours" />
+                  Clinic Timings
+                </span>
+                <span class="card-feature-tag">
+                  <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=40&auto=format&fit=crop&q=80" alt="Trust" />
+                  Trust Badges
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="card-right-visual">
+            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=80" alt="Clinic Pro Template" />
+            <div class="visual-corner-badge">
+              <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=40&auto=format&fit=crop&q=80" style="width:14px; height:14px; border-radius:3px;" alt="05" />
+              Template 05 of 05
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Stack Navigation Controls -->
+      <div class="deck-controls">
+        <button class="btn-deck-arrow" id="deck-prev" aria-label="Previous Card">
+          <i class="fa-solid fa-chevron-up"></i>
+        </button>
+        <span class="deck-counter" id="deck-counter">CARD 01 / 05</span>
+        <button class="btn-deck-arrow" id="deck-next" aria-label="Next Card">
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════
+         IMAGE-BASED 6-PILLAR ENGINE MATRIX
+    ═════════════════════════════════════════════════ -->
+    <section class="engine-section" id="engine">
+      <div class="deck-header">
+        <div class="status-pill" style="margin: 0 auto 14px;">
+          Next-Gen Platform Capabilities
+        </div>
+        <h2>Engineered for Seamless Local Commerce</h2>
+        <p>Replacing traditional agency complexities with a frictionless, automated website ecosystem.</p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1 -->
+        <div class="feature-card">
+          <div class="feature-image-header">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80" alt="AI Content Engine" />
+            <div class="feature-tag-overlay">Automated Copy</div>
+          </div>
+          <h3>AI-Powered Content Engine</h3>
+          <p>Too busy to write website copy? Our integrated AI engine generates professional, persuasive business descriptions, headlines, and service specs in seconds.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card">
+          <div class="feature-image-header">
+            <img src="https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=600&auto=format&fit=crop&q=80" alt="WhatsApp Commerce" />
+            <div class="feature-tag-overlay">WhatsApp Ready</div>
+          </div>
+          <h3>WhatsApp-First Commerce</h3>
+          <p>Direct 1-tap WhatsApp chat buttons, catalog sharing, and automated lead routing wired directly into your business mobile number.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card">
+          <div class="feature-image-header">
+            <img src="https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?w=600&auto=format&fit=crop&q=80" alt="Mobile Drag Drop" />
+            <div class="feature-tag-overlay">Zero Coding</div>
+          </div>
+          <h3>Mobile-First Drag & Drop</h3>
+          <p>Customize your entire layout from any smartphone or tablet. Reorder sections, update banners, and manage content with zero code.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card">
+          <div class="feature-image-header">
+            <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600&auto=format&fit=crop&q=80" alt="Free Swaps" />
+            <div class="feature-tag-overlay">Design Freedom</div>
+          </div>
+          <h3>Free Template Swaps</h3>
+          <p>Need a fresh design for the festival season? Swap your site theme anytime after launch among our 139+ templates at zero additional fee.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="feature-card">
+          <div class="feature-image-header">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&auto=format&fit=crop&q=80" alt="Compliance Invoicing" />
+            <div class="feature-tag-overlay">Legal Trust</div>
+          </div>
+          <h3>GST Invoicing & DPDP Compliant</h3>
+          <p>Full statutory compliance with India's Digital Personal Data Protection Act 2023. GST-compliant tax invoices with Input Tax Credit eligibility.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="feature-card">
+          <div class="feature-image-header">
+            <img src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?w=600&auto=format&fit=crop&q=80" alt="Human Support" />
+            <div class="feature-tag-overlay">24/7 Human Help</div>
+          </div>
+          <h3>24/7 Dedicated Support</h3>
+          <p>Local support you can rely on. Customer Support: <strong>+91 96767 00488</strong> | Helpdesk: <strong>+91 62634 39523</strong> available for instant onboarding assistance.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════════════════════════════
+         REFER & EARN BANNER
+    ═════════════════════════════════════════════════ -->
+    <section class="referral-banner" id="refer-earn">
+      <div class="referral-text">
+        <h3>Join the VTKRO Referral Partner Program</h3>
+        <p>Whether you're a content creator, student, freelancer, or field agent — earn high-tier commissions by introducing local businesses to affordable digital presence. Instant Aadhaar verification, zero investment, and direct bank payouts.</p>
+      </div>
+      <a href="https://www.vtkro.com/refer-earn" class="btn-action-glow" target="_blank" style="white-space: nowrap; padding: 14px 28px;">
+        Become a Partner
+      </a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <img src="vtkro-logo.png" alt="VTKRO Official Logo" style="height: 40px; width: auto; border-radius: 8px; border: 1px solid rgba(0, 229, 255, 0.3); box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);" />
+        <div>
+          <p style="font-weight: 700; color: #fff; font-size: 14px; margin-bottom: 2px;">VTKRO • Virtual Tour Kro</p>
+          <p style="font-size: 12px; color: var(--text-muted);">© 2026 VTKRO. Built & supported with pride from Bhilai, Chhattisgarh, India. DPDP Act 2023 Compliant.</p>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center;">
+        <a href="tel:9676700488" style="color: var(--cyan); text-decoration: none; font-size: 13px; font-weight: 700;">
+          <i class="fa-solid fa-headset"></i> Support: +91 96767 00488
+        </a>
+        <a href="tel:+916263439523" style="color: #cbd5e1; text-decoration: none; font-size: 13px; font-weight: 600;">
+          <i class="fa-solid fa-phone"></i> Helpdesk: +91 62634 39523
+        </a>
+        <a href="https://wa.me/919676700488" style="color: #25d366; text-decoration: none; font-size: 13px; font-weight: 600;" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="14" height="14" alt="WhatsApp" /> WhatsApp
+        </a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ═════════════════════════════════════════════════
+       CIRCUIT WITH FLOWING PLASMA & STACKED DECK ENGINE
+  ═════════════════════════════════════════════════ -->
+  <script>
+    /* ───────────────────────────────────────────────
+       1. PROCEDURAL CIRCUIT BOARD & PLASMA FLOW
+    ─────────────────────────────────────────────── */
+    const canvas = document.getElementById('circuit-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initCircuit();
+    }
+
+    // Circuit grid parameters
+    const gridSize = 70;
+    let traces = [];
+    let plasmaPackets = [];
+
+    class CircuitTrace {
+      constructor(points) {
+        this.points = points; // Array of {x, y}
+      }
+
+      draw() {
+        if (this.points.length < 2) return;
+        ctx.beginPath();
+        ctx.moveTo(this.points[0].x, this.points[0].y);
+        for (let i = 1; i < this.points.length; i++) {
+          ctx.lineTo(this.points[i].x, this.points[i].y);
+        }
+        ctx.strokeStyle = 'rgba(0, 229, 255, 0.08)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Draw small junction terminal dots
+        this.points.forEach((pt) => {
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(0, 229, 255, 0.18)';
+          ctx.fill();
+        });
+      }
+    }
+
+    class PlasmaPulse {
+      constructor(trace) {
+        this.trace = trace;
+        this.currentSegment = 0;
+        this.progress = 0;
+        this.speed = 0.008 + Math.random() * 0.007; // Smooth plasma speed
+        this.color = Math.random() > 0.4 ? '#00e5ff' : '#00ffaa';
+        this.tailLength = 40;
+      }
+
+      update() {
+        this.progress += this.speed;
+        if (this.progress >= 1) {
+          this.progress = 0;
+          this.currentSegment++;
+          if (this.currentSegment >= this.trace.points.length - 1) {
+            // Respawn on random trace
+            this.trace = traces[Math.floor(Math.random() * traces.length)];
+            this.currentSegment = 0;
+            this.progress = 0;
+          }
+        }
+      }
+
+      draw() {
+        const p1 = this.trace.points[this.currentSegment];
+        const p2 = this.trace.points[this.currentSegment + 1];
+        if (!p1 || !p2) return;
+
+        const curX = p1.x + (p2.x - p1.x) * this.progress;
+        const curY = p1.y + (p2.y - p1.y) * this.progress;
+
+        // Glowing plasma core
+        ctx.save();
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 12;
+
+        ctx.beginPath();
+        ctx.arc(curX, curY, 3, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.fill();
+
+        // Plasma aura
+        ctx.beginPath();
+        ctx.arc(curX, curY, 6, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = 0.6;
+        ctx.fill();
+
+        ctx.restore();
+      }
+    }
+
+    function initCircuit() {
+      traces = [];
+      plasmaPackets = [];
+
+      const cols = Math.ceil(width / gridSize) + 1;
+      const rows = Math.ceil(height / gridSize) + 1;
+
+      // Generate circuit traces with 90-degree and 45-degree electronic routing
+      for (let r = 0; r < rows; r += 2) {
+        let x = (r % 2) * (gridSize / 2);
+        let y = r * gridSize;
+        const points = [{ x, y }];
+
+        while (x < width + 50) {
+          const moveType = Math.floor(Math.random() * 3);
+          if (moveType === 0) {
+            x += gridSize * 2;
+          } else if (moveType === 1) {
+            x += gridSize;
+            y += (Math.random() > 0.5 ? 1 : -1) * gridSize;
+          } else {
+            x += gridSize * 1.5;
+          }
+          points.push({ x, y });
+        }
+        traces.push(new CircuitTrace(points));
+      }
+
+      // Create flowing plasma packets
+      const totalPulses = Math.min(35, Math.floor(width / 35));
+      for (let i = 0; i < totalPulses; i++) {
+        const randomTrace = traces[Math.floor(Math.random() * traces.length)];
+        plasmaPackets.push(new PlasmaPulse(randomTrace));
+      }
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function renderCircuit() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw all passive circuit traces
+      traces.forEach((t) => t.draw());
+
+      // Update & draw glowing flowing plasma
+      plasmaPackets.forEach((p) => {
+        p.update();
+        p.draw();
+      });
+
+      requestAnimationFrame(renderCircuit);
+    }
+    renderCircuit();
+
+    /* ───────────────────────────────────────────────
+       2. 3D STACKED CARD DECK (CARDS GOING BEHIND)
+    ─────────────────────────────────────────────── */
+    const deckCards = document.querySelectorAll('.stacked-card');
+    const deckPrev = document.getElementById('deck-prev');
+    const deckNext = document.getElementById('deck-next');
+    const deckCounter = document.getElementById('deck-counter');
+
+    let activeDeckIndex = 0;
+    const totalDeckCards = deckCards.length;
+
+    function updateDeckPositions() {
+      deckCards.forEach((card, idx) => {
+        // Compute relative position in the stack (0 = top/front, 1 = behind, 2 = behind 1, etc.)
+        const relPos = (idx - activeDeckIndex + totalDeckCards) % totalDeckCards;
+
+        if (relPos === 0) {
+          card.setAttribute('data-pos', '0');
+        } else if (relPos === 1) {
+          card.setAttribute('data-pos', '1');
+        } else if (relPos === 2) {
+          card.setAttribute('data-pos', '2');
+        } else if (relPos === 3) {
+          card.setAttribute('data-pos', '3');
+        } else {
+          card.setAttribute('data-pos', 'hidden');
+        }
+      });
+
+      deckCounter.textContent = `CARD 0${activeDeckIndex + 1} / 0${totalDeckCards}`;
+    }
+
+    function advanceDeckNext() {
+      activeDeckIndex = (activeDeckIndex + 1) % totalDeckCards;
+      updateDeckPositions();
+    }
+
+    function advanceDeckPrev() {
+      activeDeckIndex = (activeDeckIndex - 1 + totalDeckCards) % totalDeckCards;
+      updateDeckPositions();
+    }
+
+    deckNext.addEventListener('click', advanceDeckNext);
+    deckPrev.addEventListener('click', advanceDeckPrev);
+
+    // Clicking directly on any card in the stack brings it to the front
+    deckCards.forEach((card, i) => {
+      card.addEventListener('click', () => {
+        if (i !== activeDeckIndex) {
+          activeDeckIndex = i;
+          updateDeckPositions();
+        }
+      });
+    });
+
+    // Keyboard Arrow Navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') advanceDeckNext();
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') advanceDeckPrev();
+    });
+
+    // Auto-cycle through the deck every 6.5 seconds when idle
+    let deckTimer = setInterval(advanceDeckNext, 6500);
+    const stageElement = document.getElementById('deck-stage');
+    stageElement.addEventListener('mouseenter', () => clearInterval(deckTimer));
+    stageElement.addEventListener('mouseleave', () => {
+      clearInterval(deckTimer);
+      deckTimer = setInterval(advanceDeckNext, 6500);
+    });
+
+    /* ───────────────────────────────────────────────
+       3. HOLOGRAPHIC STREAM CONTROLLER (PREVIEWS & VOLUME ADJUST)
+    ─────────────────────────────────────────────── */
+    const holoStreams = [
+      {
+        src: 'holo-1.mp4',
+        title: 'Preview 1 • AI Website Generator'
+      },
+      {
+        src: 'holo-2.mp4',
+        title: 'Preview 2 • 139+ Industry Templates'
+      },
+      {
+        src: 'holo-3.mp4',
+        title: 'Preview 3 • WhatsApp Commerce'
+      },
+      {
+        src: 'holo-4.mp4',
+        title: 'Preview 4 • Zero Subscriptions'
+      }
+    ];
+
+    let currentStreamIndex = 0;
+    let isTransitioning = false;
+    let currentVolume = 0.40; // Initial 40% volume
+
+    const holoVideo = document.getElementById('holo-video');
+    const holoStage = document.getElementById('holo-stage');
+    const holoPrevBtn = document.getElementById('holo-prev-btn');
+    const holoNextBtn = document.getElementById('holo-next-btn');
+
+    // Volume adjustment elements
+    const volMuteBtn = document.getElementById('vol-mute-btn');
+    const volSpeakerIcon = document.getElementById('vol-speaker-icon');
+    const volDownBtn = document.getElementById('vol-down-btn');
+    const volUpBtn = document.getElementById('vol-up-btn');
+    const volTrack = document.getElementById('vol-track');
+    const volFill = document.getElementById('vol-fill');
+    const volDisplay = document.getElementById('vol-display');
+
+    // Initialize Video Volume
+    if (holoVideo) {
+      holoVideo.volume = currentVolume;
+    }
+
+    function updateVolumeUI() {
+      const pct = Math.round(currentVolume * 100);
+      if (volFill) volFill.style.width = pct + '%';
+      if (volDisplay) volDisplay.textContent = pct + '%';
+
+      if (!holoVideo || holoVideo.muted || currentVolume === 0) {
+        if (volSpeakerIcon) {
+          volSpeakerIcon.className = 'fa-solid fa-volume-xmark';
+          volSpeakerIcon.style.color = '#94a3b8';
+        }
+      } else if (currentVolume < 0.5) {
+        if (volSpeakerIcon) {
+          volSpeakerIcon.className = 'fa-solid fa-volume-low';
+          volSpeakerIcon.style.color = 'var(--cyan)';
+        }
+      } else {
+        if (volSpeakerIcon) {
+          volSpeakerIcon.className = 'fa-solid fa-volume-high';
+          volSpeakerIcon.style.color = 'var(--plasma-green)';
+        }
+      }
+    }
+
+    function setHoloVolume(newVol, forceUnmute = true) {
+      currentVolume = Math.max(0, Math.min(1, parseFloat(newVol.toFixed(2))));
+      if (holoVideo) {
+        holoVideo.volume = currentVolume;
+        if (forceUnmute && currentVolume > 0) {
+          holoVideo.muted = false;
+        } else if (currentVolume === 0) {
+          holoVideo.muted = true;
+        }
+      }
+      updateVolumeUI();
+    }
+
+    // Lower volume button (-10%)
+    if (volDownBtn) {
+      volDownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setHoloVolume(currentVolume - 0.10, true);
+      });
+    }
+
+    // Increase volume button (+10%)
+    if (volUpBtn) {
+      volUpBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setHoloVolume(currentVolume + 0.10, true);
+      });
+    }
+
+    // Mute / Unmute icon toggle
+    if (volMuteBtn && holoVideo) {
+      volMuteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (holoVideo.muted) {
+          holoVideo.muted = false;
+          if (currentVolume === 0) currentVolume = 0.40;
+          holoVideo.volume = currentVolume;
+        } else {
+          holoVideo.muted = true;
+        }
+        updateVolumeUI();
+      });
+    }
+
+    // Click anywhere on volume slider track to jump to volume
+    if (volTrack) {
+      volTrack.addEventListener('click', (e) => {
+        const rect = volTrack.getBoundingClientRect();
+        const clickRatio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        setHoloVolume(clickRatio, true);
+      });
+    }
+
+    function switchHoloStream(newIndex) {
+      if (isTransitioning || !holoVideo || !holoStage) return;
+      isTransitioning = true;
+
+      // Update current index with cyclic wrap
+      currentStreamIndex = (newIndex + holoStreams.length) % holoStreams.length;
+
+      // Trigger Holographic Glitch / De-materialization Effect
+      holoStage.classList.remove('dematerializing');
+      void holoStage.offsetWidth; // Force CSS reflow to replay animation
+      holoStage.classList.add('dematerializing');
+
+      // Swap video source during glitch peak
+      setTimeout(() => {
+        holoVideo.src = holoStreams[currentStreamIndex].src;
+        holoVideo.currentTime = 0;
+        holoVideo.volume = currentVolume;
+        holoVideo.play().catch(() => {
+          // Fallback if browser requires user gesture for unmuted play
+          holoVideo.muted = true;
+          holoVideo.play();
+          updateVolumeUI();
+        });
+      }, 260);
+
+      // Clean up glitch state
+      setTimeout(() => {
+        holoStage.classList.remove('dematerializing');
+        isTransitioning = false;
+      }, 580);
+    }
+
+    // Auto-advance loop when current video completes
+    if (holoVideo) {
+      holoVideo.addEventListener('ended', () => {
+        switchHoloStream(currentStreamIndex + 1);
+      });
+    }
+
+    // Prev / Next Navigation buttons
+    if (holoPrevBtn) {
+      holoPrevBtn.addEventListener('click', () => {
+        switchHoloStream(currentStreamIndex - 1);
+      });
+    }
+    if (holoNextBtn) {
+      holoNextBtn.addEventListener('click', () => {
+        switchHoloStream(currentStreamIndex + 1);
+      });
+    }
+  </script>
+</body>
+</html>
+

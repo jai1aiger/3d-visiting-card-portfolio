@@ -1,9 +1,12 @@
 # 📇 VTKRO 360° Interactive 3D Digital Visiting Card
 
+> ### 🌐 [👉 CLICK HERE TO OPEN AND VIEW THE LIVE 3D CARD 👈](https://jai1aiger.github.io/vtkro-3d-digital-card/)
+> **Live URL**: `https://jai1aiger.github.io/vtkro-3d-digital-card/`
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Card-00e5ff?style=for-the-badge&logo=github)](https://jai1aiger.github.io/vtkro-3d-digital-card/)
 [![Platform](https://img.shields.io/badge/platform-Mobile%20%7C%20Tablet%20%7C%20Desktop-00e5ff?style=flat-square)](#)
 [![Tech Stack](https://img.shields.io/badge/tech-HTML5%20%7C%20CSS%203D%20%7C%20Vanilla%20JS-0284c7?style=flat-square)](#)
 [![Dependency](https://img.shields.io/badge/dependencies-Zero%20(100%25%20Offline)-10b981?style=flat-square)](#)
-[![Format](https://img.shields.io/badge/standard-90x50mm%20Aspect%20Ratio-7c3aed?style=flat-square)](#)
 
 An executive, high-performance **360° Interactive 3D Digital Visiting Card** engineered for **VTKRO — Virtual Tour Kro**. Designed to deliver an immersive, tactile physical card feel with smooth multi-axis swipe gestures, momentum physics, and instant dual-face flipping.
 

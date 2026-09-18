@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>VTKRO Interactive 3D Event Badge — Vercel Physics</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Three.js + GLTFLoader + MeshLine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #000000;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #ffffff;
+    }
+
+    #canvas-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      cursor: grab;
+    }
+
+    #canvas-container.grabbing {
+      cursor: grabbing;
+    }
+
+    /* Minimal branding top left */
+    .top-bar {
+      position: absolute;
+      top: 28px;
+      left: 32px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .badge-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      backdrop-filter: blur(16px);
+      color: #00e5ff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-pill span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00e5ff;
+      box-shadow: 0 0 8px #00e5ff;
+    }
+
+    .top-title {
+      font-size: 14px;
+      color: #888899;
+      font-weight: 500;
+    }
+    .top-title strong {
+      color: #ffffff;
+    }
+
+    /* Floating action buttons top right */
+    .actions-bar {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      z-index: 10;
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-icon {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 8px 16px;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* Minimal hint toast bottom */
+    .hint-toast {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: rgba(18, 18, 24, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      padding: 9px 22px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #bbbbc8;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+      pointer-events: none;
+    }
+
+    .hint-toast svg {
+      color: #00e5ff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="badge-pill">
+      <span class="dot"></span>
+      <span>VTKRO Official</span>
+    </div>
+    <div class="top-title">Interactive 3D <strong>Event Badge</strong></div>
+  </div>
+
+  <!-- Action bar -->
+  <div class="actions-bar">
+    <button class="btn-icon" id="btn-flip">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16M21 21v-5h-5"/></svg>
+      Flip Badge
+    </button>
+    <button class="btn-icon" id="btn-drop">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      Drop Test
+    </button>
+    <button class="btn-icon" id="btn-reset">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-9 9"/></svg>
+      Reset
+    </button>
+  </div>
+
+  <!-- 3D Canvas -->
+  <div id="canvas-container"></div>
+
+  <!-- Bottom Hint -->
+  <div class="hint-toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 14l5-5-5-5"></path>
+      <path d="M4 20v-7a4 4 0 0 1 4-4h12"></path>
+    </svg>
+    <span>Click & drag badge to fling • Real-time Vercel rope physics</span>
+  </div>
+
+  <script>
+    /* =========================================================================
+       VERCEL 3D EVENT BADGE WITH VTKRO TEXTURE BLEND (TAG.GLB + BAND.JPG)
+       ========================================================================= */
+
+    const container = document.getElementById('canvas-container');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    // --- Scene & Camera ---
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color('#000000');
+
+    const camera = new THREE.PerspectiveCamera(25, width / height, 0.1, 100);
+    camera.position.set(0, 0, 13.5);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    container.appendChild(renderer.domElement);
+
+    // --- Studio Lighting & Lightformers (Matching Vercel Blog Exactly) ---
+    const ambientLight = new THREE.AmbientLight(0xffffff, Math.PI * 0.8);
+    scene.add(ambientLight);
+
+    // Lightformers (Soft reflective light strips that glaze over the glossy plastic)
+    function createLightformer(intensity, color, pos, rot, scale) {
+      const planeGeo = new THREE.PlaneGeometry(scale[0], scale[1]);
+      const mat = new THREE.MeshBasicMaterial({ color: color, side: THREE.DoubleSide });
+      const mesh = new THREE.Mesh(planeGeo, mat);
+      mesh.position.set(pos[0], pos[1], pos[2]);
+      mesh.rotation.set(rot[0], rot[1], rot[2]);
+      scene.add(mesh);
+      return mesh;
+    }
+
+    // Lightformer 1: [0, -1, 5], rotation: [0, 0, PI/3], scale: [100, 0.1, 1]
+    createLightformer(2, 0xffffff, [0, -1, 5], [0, 0, Math.PI / 3], [40, 0.15]);
+    // Lightformer 2: [-1, -1, 1], rotation: [0, 0, PI/3], scale: [100, 0.1, 1]
+    createLightformer(3, 0xffffff, [-1, -1, 1], [0, 0, Math.PI / 3], [40, 0.15]);
+    // Lightformer 3: [1, 1, 1], rotation: [0, 0, PI/3], scale: [100, 0.1, 1]
+    createLightformer(3, 0xd0e8ff, [1, 1, 1], [0, 0, Math.PI / 3], [40, 0.15]);
+    // Lightformer 4: [-10, 0, 14], rotation: [0, PI/2, PI/3], scale: [100, 10, 1]
+    createLightformer(10, 0x88ccff, [-10, 0, 14], [0, Math.PI / 2, Math.PI / 3], [40, 12]);
+
+    // Directional Key and Rim lights
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    keyLight.position.set(4, 7, 7);
+    keyLight.castShadow = true;
+    scene.add(keyLight);
+
+    const cyanRim = new THREE.DirectionalLight(0x00e5ff, 2.8);
+    cyanRim.position.set(0, -6, -6);
+    scene.add(cyanRim);
+
+    // --- Textures ---
+    const textureLoader = new THREE.TextureLoader();
+
+    // Lanyard ribbon texture from Vercel CDN/local
+    const bandTexture = textureLoader.load('band.jpg');
+    bandTexture.wrapS = THREE.RepeatWrapping;
+    bandTexture.wrapT = THREE.RepeatWrapping;
+    bandTexture.repeat.set(1, 4);
+
+    // VTKRO Master Badge Texture (2048 x 2048)
+    const vtkroTexture = textureLoader.load('vtkro_badge_texture.png', (tex) => {
+      tex.anisotropy = 16;
+      tex.generateMipmaps = true;
+      tex.minFilter = THREE.LinearMipmapLinearFilter;
+    });
+
+    // --- Physical Materials (Exact Vercel Spec) ---
+    const badgeMaterial = new THREE.MeshPhysicalMaterial({
+      map: vtkroTexture,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.12,
+      roughness: 0.28,
+      metalness: 0.45,
+      iridescence: 0.65,
+      iridescenceIOR: 1.3,
+      iridescenceThicknessRange: [100, 800],
+      side: THREE.DoubleSide
+    });
+
+    const metalMaterial = new THREE.MeshStandardMaterial({
+      color: 0xccd5e0,
+      roughness: 0.22,
+      metalness: 0.95
+    });
+
+    // --- Card Mesh Group ---
+    const cardGroup = new THREE.Group();
+    scene.add(cardGroup);
+
+    // Load authentic tag.glb model
+    const gltfLoader = new THREE.GLTFLoader();
+    gltfLoader.load('tag.glb', (gltf) => {
+      const model = gltf.scene;
+      
+      // Exact scale & position from Vercel's blog:
+      // <group scale={2.25} position={[0, -1.2, -0.05]}>
+      model.scale.set(2.25, 2.25, 2.25);
+      model.position.set(0, -1.2, -0.05);
+
+      gltf.scene.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+          if (child.name === 'card') {
+            child.material = badgeMaterial;
+          } else if (child.name === 'clip') {
+            child.material = metalMaterial;
+          } else if (child.name === 'clamp') {
+            child.material = metalMaterial;
+          }
+        }
+      });
+
+      cardGroup.add(model);
+      console.log('tag.glb mounted with VTKRO texture blend!');
+    });
+
+    // --- Physics Engine (Verlet Chain + Rigid Body) ---
+    // Fixed ceiling point at (0, 4, 0)
+    const fixedAnchor = new THREE.Vector3(0, 4.0, 0);
+
+    // 4 Joint particles along the lanyard
+    const particles = [
+      { pos: fixedAnchor.clone(), oldPos: fixedAnchor.clone(), pinned: true },
+      { pos: new THREE.Vector3(0, 3.0, 0), oldPos: new THREE.Vector3(0, 3.0, 0) },
+      { pos: new THREE.Vector3(0, 2.0, 0), oldPos: new THREE.Vector3(0, 2.0, 0) },
+      { pos: new THREE.Vector3(0, 1.0, 0), oldPos: new THREE.Vector3(0, 1.0, 0) }
+    ];
+
+    const SEG_LENGTH = 1.0; // Length = 1 as in useRopeJoint(fixed, j1, [..., 1])
+
+    // Card rigid body
+    const card = {
+      pos: new THREE.Vector3(0, -0.45, 0),
+      oldPos: new THREE.Vector3(0, -0.45, 0),
+      rot: new THREE.Euler(0, 0, 0),
+      angVel: new THREE.Vector3(0, 0, 0),
+      dragged: false,
+      dragOffset: new THREE.Vector3()
+    };
+
+    // Spherical joint connection point at card top clip
+    const CARD_JOINT_Y = 1.45; // Exactly [0, 1.45, 0] from useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.45, 0]])
+
+    // --- Catmull-Rom Ribbon Mesh (MeshLine Equivalent) ---
+    const curvePoints = [
+      particles[3].pos,
+      particles[2].pos,
+      particles[1].pos,
+      particles[0].pos
+    ];
+    const catmullCurve = new THREE.CatmullRomCurve3(curvePoints);
+    catmullCurve.curveType = 'chordal';
+
+    const RIBBON_SEGS = 36;
+    const RIBBON_WIDTH = 0.22;
+    const ribbonGeo = new THREE.BufferGeometry();
+    const posArr = new Float32Array((RIBBON_SEGS + 1) * 2 * 3);
+    const uvArr = new Float32Array((RIBBON_SEGS + 1) * 2 * 2);
+    const indexArr = [];
+
+    for (let i = 0; i <= RIBBON_SEGS; i++) {
+      const v = i / RIBBON_SEGS;
+      uvArr[i * 4 + 0] = 0;
+      uvArr[i * 4 + 1] = v * 4;
+      uvArr[i * 4 + 2] = 1;
+      uvArr[i * 4 + 3] = v * 4;
+
+      if (i < RIBBON_SEGS) {
+        const a = i * 2;
+        const b = a + 1;
+        const c = a + 2;
+        const d = a + 3;
+        indexArr.push(a, b, c);
+        indexArr.push(b, d, c);
+      }
+    }
+
+    ribbonGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
+    ribbonGeo.setAttribute('uv', new THREE.BufferAttribute(uvArr, 2));
+    ribbonGeo.setIndex(indexArr);
+
+    const ribbonMaterial = new THREE.MeshStandardMaterial({
+      map: bandTexture,
+      roughness: 0.6,
+      metalness: 0.1,
+      side: THREE.DoubleSide
+    });
+
+    const ribbonMesh = new THREE.Mesh(ribbonGeo, ribbonMaterial);
+    scene.add(ribbonMesh);
+
+    function updateRibbonGeometry() {
+      const samples = catmullCurve.getPoints(RIBBON_SEGS);
+      const positions = ribbonGeo.attributes.position.array;
+      const normal = new THREE.Vector3(0, 0, 1);
+
+      for (let i = 0; i <= RIBBON_SEGS; i++) {
+        const pt = samples[i];
+        const t = Math.min(1, Math.max(0, i / RIBBON_SEGS));
+        const tangent = catmullCurve.getTangent(t).normalize();
+        
+        const binormal = new THREE.Vector3().crossVectors(tangent, normal).normalize();
+        if (binormal.lengthSq() < 0.001) binormal.set(1, 0, 0);
+
+        const halfW = RIBBON_WIDTH * 0.5;
+        const p1 = new THREE.Vector3().copy(pt).addScaledVector(binormal, -halfW);
+        const p2 = new THREE.Vector3().copy(pt).addScaledVector(binormal, halfW);
+
+        positions[i * 6 + 0] = p1.x;
+        positions[i * 6 + 1] = p1.y;
+        positions[i * 6 + 2] = p1.z;
+
+        positions[i * 6 + 3] = p2.x;
+        positions[i * 6 + 4] = p2.y;
+        positions[i * 6 + 5] = p2.z;
+      }
+
+      ribbonGeo.attributes.position.needsUpdate = true;
+      ribbonGeo.computeVertexNormals();
+    }
+
+    // --- Physics Simulation Step ---
+    const gravityVal = 40;
+    const dampingVal = 0.975;
+    const stiffnessIterations = 16;
+
+    function stepPhysics(dt) {
+      const g = -gravityVal;
+
+      // 1. Verlet integration
+      for (let i = 1; i < particles.length; i++) {
+        const p = particles[i];
+        const vx = (p.pos.x - p.oldPos.x) * dampingVal;
+        const vy = (p.pos.y - p.oldPos.y) * dampingVal + g * dt * dt;
+        const vz = (p.pos.z - p.oldPos.z) * dampingVal;
+
+        p.oldPos.copy(p.pos);
+        p.pos.x += vx;
+        p.pos.y += vy;
+        p.pos.z += vz;
+      }
+
+      // Card translation integration
+      if (!card.dragged) {
+        const vx = (card.pos.x - card.oldPos.x) * dampingVal;
+        const vy = (card.pos.y - card.oldPos.y) * dampingVal + g * dt * dt;
+        const vz = (card.pos.z - card.oldPos.z) * dampingVal;
+
+        card.oldPos.copy(card.pos);
+        card.pos.x += vx;
+        card.pos.y += vy;
+        card.pos.z += vz;
+      }
+
+      // 2. Constraints
+      for (let iter = 0; iter < stiffnessIterations; iter++) {
+        for (let i = 0; i < particles.length - 1; i++) {
+          const pA = particles[i];
+          const pB = particles[i + 1];
+          const delta = new THREE.Vector3().subVectors(pB.pos, pA.pos);
+          const dist = delta.length();
+          if (dist > 0.0001) {
+            const diff = (dist - SEG_LENGTH) / dist;
+            if (!pA.pinned && !pB.pinned) {
+              pA.pos.addScaledVector(delta, diff * 0.5);
+              pB.pos.addScaledVector(delta, -diff * 0.5);
+            } else if (pA.pinned && !pB.pinned) {
+              pB.pos.addScaledVector(delta, -diff);
+            }
+          }
+        }
+
+        // Card connection to bottom joint
+        const pBottom = particles[particles.length - 1];
+        const cardTop = new THREE.Vector3(0, CARD_JOINT_Y, 0).applyEuler(card.rot).add(card.pos);
+        const dCard = new THREE.Vector3().subVectors(cardTop, pBottom.pos);
+        const distCard = dCard.length();
+        if (distCard > 0.0001) {
+          if (card.dragged) {
+            pBottom.pos.addScaledVector(dCard, 0.85);
+          } else {
+            pBottom.pos.addScaledVector(dCard, 0.5);
+            card.pos.addScaledVector(dCard, -0.5);
+          }
+        }
+      }
+
+      // 3. Gyroscopic Stabilization (Exact code: ang.y - rot.y * 0.25)
+      const pBottom = particles[particles.length - 1];
+      const targetHang = new THREE.Vector3().subVectors(card.pos, pBottom.pos).normalize();
+
+      const targetZRot = -targetHang.x * 0.85;
+      const targetXRot = targetHang.z * 0.85;
+
+      card.angVel.z += (targetZRot - card.rot.z) * 0.12;
+      card.angVel.x += (targetXRot - card.rot.x) * 0.12;
+      
+      // Auto-face forward or back
+      const targetY = (Math.abs(card.rot.y) > Math.PI * 0.5 && Math.abs(card.rot.y) < Math.PI * 1.5)
+        ? (card.rot.y > 0 ? Math.PI : -Math.PI)
+        : 0;
+      card.angVel.y += (targetY - card.rot.y) * 0.07;
+
+      card.angVel.multiplyScalar(0.93);
+
+      card.rot.x += card.angVel.x;
+      card.rot.y += card.angVel.y;
+      card.rot.z += card.angVel.z;
+
+      cardGroup.position.copy(card.pos);
+      cardGroup.rotation.copy(card.rot);
+
+      curvePoints[0].copy(pBottom.pos);
+      curvePoints[1].copy(particles[2].pos);
+      curvePoints[2].copy(particles[1].pos);
+      curvePoints[3].copy(fixedAnchor);
+
+      updateRibbonGeometry();
+    }
+
+    // --- Interactive Drag & Fling (Exact Pointer Capture) ---
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const dragPlane = new THREE.Plane();
+    const planeIntersect = new THREE.Vector3();
+
+    let throwVelocity = new THREE.Vector3();
+
+    function onPointerDown(e) {
+      const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+      const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+      if (!clientX || !clientY) return;
+
+      mouse.x = (clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(clientY / window.innerHeight) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(cardGroup.children, true);
+
+      if (intersects.length > 0) {
+        card.dragged = true;
+        container.classList.add('grabbing');
+
+        const hitPoint = intersects[0].point;
+        dragPlane.setFromNormalAndCoplanarPoint(camera.getWorldDirection(new THREE.Vector3()).negate(), hitPoint);
+
+        card.dragOffset.copy(card.pos).sub(hitPoint);
+      }
+    }
+
+    function onPointerMove(e) {
+      const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+      const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+      if (!clientX || !clientY) return;
+
+      mouse.x = (clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(clientY / window.innerHeight) * 2 + 1;
+
+      if (card.dragged) {
+        raycaster.setFromCamera(mouse, camera);
+        if (raycaster.ray.intersectPlane(dragPlane, planeIntersect)) {
+          const targetPos = planeIntersect.clone().add(card.dragOffset);
+          throwVelocity.copy(targetPos).sub(card.pos);
+          card.pos.copy(targetPos);
+
+          card.angVel.y += (throwVelocity.x * 0.35 - card.rot.y * 0.08);
+          card.angVel.z += (-throwVelocity.x * 0.22);
+          card.angVel.x += (throwVelocity.y * 0.22);
+        }
+      }
+    }
+
+    function onPointerUp() {
+      if (card.dragged) {
+        card.dragged = false;
+        container.classList.remove('grabbing');
+        card.oldPos.copy(card.pos).sub(throwVelocity.multiplyScalar(0.92));
+      }
+    }
+
+    window.addEventListener('mousedown', onPointerDown);
+    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('mouseup', onPointerUp);
+
+    window.addEventListener('touchstart', onPointerDown, { passive: true });
+    window.addEventListener('touchmove', onPointerMove, { passive: true });
+    window.addEventListener('touchend', onPointerUp, { passive: true });
+
+    // Buttons
+    document.getElementById('btn-flip').addEventListener('click', () => {
+      card.angVel.y += 1.6;
+    });
+
+    document.getElementById('btn-drop').addEventListener('click', () => {
+      card.pos.set((Math.random() - 0.5) * 2.2, 3.2, (Math.random() - 0.5) * 1.5);
+      card.oldPos.copy(card.pos);
+      card.rot.set(Math.random() * 0.5, Math.random() * 2, Math.random() * 0.5);
+      card.angVel.set(0, 0, 0);
+    });
+
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      card.pos.set(0, -0.45, 0);
+      card.oldPos.copy(card.pos);
+      card.rot.set(0, 0, 0);
+      card.angVel.set(0, 0, 0);
+      for (let i = 1; i < particles.length; i++) {
+        particles[i].pos.set(0, 4.0 - i * 1.0, 0);
+        particles[i].oldPos.copy(particles[i].pos);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    });
+
+    // Startup drop animation
+    card.pos.set(1.4, 2.0, 0.8);
+    card.oldPos.copy(card.pos);
+
+    // --- Animation Loop ---
+    let lastTime = performance.now();
+    function animate(now) {
+      requestAnimationFrame(animate);
+
+      const dt = Math.min((now - lastTime) / 1000, 0.033);
+      lastTime = now;
+
+      stepPhysics(dt);
+
+      renderer.render(scene, camera);
+    }
+
+    animate(performance.now());
+  </script>
+</body>
+</html>

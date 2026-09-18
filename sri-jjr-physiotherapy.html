@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sri J.J.R. Physiotherapy Clinic | Dr. S. Gayathri (B.P.T, M.I.A.P, M.P.T Ortho) | Visakhapatnam</title>
+
+  <!-- SEO & Social Meta Tags -->
+  <meta name="description" content="Sri J.J.R. Physiotherapy Clinic in Marripalem, Visakhapatnam. Consultant: Dr. S. Gayathri, M.P.T (Ortho), Reg No: L-52781. Orthopaedic, Spinal, Neurological & Paediatric physical therapy." />
+  <meta name="keywords" content="Sri JJR Physiotherapy Clinic, Dr S Gayathri, Physiotherapy Visakhapatnam, Marripalem, Knee Pain, Sciatica, Spondylosis, Stroke Rehab, Cerebral Palsy, Bell Palsy" />
+  <meta name="author" content="Dr. S. Gayathri" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Sri J.J.R. Physiotherapy Clinic | Dr. S. Gayathri (M.P.T Ortho)" />
+  <meta property="og:description" content="Professional physiotherapy and physical rehabilitation in Visakhapatnam. Appointments: +91 94937 91045 / +91 82475 32422." />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Libraries: Three.js for 3D Particle Spine & Confetti -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <!-- Schema.org MedicalClinic JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalBusiness",
+    "name": "Sri J.J.R. Physiotherapy Clinic",
+    "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&auto=format&fit=crop&q=80",
+    "@id": "https://srijjr-physiotherapy.vercel.app",
+    "url": "https://srijjr-physiotherapy.vercel.app",
+    "telephone": ["+919493791045", "+918247532422"],
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Shop No-3, #38-16-77/1, Jyothi Nagar Road, Raman School Down, Opp: GVMC High School, Marripalem",
+      "addressLocality": "Visakhapatnam",
+      "addressRegion": "Andhra Pradesh",
+      "postalCode": "530018",
+      "addressCountry": "IN"
+    },
+    "medicalSpecialty": ["Physiotherapy", "Orthopedics", "Neurology", "Pediatrics"],
+    "founder": {
+      "@type": "Person",
+      "name": "Dr. S. Gayathri",
+      "jobTitle": "Consultant Physiotherapist",
+      "hasCredential": ["B.P.T", "M.I.A.P", "M.P.T (Ortho)", "Reg No: L-52781"]
+    }
+  }
+  </script>
+
+  <style>
+    /* DESIGN TOKENS & MULTI-TEMPLATE THEME ENGINE */
+    :root {
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Template 1: 3D Biomechanical (Dark Cyber-Clinical) */
+    body[data-theme="biomechanical"] {
+      --bg-base: #040813;
+      --bg-surface: rgba(9, 17, 34, 0.75);
+      --bg-surface-elevated: rgba(14, 25, 50, 0.85);
+      --bg-card: rgba(10, 20, 40, 0.7);
+      --border-main: rgba(0, 242, 254, 0.22);
+      --border-highlight: rgba(0, 242, 254, 0.5);
+      --primary: #00f2fe;
+      --secondary: #00e676;
+      --accent: #7928ca;
+      --warning: #f59e0b;
+      --text-head: #ffffff;
+      --text-body: #94a3b8;
+      --text-muted: #64748b;
+      --glow-primary: 0 0 30px rgba(0, 242, 254, 0.35);
+      --glow-card: 0 20px 50px -10px rgba(0, 0, 0, 0.85), 0 0 30px rgba(0, 242, 254, 0.12);
+      --badge-bg: rgba(0, 242, 254, 0.12);
+      --badge-border: rgba(0, 242, 254, 0.35);
+    }
+
+    /* Template 2: Clinical Healthcare White */
+    body[data-theme="clinical"] {
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #ffffff;
+      --bg-card: #ffffff;
+      --border-main: #e2e8f0;
+      --border-highlight: #0284c7;
+      --primary: #0284c7;
+      --secondary: #059669;
+      --accent: #2563eb;
+      --warning: #d97706;
+      --text-head: #0f172a;
+      --text-body: #334155;
+      --text-muted: #64748b;
+      --glow-primary: 0 10px 25px rgba(2, 132, 199, 0.2);
+      --glow-card: 0 12px 35px -5px rgba(15, 23, 42, 0.08), 0 0 1px rgba(15, 23, 42, 0.1);
+      --badge-bg: rgba(2, 132, 199, 0.08);
+      --badge-border: rgba(2, 132, 199, 0.25);
+    }
+
+    /* Template 3: 3D Interactive Visiting Card Showcase */
+    body[data-theme="visiting-card"] {
+      --bg-base: #070a12;
+      --bg-surface: rgba(14, 19, 32, 0.85);
+      --bg-surface-elevated: rgba(20, 27, 46, 0.9);
+      --bg-card: rgba(15, 22, 38, 0.8);
+      --border-main: rgba(245, 158, 11, 0.28);
+      --border-highlight: rgba(245, 158, 11, 0.6);
+      --primary: #f59e0b;
+      --secondary: #38bdf8;
+      --accent: #ec4899;
+      --warning: #eab308;
+      --text-head: #ffffff;
+      --text-body: #cbd5e1;
+      --text-muted: #94a3b8;
+      --glow-primary: 0 0 35px rgba(245, 158, 11, 0.35);
+      --glow-card: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 35px rgba(245, 158, 11, 0.15);
+      --badge-bg: rgba(245, 158, 11, 0.12);
+      --badge-border: rgba(245, 158, 11, 0.4);
+    }
+
+    /* Template 4: Interactive Patient Rehabilitation Portal */
+    body[data-theme="patient-portal"] {
+      --bg-base: #060b14;
+      --bg-surface: rgba(12, 21, 38, 0.82);
+      --bg-surface-elevated: rgba(18, 30, 54, 0.9);
+      --bg-card: rgba(13, 24, 44, 0.78);
+      --border-main: rgba(56, 189, 248, 0.25);
+      --border-highlight: rgba(168, 85, 247, 0.6);
+      --primary: #38bdf8;
+      --secondary: #a855f7;
+      --accent: #10b981;
+      --warning: #f59e0b;
+      --text-head: #ffffff;
+      --text-body: #94a3b8;
+      --text-muted: #64748b;
+      --glow-primary: 0 0 30px rgba(56, 189, 248, 0.35);
+      --glow-card: 0 20px 50px -10px rgba(0, 0, 0, 0.85), 0 0 30px rgba(168, 85, 247, 0.15);
+      --badge-bg: rgba(56, 189, 248, 0.12);
+      --badge-border: rgba(56, 189, 248, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-body);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      line-height: 1.6;
+    }
+
+    #three-canvas {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 0; pointer-events: none; opacity: 0.85;
+      transition: opacity 0.5s ease;
+    }
+    body[data-theme="clinical"] #three-canvas { opacity: 0.12; }
+
+    .app-wrapper { position: relative; z-index: 10; display: flex; flex-direction: column; min-height: 100vh; }
+    .container { width: 100%; max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+    /* Top Announcement Bar */
+    .top-bar {
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-main);
+      padding: 8px 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    body[data-theme="clinical"] .top-bar { background: #f1f5f9; }
+    .top-bar-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .top-info-group { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+    .top-info-item { display: flex; align-items: center; gap: 6px; }
+    .top-info-item i { color: var(--primary); }
+    .top-link { color: inherit; text-decoration: none; transition: var(--transition); }
+    .top-link:hover { color: var(--primary); }
+
+    /* Header & Navigation */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-main);
+      transition: var(--transition);
+    }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--text-head); }
+    .brand-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center;
+      color: #000; font-size: 1.4rem; box-shadow: var(--glow-primary); flex-shrink: 0;
+    }
+    .brand-text h1 { font-size: 1.25rem; font-weight: 800; line-height: 1.2; font-family: 'Outfit', sans-serif; }
+    .brand-text p { font-size: 0.78rem; color: var(--primary); font-weight: 600; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 24px; list-style: none; }
+    .nav-link { color: var(--text-body); text-decoration: none; font-size: 0.92rem; font-weight: 600; transition: var(--transition); }
+    .nav-link:hover { color: var(--primary); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+
+    /* Template Switcher Buttons */
+    .template-switcher-bar {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-main);
+      padding: 6px; border-radius: 30px; display: flex; align-items: center; gap: 4px;
+    }
+    .tmpl-btn {
+      border: none; background: transparent; color: var(--text-muted);
+      font-size: 0.8rem; font-weight: 700; padding: 6px 14px; border-radius: 20px;
+      cursor: pointer; display: flex; align-items: center; gap: 6px; transition: var(--transition);
+    }
+    .tmpl-btn:hover { color: var(--text-head); }
+    .tmpl-btn.active {
+      background: var(--primary); color: #000; box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+    }
+    body[data-theme="clinical"] .tmpl-btn.active { color: #fff; }
+
+    .btn-inv {
+      background: rgba(121, 40, 202, 0.15); border: 1px solid rgba(121, 40, 202, 0.4);
+      color: #c084fc; font-size: 0.84rem; font-weight: 700; padding: 8px 16px;
+      border-radius: 30px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: var(--transition);
+    }
+    .btn-inv:hover { background: #7928ca; color: #fff; box-shadow: 0 0 20px rgba(121, 40, 202, 0.5); }
+
+    .btn-cta {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000; border: none; padding: 10px 22px; border-radius: 30px;
+      font-weight: 700; font-size: 0.9rem; cursor: pointer; display: flex;
+      align-items: center; gap: 8px; text-decoration: none; box-shadow: var(--glow-primary); transition: var(--transition);
+    }
+    .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 242, 254, 0.5); }
+    .btn-secondary {
+      background: var(--bg-surface); border: 1px solid var(--border-main); color: var(--text-head);
+      padding: 10px 22px; border-radius: 30px; font-weight: 700; font-size: 0.9rem;
+      text-decoration: none; display: flex; align-items: center; gap: 8px; transition: var(--transition);
+    }
+    .btn-secondary:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+
+    /* Hero Section */
+    .hero { padding: 70px 0 60px; position: relative; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 50px; align-items: center; }
+    .badge-clinical {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px;
+      border-radius: 30px; background: var(--badge-bg); border: 1px solid var(--badge-border);
+      font-size: 0.82rem; font-weight: 700; color: var(--primary); margin-bottom: 20px; text-transform: uppercase;
+    }
+    .hero h2 {
+      font-size: 3.2rem; font-weight: 800; color: var(--text-head); line-height: 1.15;
+      font-family: 'Outfit', sans-serif; margin-bottom: 20px; letter-spacing: -0.03em;
+    }
+    .hero h2 span.gradient {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-lead { font-size: 1.15rem; color: var(--text-body); margin-bottom: 30px; max-width: 580px; }
+    .hero-meta-badges { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 35px; }
+    .meta-pill {
+      background: var(--bg-surface); border: 1px solid var(--border-main); padding: 8px 16px;
+      border-radius: 12px; font-size: 0.86rem; font-weight: 600; color: var(--text-head);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .meta-pill i { color: var(--primary); }
+    .hero-ctas { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .hero-card-preview { display: flex; justify-content: center; align-items: center; }
+
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 50px;
+      padding-top: 40px; border-top: 1px solid var(--border-main);
+    }
+    .stat-card {
+      background: var(--bg-surface); border: 1px solid var(--border-main);
+      border-radius: var(--radius-md); padding: 20px; text-align: center; transition: var(--transition);
+    }
+    .stat-card:hover { border-color: var(--border-highlight); transform: translateY(-4px); box-shadow: var(--glow-card); }
+    .stat-number {
+      font-size: 2rem; font-weight: 800; color: var(--text-head); font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 4px; background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+
+    /* Bento Clinical Specializations */
+    .section { padding: 80px 0; position: relative; }
+    .section-header { text-align: center; max-width: 680px; margin: 0 auto 50px; }
+    .section-title {
+      font-size: 2.3rem; font-weight: 800; color: var(--text-head); font-family: 'Outfit', sans-serif;
+      letter-spacing: -0.02em; margin-bottom: 12px;
+    }
+    .section-subtitle { font-size: 1.05rem; color: var(--text-body); }
+    .bento-services { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .service-card {
+      background: var(--bg-surface); border: 1px solid var(--border-main);
+      border-radius: var(--radius-lg); padding: 32px; position: relative;
+      transition: var(--transition); backdrop-filter: blur(14px);
+    }
+    .service-card:hover { border-color: var(--border-highlight); box-shadow: var(--glow-card); transform: translateY(-4px); }
+    .service-badge {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
+      border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .badge-ortho { background: rgba(0, 242, 254, 0.15); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.3); }
+    .badge-spine { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-neuro { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .badge-paed { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .service-card h3 { font-size: 1.4rem; font-weight: 700; color: var(--text-head); margin-bottom: 12px; }
+    .service-card p { color: var(--text-body); font-size: 0.95rem; margin-bottom: 20px; }
+    .condition-list { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 24px; }
+    .condition-item { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--text-head); font-weight: 500; }
+    .condition-item i { color: var(--secondary); font-size: 0.8rem; }
+    .service-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-main); padding-top: 16px; font-size: 0.85rem; }
+    .service-action-link { color: var(--primary); text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 6px; transition: var(--transition); }
+    .service-action-link:hover { gap: 10px; }
+
+    /* 3D Visiting Card Styles */
+    .card-section {
+      background: radial-gradient(circle at 50% 50%, var(--bg-surface-elevated) 0%, var(--bg-base) 100%);
+      border-top: 1px solid var(--border-main); border-bottom: 1px solid var(--border-main); padding: 90px 0;
+    }
+    .visiting-card-container { perspective: 1400px; display: flex; justify-content: center; align-items: center; margin: 30px auto; }
+    .card-3d-flipper {
+      width: 580px; height: 340px; position: relative; transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-radius: 20px; box-shadow: var(--glow-card); cursor: pointer;
+    }
+    .card-3d-flipper.flipped { transform: rotateY(180deg); }
+    .card-face {
+      position: absolute; inset: 0; border-radius: 20px; padding: 30px 36px;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      display: flex; flex-direction: column; justify-content: space-between;
+      border: 1px solid var(--border-highlight);
+      background: linear-gradient(145deg, rgba(16, 27, 52, 0.96) 0%, rgba(8, 14, 28, 0.98) 100%);
+      box-shadow: inset 0 0 25px rgba(0, 242, 254, 0.08); overflow: hidden;
+    }
+    body[data-theme="clinical"] .card-face {
+      background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+    }
+    .card-face-back { transform: rotateY(180deg); }
+    .card-header-row { display: flex; justify-content: space-between; align-items: flex-start; }
+    .card-clinic-title h4 { font-size: 1.35rem; font-weight: 800; color: var(--text-head); font-family: 'Outfit', sans-serif; }
+    .card-clinic-title p { font-size: 0.8rem; color: var(--primary); font-weight: 700; text-transform: uppercase; }
+    .card-reg-badge {
+      background: rgba(0, 242, 254, 0.12); border: 1px solid var(--border-main); color: var(--primary);
+      font-size: 0.78rem; font-weight: 800; padding: 4px 10px; border-radius: 8px; font-family: 'Space Grotesk', sans-serif;
+    }
+    .card-center-doctor h3 { font-size: 1.7rem; font-weight: 800; color: var(--text-head); margin-bottom: 4px; }
+    .card-degrees { font-size: 0.88rem; color: var(--secondary); font-weight: 700; }
+    .card-designation { font-size: 0.84rem; color: var(--text-muted); font-weight: 600; }
+    .card-bottom-row { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--border-main); padding-top: 16px; }
+    .card-contact-box p { font-size: 0.86rem; font-weight: 700; color: var(--text-head); display: flex; align-items: center; gap: 8px; }
+    .card-contact-box p i { color: var(--primary); }
+    .card-flip-prompt {
+      font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;
+      background: var(--badge-bg); padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border-main);
+    }
+    .card-back-grid { display: grid; grid-template-columns: 1fr 110px; gap: 20px; align-items: center; height: 100%; }
+    .card-address-block h5 { font-size: 1.05rem; font-weight: 800; color: var(--text-head); margin-bottom: 8px; }
+    .card-address-block p { font-size: 0.84rem; color: var(--text-body); line-height: 1.5; margin-bottom: 12px; }
+    .card-timings-badge {
+      background: var(--badge-bg); border: 1px solid var(--border-main); padding: 6px 12px;
+      border-radius: 10px; font-size: 0.78rem; color: var(--text-head); display: inline-block;
+    }
+    .card-qr-box { text-align: center; }
+    .card-qr-img { width: 100px; height: 100px; background: #fff; padding: 6px; border-radius: 12px; }
+    .card-qr-box span { display: block; font-size: 0.7rem; color: var(--text-muted); margin-top: 6px; font-weight: 600; }
+    .card-controls { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 24px; }
+
+    /* Symptom Navigator & Portal */
+    .portal-box {
+      background: var(--bg-surface); border: 1px solid var(--border-main); border-radius: var(--radius-xl);
+      padding: 40px; box-shadow: var(--glow-card);
+    }
+    .portal-tabs { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 35px; }
+    .portal-tab-btn {
+      background: var(--bg-surface-elevated); border: 1px solid var(--border-main); color: var(--text-body);
+      padding: 10px 20px; border-radius: 30px; font-weight: 700; font-size: 0.88rem; cursor: pointer;
+      display: flex; align-items: center; gap: 8px; transition: var(--transition);
+    }
+    .portal-tab-btn.active { background: var(--primary); color: #000; border-color: var(--primary); }
+    body[data-theme="clinical"] .portal-tab-btn.active { color: #fff; }
+    .portal-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; align-items: center; }
+    .portal-detail-card {
+      background: var(--bg-surface-elevated); border: 1px solid var(--border-main); border-radius: var(--radius-lg); padding: 30px;
+    }
+    .portal-detail-card h4 { font-size: 1.5rem; font-weight: 800; color: var(--text-head); margin-bottom: 12px; }
+    .portal-features-list { list-style: none; margin: 20px 0; display: flex; flex-direction: column; gap: 12px; }
+    .portal-features-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.92rem; color: var(--text-head); }
+    .portal-features-list li i { color: var(--secondary); margin-top: 4px; }
+
+    /* Doctor Profile */
+    .doctor-profile-card {
+      background: var(--bg-surface); border: 1px solid var(--border-main); border-radius: var(--radius-xl);
+      padding: 45px; display: grid; grid-template-columns: 320px 1fr; gap: 45px; align-items: center;
+    }
+    .doctor-avatar-wrap { text-align: center; }
+    .doctor-avatar-box {
+      width: 240px; height: 240px; margin: 0 auto 20px; border-radius: 24px;
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(0, 230, 118, 0.2));
+      border: 2px solid var(--border-highlight); display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--glow-primary);
+    }
+    .doctor-avatar-box i { font-size: 6.5rem; color: var(--primary); }
+    .doctor-reg-tag {
+      display: inline-block; background: var(--badge-bg); border: 1px solid var(--badge-border);
+      color: var(--primary); font-size: 0.84rem; font-weight: 700; padding: 4px 12px; border-radius: 8px;
+    }
+    .doctor-info-col h3 { font-size: 2.2rem; font-weight: 800; color: var(--text-head); margin-bottom: 6px; }
+    .doctor-bio { font-size: 1rem; color: var(--text-body); margin-bottom: 24px; line-height: 1.7; }
+    .credentials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .cred-item { background: var(--bg-surface-elevated); border: 1px solid var(--border-main); padding: 14px; border-radius: var(--radius-md); }
+    .cred-item strong { display: block; color: var(--text-head); font-size: 0.95rem; margin-bottom: 2px; }
+    .cred-item span { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Booking Form */
+    .booking-wrapper {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: var(--bg-surface);
+      border: 1px solid var(--border-main); border-radius: var(--radius-xl); padding: 45px; box-shadow: var(--glow-card);
+    }
+    .booking-info-col h3 { font-size: 2rem; font-weight: 800; color: var(--text-head); margin-bottom: 14px; }
+    .booking-info-col p { color: var(--text-body); margin-bottom: 24px; }
+    .booking-guarantees { display: flex; flex-direction: column; gap: 14px; margin-top: 30px; }
+    .guarantee-row { display: flex; align-items: center; gap: 12px; font-size: 0.92rem; color: var(--text-head); font-weight: 600; }
+    .guarantee-row i { color: var(--secondary); font-size: 1.1rem; }
+    .booking-form { display: flex; flex-direction: column; gap: 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 0.84rem; font-weight: 700; color: var(--text-head); }
+    .form-control {
+      background: var(--bg-surface-elevated); border: 1px solid var(--border-main);
+      border-radius: var(--radius-sm); padding: 12px 16px; color: var(--text-head);
+      font-family: inherit; font-size: 0.92rem; transition: var(--transition); outline: none;
+    }
+    .form-control:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 242, 254, 0.25); }
+    body[data-theme="clinical"] .form-control { background: #f8fafc; color: #0f172a; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .btn-submit-booking {
+      background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; border: none;
+      padding: 14px 24px; border-radius: var(--radius-md); font-weight: 800; font-size: 1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35); transition: var(--transition); margin-top: 8px;
+    }
+    .btn-submit-booking:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5); }
+
+    /* Inventory Section */
+    .inventory-section {
+      background: radial-gradient(circle at 50% 0%, var(--bg-surface-elevated) 0%, var(--bg-base) 100%);
+      border-top: 1px solid var(--border-main); border-bottom: 1px solid var(--border-main); padding: 90px 0;
+    }
+    .inventory-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; }
+    .search-input-wrap { position: relative; flex: 1; max-width: 400px; }
+    .search-input-wrap i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+    .search-input-wrap input {
+      width: 100%; background: var(--bg-surface); border: 1px solid var(--border-main);
+      border-radius: 30px; padding: 10px 16px 10px 42px; color: var(--text-head); font-size: 0.9rem; outline: none;
+    }
+    .search-input-wrap input:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(0, 242, 254, 0.25); }
+    .category-filter-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .cat-chip {
+      background: var(--bg-surface); border: 1px solid var(--border-main); color: var(--text-muted);
+      padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: var(--transition);
+    }
+    .cat-chip:hover, .cat-chip.active { background: var(--primary); color: #000; border-color: var(--primary); }
+    body[data-theme="clinical"] .cat-chip:hover, body[data-theme="clinical"] .cat-chip.active { color: #fff; }
+    .inventory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .doc-card {
+      background: var(--bg-surface); border: 1px solid var(--border-main); border-radius: var(--radius-md);
+      padding: 22px; display: flex; flex-direction: column; justify-content: space-between; transition: var(--transition); cursor: pointer;
+    }
+    .doc-card:hover { border-color: var(--border-highlight); transform: translateY(-4px); box-shadow: var(--glow-card); }
+    .doc-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .doc-file-badge {
+      font-family: monospace; font-size: 0.78rem; color: var(--primary); background: var(--badge-bg);
+      padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border-main);
+    }
+    .doc-size-badge { font-size: 0.74rem; color: var(--text-muted); font-weight: 600; }
+    .doc-card h4 { font-size: 1.05rem; font-weight: 700; color: var(--text-head); margin-bottom: 8px; line-height: 1.35; }
+    .doc-card p {
+      font-size: 0.82rem; color: var(--text-body); margin-bottom: 16px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .doc-tag-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .tag-pill { background: rgba(255, 255, 255, 0.05); font-size: 0.7rem; padding: 2px 8px; border-radius: 12px; color: var(--text-muted); }
+    .doc-card-btn {
+      border: none; background: transparent; color: var(--primary); font-size: 0.8rem; font-weight: 700;
+      display: flex; align-items: center; gap: 6px; padding-top: 10px; border-top: 1px solid var(--border-main); cursor: pointer;
+    }
+
+    /* Location & Map */
+    .location-card {
+      background: var(--bg-surface); border: 1px solid var(--border-main); border-radius: var(--radius-xl);
+      padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+    }
+    .location-info h3 { font-size: 2rem; font-weight: 800; color: var(--text-head); margin-bottom: 16px; }
+    .location-lines { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
+    .loc-line { display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem; color: var(--text-head); }
+    .loc-line i { color: var(--primary); margin-top: 4px; }
+    .map-embed-placeholder {
+      width: 100%; height: 280px; border-radius: var(--radius-lg); background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-main); display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center; padding: 20px;
+    }
+    .map-embed-placeholder i { font-size: 3rem; color: var(--primary); margin-bottom: 12px; }
+
+    /* Footer */
+    footer { background: var(--bg-surface); border-top: 1px solid var(--border-main); padding: 50px 0 30px; margin-top: 80px; }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+      border-bottom: 1px solid var(--border-main); padding-bottom: 30px; margin-bottom: 25px;
+    }
+    .footer-credits { font-size: 0.84rem; color: var(--text-muted); }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(10px);
+      z-index: 1000; display: none; align-items: center; justify-content: center; padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-content {
+      background: var(--bg-surface-elevated); border: 1px solid var(--border-highlight); border-radius: var(--radius-xl);
+      width: 100%; max-width: 680px; max-height: 85vh; overflow-y: auto; padding: 35px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9); position: relative;
+    }
+    .modal-close-btn {
+      position: absolute; top: 20px; right: 20px; background: transparent; border: none;
+      color: var(--text-muted); font-size: 1.4rem; cursor: pointer;
+    }
+
+    @media (max-width: 992px) {
+      .hero-grid, .doctor-profile-card, .booking-wrapper, .location-card, .portal-content-grid { grid-template-columns: 1fr; }
+      .bento-services, .inventory-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .card-3d-flipper { width: 100%; max-width: 500px; height: 320px; }
+    }
+  </style>
+</head>
+
+<body data-theme="biomechanical">
+
+  <!-- 3D Three.js WebGL Simulation Canvas -->
+  <canvas id="three-canvas"></canvas>
+
+  <div class="app-wrapper">
+
+    <!-- Top Announcement Bar -->
+    <div class="top-bar">
+      <div class="container top-bar-inner">
+        <div class="top-info-group">
+          <div class="top-info-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Shop No-3, #38-16-77/1, Jyothi Nagar Road, Marripalem, Visakhapatnam - 530018</span>
+          </div>
+          <div class="top-info-item">
+            <i class="fa-solid fa-clock"></i>
+            <span>Mon?Sat: 8:00 AM ? 1:00 PM & 5:00 PM ? 9:00 PM | Sun: 9:00 AM ? 1:00 PM</span>
+          </div>
+        </div>
+        <div class="top-info-group">
+          <div class="top-info-item">
+            <i class="fa-solid fa-phone"></i>
+            <a href="tel:+919493791045" class="top-link">+91 94937 91045</a>
+            <span>/</span>
+            <a href="tel:+918247532422" class="top-link">+91 82475 32422</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Navigation Bar with Template Switcher -->
+    <header>
+      <div class="container nav-inner">
+        <a href="#home" class="brand">
+          <div class="brand-icon">
+            <i class="fa-solid fa-heart-pulse"></i>
+          </div>
+          <div class="brand-text">
+            <h1>SRI J.J.R.</h1>
+            <p>PHYSIOTHERAPY CLINIC</p>
+          </div>
+        </a>
+
+        <!-- Template Switcher Bar -->
+        <div class="template-switcher-bar" role="group" aria-label="Template Selector">
+          <button class="tmpl-btn active" onclick="setTemplate('biomechanical')" title="3D Biomechanical Dark Theme">
+            <i class="fa-solid fa-atom"></i> 3D Kinetic
+          </button>
+          <button class="tmpl-btn" onclick="setTemplate('clinical')" title="Clinical Medical White Theme">
+            <i class="fa-solid fa-notes-medical"></i> Medical White
+          </button>
+          <button class="tmpl-btn" onclick="setTemplate('visiting-card')" title="3D Visiting Card Showcase">
+            <i class="fa-solid fa-id-card"></i> 3D Card
+          </button>
+          <button class="tmpl-btn" onclick="setTemplate('patient-portal')" title="Interactive Patient Symptom Portal">
+            <i class="fa-solid fa-user-doctor"></i> Patient Portal
+          </button>
+        </div>
+
+        <ul class="nav-links">
+          <li><a href="#services" class="nav-link">Treatments</a></li>
+          <li><a href="#card-showcase" class="nav-link">3D Card</a></li>
+          <li><a href="#symptom-portal" class="nav-link">Symptom Guide</a></li>
+          <li><a href="#doctor" class="nav-link">Doctor</a></li>
+          <li><a href="#inventory" class="nav-link">DB Docs</a></li>
+          <li><a href="#location" class="nav-link">Location</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button class="btn-inv" onclick="scrollToInventory()" title="View Complete Curated .md Inventory from Database">
+            <i class="fa-solid fa-database"></i> 29 Curated Docs
+          </button>
+          <a href="#book" class="btn-cta">
+            <i class="fa-brands fa-whatsapp"></i> Book Now
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="badge-clinical">
+              <i class="fa-solid fa-shield-halved"></i> Registered Medical Clinic ? Reg No: L-52781
+            </div>
+            <h2>
+              Advanced Physical <br/>
+              <span class="gradient">Rehabilitation</span> & Biomechanics
+            </h2>
+            <p class="hero-lead">
+              Restoring painless mobility and neuromuscular function. Specialized in non-surgical spine decompression, joint rehabilitation, stroke paralysis recovery, and pediatric neuro-development.
+            </p>
+
+            <div class="hero-meta-badges">
+              <div class="meta-pill">
+                <i class="fa-solid fa-user-doctor"></i>
+                <span>Dr. S. Gayathri (M.P.T Ortho)</span>
+              </div>
+              <div class="meta-pill">
+                <i class="fa-solid fa-certificate"></i>
+                <span>M.I.A.P Certified</span>
+              </div>
+              <div class="meta-pill">
+                <i class="fa-solid fa-map-pin"></i>
+                <span>Marripalem, Vizag</span>
+              </div>
+            </div>
+
+            <div class="hero-ctas">
+              <a href="#book" class="btn-cta">
+                <i class="fa-brands fa-whatsapp"></i> Book Consultation
+              </a>
+              <a href="#card-showcase" class="btn-secondary">
+                <i class="fa-solid fa-id-card"></i> View 3D Visiting Card
+              </a>
+              <a href="#symptom-portal" class="btn-secondary">
+                <i class="fa-solid fa-person-walking"></i> Symptom Navigator
+              </a>
+            </div>
+          </div>
+
+          <!-- Hero 3D Card Interactive Quick Teaser -->
+          <div class="hero-card-preview">
+            <div class="card-3d-flipper" id="heroQuickCard" onclick="toggleCardFlip(this)" style="cursor: pointer; max-width: 460px; height: 270px;">
+              <div class="card-face">
+                <div class="card-header-row">
+                  <div class="card-clinic-title">
+                    <h4>SRI J.J.R. PHYSIOTHERAPY</h4>
+                    <p>Consultant Physiotherapist</p>
+                  </div>
+                  <span class="card-reg-badge">Reg: L-52781</span>
+                </div>
+                <div class="card-center-doctor">
+                  <h3>Dr. S. Gayathri</h3>
+                  <div class="card-degrees">B.P.T, M.I.A.P, M.P.T (ORTHO)</div>
+                  <div class="card-designation">Orthopaedic & Spine Specialist</div>
+                </div>
+                <div class="card-bottom-row">
+                  <div class="card-contact-box">
+                    <p><i class="fa-solid fa-phone"></i> +91 94937 91045</p>
+                  </div>
+                  <span class="card-flip-prompt"><i class="fa-solid fa-rotate"></i> Tap to Flip</span>
+                </div>
+              </div>
+
+              <div class="card-face card-face-back">
+                <div class="card-back-grid">
+                  <div class="card-address-block">
+                    <h5><i class="fa-solid fa-location-dot"></i> Clinic Location</h5>
+                    <p>Shop No-3, #38-16-77/1, Jyothi Nagar Road, Raman School Down, Marripalem, Visakhapatnam - 530018</p>
+                    <span class="card-timings-badge">8:00 AM - 1:00 PM & 5:00 PM - 9:00 PM</span>
+                  </div>
+                  <div class="card-qr-box">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AGayathri%3BDr.+S.%3B%3B%3B%0AFN%3ADr.+S.+Gayathri%0AORG%3ASri+J.J.R.+Physiotherapy+Clinic%0ATEL%3BTYPE%3DCELL%3A%2B919493791045%0AEMAIL%3Asrijjrphysio%40gmail.com%0AADR%3BTYPE%3DWORK%3A%3B%3BShop+No-3%2C+%2338-16-77%2F1%2C+Jyothi+Nagar+Road%2C+Marripalem%3BVisakhapatnam%3BAndhra+Pradesh%3B530018%3BIN%0AEND%3AVCARD" alt="vCard QR" class="card-qr-img" />
+                    <span>Scan vCard</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust Statistics Row -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-number">12+</div>
+            <div class="stat-label">Years Clinical Excellence</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">15,000+</div>
+            <div class="stat-label">Patients Successfully Treated</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">98.4%</div>
+            <div class="stat-label">Surgery Avoidance Rate</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">4.9 ?</div>
+            <div class="stat-label">Patient Satisfaction Rating</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: CLINICAL SPECIALIZATIONS -->
+    <section id="services" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-clinical"><i class="fa-solid fa-stethoscope"></i> Comprehensive Care</div>
+          <h2 class="section-title">Specialized Clinical Pillars</h2>
+          <p class="section-subtitle">Targeted, evidence-based physiotherapy tailored to resolve acute pain and rebuild long-term neuromuscular strength.</p>
+        </div>
+
+        <div class="bento-services">
+          <!-- Orthopaedic Conditions -->
+          <div class="service-card">
+            <span class="service-badge badge-ortho"><i class="fa-solid fa-bone"></i> Orthopaedic</span>
+            <h3>Orthopaedic Rehabilitation</h3>
+            <p>Targeted joint biomechanics, post-surgical rehabilitation, and muscular restoration for musculoskeletal pathologies.</p>
+            <ul class="condition-list">
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Knee Pain & Osteoarthritis</li>
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Frozen Shoulder & Capsulitis</li>
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Tennis & Golfer's Elbow</li>
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Post-Operative Joint Stiffness</li>
+            </ul>
+            <div class="service-footer">
+              <span>Modality: Manual Therapy + Ultrasound</span>
+              <a href="#book" class="service-action-link" onclick="preselectCondition('Orthopaedic Conditions (Knee/Shoulder/Elbow/Joint)')">Book Care <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Spinal Conditions -->
+          <div class="service-card">
+            <span class="service-badge badge-spine"><i class="fa-solid fa-arrows-up-down"></i> Spine Care</span>
+            <h3>Spinal & Decompression Care</h3>
+            <p>Non-surgical mechanical and kinematic decompression protocols for nerve root compression and disc pathology.</p>
+            <ul class="condition-list">
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Cervical & Lumbar Spondylosis</li>
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Disc Herniation & Slip Disc</li>
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Sciatica Radiation Relief</li>
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Chronic Low Back & Neck Pain</li>
+            </ul>
+            <div class="service-footer">
+              <span>Modality: Spinal Traction + Core Stability</span>
+              <a href="#book" class="service-action-link" onclick="preselectCondition('Spinal Conditions (Spondylosis/Sciatica/Slip Disc)')">Book Care <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Neurological Conditions -->
+          <div class="service-card">
+            <span class="service-badge badge-neuro"><i class="fa-solid fa-brain"></i> Neurological</span>
+            <h3>Neurological Rehabilitation</h3>
+            <p>Advanced neuroplastic motor retraining, balance re-education, and functional independence restoration.</p>
+            <ul class="condition-list">
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Stroke Recovery & Paralysis</li>
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Facial Palsy (Bell's Palsy)</li>
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Guillain-Barr? Syndrome (GBS)</li>
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Parkinson's & Alzheimer's Care</li>
+            </ul>
+            <div class="service-footer">
+              <span>Modality: Neuro-Muscular Stimulation</span>
+              <a href="#book" class="service-action-link" onclick="preselectCondition('Neurological Conditions (Stroke/Paralysis/Bell\'s Palsy/GBS)')">Book Care <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Paediatric Conditions -->
+          <div class="service-card">
+            <span class="service-badge badge-paed"><i class="fa-solid fa-baby"></i> Paediatric</span>
+            <h3>Paediatric Physical Therapy</h3>
+            <p>Compassionate milestone tracking and physical motor therapy for developmental and congenital conditions.</p>
+            <ul class="condition-list">
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Cerebral Palsy (CP) Motor Therapy</li>
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Muscular Dystrophy Support</li>
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Newborn Developmental Screening</li>
+              <li class="condition-item"><i class="fa-solid fa-circle-check"></i> Autism Spectrum Motor Skills</li>
+            </ul>
+            <div class="service-footer">
+              <span>Modality: Neuro-Developmental Therapy (NDT)</span>
+              <a href="#book" class="service-action-link" onclick="preselectCondition('Paediatric Conditions (Cerebral Palsy/Muscular Dystrophy)')">Book Care <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 3D INTERACTIVE VISITING CARD SHOWCASE -->
+    <section id="card-showcase" class="card-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-clinical"><i class="fa-solid fa-cube"></i> Digital Visiting Card</div>
+          <h2 class="section-title">Interactive 3D Visiting Card</h2>
+          <p class="section-subtitle">Move your mouse to inspect the 3D card tilt and reflection. Click or tap to flip 180? for detailed address, timings, and QR code.</p>
+        </div>
+
+        <div class="visiting-card-container" id="visitingCardWrapper">
+          <div class="card-3d-flipper" id="main3DCard">
+            <!-- Front Face -->
+            <div class="card-face">
+              <div class="card-header-row">
+                <div class="card-clinic-title">
+                  <h4>SRI J.J.R. PHYSIOTHERAPY CLINIC</h4>
+                  <p>Dr. S. Gayathri, M.P.T (Ortho)</p>
+                </div>
+                <span class="card-reg-badge">Reg: L-52781</span>
+              </div>
+
+              <div class="card-center-doctor">
+                <h3>Dr. S. GAYATHRI</h3>
+                <div class="card-degrees">B.P.T, M.I.A.P, M.P.T (ORTHO)</div>
+                <div class="card-designation">CONSULTANT PHYSIOTHERAPIST</div>
+              </div>
+
+              <div class="card-bottom-row">
+                <div class="card-contact-box">
+                  <p><i class="fa-solid fa-phone"></i> +91 94937 91045</p>
+                  <p style="margin-top: 4px;"><i class="fa-solid fa-phone"></i> +91 82475 32422</p>
+                </div>
+                <span class="card-flip-prompt"><i class="fa-solid fa-rotate"></i> Click to Flip</span>
+              </div>
+            </div>
+
+            <!-- Back Face -->
+            <div class="card-face card-face-back">
+              <div class="card-back-grid">
+                <div class="card-address-block">
+                  <h5><i class="fa-solid fa-location-dot"></i> Clinic Location</h5>
+                  <p>
+                    <strong>Shop No-3, #38-16-77/1</strong><br/>
+                    Jyothi Nagar Road, Raman School Down<br/>
+                    Opp: GVMC High School, Marripalem<br/>
+                    <strong>Visakhapatnam - 530018</strong>
+                  </p>
+                  <span class="card-timings-badge">
+                    <i class="fa-solid fa-clock"></i> 8 AM ? 1 PM & 5 PM ? 9 PM
+                  </span>
+                </div>
+
+                <div class="card-qr-box">
+                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AN%3AGayathri%3BDr.+S.%3B%3B%3B%0AFN%3ADr.+S.+Gayathri%0AORG%3ASri+J.J.R.+Physiotherapy+Clinic%0ATEL%3BTYPE%3DCELL%3A%2B919493791045%0ATEL%3BTYPE%3DCELL%3A%2B918247532422%0AADR%3BTYPE%3DWORK%3A%3B%3BShop+No-3%2C+%2338-16-77%2F1%2C+Jyothi+Nagar+Road%2C+Marripalem%3BVisakhapatnam%3BAndhra+Pradesh%3B530018%3BIN%0AEND%3AVCARD" alt="vCard QR" class="card-qr-img" />
+                  <span>Scan for Contact</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-controls">
+          <button class="btn-secondary" onclick="flipMainCard()">
+            <i class="fa-solid fa-rotate"></i> Flip 3D Card
+          </button>
+          <button class="btn-cta" onclick="downloadVCard()">
+            <i class="fa-solid fa-address-book"></i> Download vCard (.vcf)
+          </button>
+          <a href="https://maps.google.com/?q=Marripalem+Visakhapatnam+530018" target="_blank" class="btn-secondary">
+            <i class="fa-solid fa-diamond-turn-right"></i> Open Directions
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: INTERACTIVE SYMPTOM NAVIGATOR -->
+    <section id="symptom-portal" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-clinical"><i class="fa-solid fa-magnifying-glass-chart"></i> Patient Self-Assessment</div>
+          <h2 class="section-title">Interactive Symptom Navigator</h2>
+          <p class="section-subtitle">Select your area of discomfort to view clinical causes, therapeutic protocol, and direct appointment booking.</p>
+        </div>
+
+        <div class="portal-box">
+          <div class="portal-tabs">
+            <button class="portal-tab-btn active" onclick="selectSymptom('knee')"><i class="fa-solid fa-person"></i> Knee & Joints</button>
+            <button class="portal-tab-btn" onclick="selectSymptom('spine')"><i class="fa-solid fa-arrows-up-down"></i> Spine & Back</button>
+            <button class="portal-tab-btn" onclick="selectSymptom('shoulder')"><i class="fa-solid fa-hand-fist"></i> Shoulder & Arm</button>
+            <button class="portal-tab-btn" onclick="selectSymptom('neuro')"><i class="fa-solid fa-brain"></i> Neuro / Paralysis</button>
+            <button class="portal-tab-btn" onclick="selectSymptom('paediatric')"><i class="fa-solid fa-baby"></i> Paediatric / Child</button>
+          </div>
+
+          <div class="portal-content-grid" id="portalDetailsBox">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: CONSULTANT DOCTOR PROFILE -->
+    <section id="doctor" class="section">
+      <div class="container">
+        <div class="doctor-profile-card">
+          <div class="doctor-avatar-wrap">
+            <div class="doctor-avatar-box">
+              <i class="fa-solid fa-user-doctor"></i>
+            </div>
+            <span class="doctor-reg-tag">State Medical Board Reg: L-52781</span>
+          </div>
+
+          <div class="doctor-info-col">
+            <div class="badge-clinical"><i class="fa-solid fa-award"></i> Lead Consultant</div>
+            <h3>Dr. S. Gayathri</h3>
+            <p style="color: var(--secondary); font-weight: 700; font-size: 1.1rem; margin-bottom: 12px;">
+              B.P.T, M.I.A.P, M.P.T (Ortho) ? Consultant Physiotherapist
+            </p>
+            <p class="doctor-bio">
+              With advanced specialization in Master of Physiotherapy (Orthopaedics) and membership in the Indian Association of Physiotherapists (M.I.A.P), Dr. S. Gayathri brings clinical rigor to non-surgical musculoskeletal healing, spinal decompression, and neuromuscular recovery. Dedicated to evidence-based conservative care that eliminates pain at the root cause.
+            </p>
+
+            <div class="credentials-grid">
+              <div class="cred-item">
+                <strong>B.P.T & M.P.T (Ortho)</strong>
+                <span>Master's in Orthopaedic Physical Therapy</span>
+              </div>
+              <div class="cred-item">
+                <strong>M.I.A.P Member</strong>
+                <span>Indian Association of Physiotherapists</span>
+              </div>
+              <div class="cred-item">
+                <strong>License: L-52781</strong>
+                <span>Fully Certified & State Registered</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: ONLINE APPOINTMENT BOOKING ENGINE -->
+    <section id="book" class="section">
+      <div class="container">
+        <div class="booking-wrapper">
+          <div class="booking-info-col">
+            <div class="badge-clinical"><i class="fa-solid fa-calendar-check"></i> Instant Scheduling</div>
+            <h3>Book Your Clinical Consultation</h3>
+            <p>
+              Schedule your personalized clinical evaluation with Dr. S. Gayathri. Our clinic guarantees zero waiting times for booked appointments and comprehensive diagnosis on your first visit.
+            </p>
+
+            <div class="booking-guarantees">
+              <div class="guarantee-row">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Direct WhatsApp Confirmation with Clinic Desk</span>
+              </div>
+              <div class="guarantee-row">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Same-Day Emergency Appointments Available</span>
+              </div>
+              <div class="guarantee-row">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Comprehensive 45-Minute Initial Assessment</span>
+              </div>
+              <div class="guarantee-row">
+                <i class="fa-solid fa-phone"></i>
+                <span>Direct Helpline: +91 94937 91045 / +91 82475 32422</span>
+              </div>
+            </div>
+          </div>
+
+          <form class="booking-form" id="bookingForm" onsubmit="handleAppointmentSubmit(event)">
+            <div class="form-group">
+              <label for="patientName">Patient Full Name *</label>
+              <input type="text" id="patientName" class="form-control" placeholder="e.g. Rajesh Kumar" required />
+            </div>
+
+            <div class="form-group">
+              <label for="patientPhone">Mobile Number (WhatsApp) *</label>
+              <input type="tel" id="patientPhone" class="form-control" placeholder="e.g. 9876543210" required />
+            </div>
+
+            <div class="form-group">
+              <label for="conditionSelect">Primary Condition / Department *</label>
+              <select id="conditionSelect" class="form-control" required>
+                <option value="">Select Condition</option>
+                <option value="Orthopaedic Conditions (Knee/Shoulder/Elbow/Joint)">Orthopaedic Conditions (Knee/Shoulder/Elbow/Joint)</option>
+                <option value="Spinal Conditions (Spondylosis/Sciatica/Slip Disc)">Spinal Conditions (Spondylosis/Sciatica/Slip Disc)</option>
+                <option value="Neurological Conditions (Stroke/Paralysis/Bell's Palsy/GBS)">Neurological Conditions (Stroke/Paralysis/Bell's Palsy/GBS)</option>
+                <option value="Paediatric Conditions (Cerebral Palsy/Muscular Dystrophy)">Paediatric Conditions (Cerebral Palsy/Muscular Dystrophy)</option>
+                <option value="General Post-Operative Rehabilitation">General Post-Operative Rehabilitation</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="prefDate">Preferred Date *</label>
+                <input type="date" id="prefDate" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="prefTime">Preferred Slot *</label>
+                <select id="prefTime" class="form-control" required>
+                  <option value="Morning: 8:00 AM - 1:00 PM">Morning: 8:00 AM - 1:00 PM</option>
+                  <option value="Evening: 5:00 PM - 9:00 PM">Evening: 5:00 PM - 9:00 PM</option>
+                  <option value="Sunday Emergency: 9:00 AM - 1:00 PM">Sunday: 9:00 AM - 1:00 PM</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="patientNotes">Symptoms / Brief Medical Notes (Optional)</label>
+              <input type="text" id="patientNotes" class="form-control" placeholder="e.g. Knee pain since 3 weeks, difficulty walking" />
+            </div>
+
+            <button type="submit" class="btn-submit-booking">
+              <i class="fa-brands fa-whatsapp"></i> Confirm & Book on WhatsApp
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: COMPLETE INVENTORY OF CURATED .MD DOCUMENTS (DATABASE) -->
+    <section id="inventory" class="inventory-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-clinical"><i class="fa-solid fa-database"></i> Curated Architecture</div>
+          <h2 class="section-title">Complete Inventory of Curated .md Documents</h2>
+          <p class="section-subtitle">
+            All 29 curated industry architectural documents indexed in SQLite FTS5 database (<code>web_dev_knowledge.db</code>) strictly adhered to in constructing this clinic application.
+          </p>
+        </div>
+
+        <div class="inventory-toolbar">
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="inventorySearch" placeholder="Search 29 docs by name, tags, or topic..." oninput="filterInventory()" />
+          </div>
+
+          <div class="category-filter-chips" id="catFilterChips">
+            <button class="cat-chip active" onclick="setDocCategory('All')">All (29)</button>
+            <button class="cat-chip" onclick="setDocCategory('UI/UX')">UI/UX</button>
+            <button class="cat-chip" onclick="setDocCategory('CSS & Styling')">CSS</button>
+            <button class="cat-chip" onclick="setDocCategory('3D Graphics')">3D & WebGL</button>
+            <button class="cat-chip" onclick="setDocCategory('Accessibility')">A11y (WCAG)</button>
+            <button class="cat-chip" onclick="setDocCategory('SEO')">SEO Meta</button>
+            <button class="cat-chip" onclick="setDocCategory('Forms')">Forms</button>
+            <button class="cat-chip" onclick="setDocCategory('Database')">Database</button>
+          </div>
+        </div>
+
+        <div class="inventory-grid" id="inventoryCardsGrid">
+          <!-- Populated dynamically via JS from inventory_data.json -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: CLINIC LOCATION & TIMINGS -->
+    <section id="location" class="section">
+      <div class="container">
+        <div class="location-card">
+          <div class="location-info">
+            <div class="badge-clinical"><i class="fa-solid fa-map-location-dot"></i> Physical Clinic</div>
+            <h3>Visit Sri J.J.R. Clinic</h3>
+            <p>Centrally situated in Marripalem on Jyothi Nagar Road, easily accessible with ground-floor patient wheelchair accessibility.</p>
+
+            <div class="location-lines">
+              <div class="loc-line">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                  <strong>Shop No-3, D.No: 38-16-77/1</strong><br/>
+                  Jyothi Nagar Road, Raman School Down<br/>
+                  Opposite GVMC High School, Marripalem<br/>
+                  Visakhapatnam, Andhra Pradesh ? 530018
+                </div>
+              </div>
+              <div class="loc-line">
+                <i class="fa-solid fa-clock"></i>
+                <div>
+                  <strong>Clinical Consultation Hours:</strong><br/>
+                  Morning: 8:00 AM ? 1:00 PM<br/>
+                  Evening: 5:00 PM ? 9:00 PM<br/>
+                  Sunday: 9:00 AM ? 1:00 PM (Emergency & Prior Appt.)
+                </div>
+              </div>
+              <div class="loc-line">
+                <i class="fa-solid fa-phone"></i>
+                <div>
+                  <strong>Direct Telephones:</strong><br/>
+                  +91 94937 91045 | +91 82475 32422
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+              <a href="https://maps.google.com/?q=Marripalem+Visakhapatnam+530018" target="_blank" class="btn-cta">
+                <i class="fa-solid fa-diamond-turn-right"></i> Open in Google Maps
+              </a>
+              <a href="tel:+919493791045" class="btn-secondary">
+                <i class="fa-solid fa-phone"></i> Call Primary: +91 94937 91045
+              </a>
+              <a href="tel:+918247532422" class="btn-secondary">
+                <i class="fa-solid fa-phone"></i> Call Alt: +91 82475 32422
+              </a>
+            </div>
+          </div>
+
+          <div class="map-embed-placeholder">
+            <i class="fa-solid fa-hospital"></i>
+            <h4 style="color: var(--text-head); font-size: 1.25rem; margin-bottom: 6px;">Marripalem Main Road Landmark</h4>
+            <p style="color: var(--text-muted); font-size: 0.88rem; max-width: 320px; margin-bottom: 16px;">
+              Located near Raman School Down, directly opposite GVMC High School on Jyothi Nagar Road.
+            </p>
+            <a href="https://maps.google.com/?q=Marripalem+Visakhapatnam+530018" target="_blank" class="btn-secondary" style="font-size: 0.82rem;">
+              <i class="fa-solid fa-location-arrow"></i> Launch Live Navigation
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-inner">
+          <div class="brand">
+            <div class="brand-icon" style="width: 40px; height: 40px; font-size: 1.1rem;">
+              <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+            <div class="brand-text">
+              <h1 style="font-size: 1.1rem;">SRI J.J.R. PHYSIOTHERAPY CLINIC</h1>
+              <p style="font-size: 0.72rem;">Dr. S. Gayathri ? B.P.T, M.I.A.P, M.P.T (Ortho) ? Reg: L-52781</p>
+            </div>
+          </div>
+
+          <div class="footer-credits">
+            Built following the 28+ curated .md documents in SQLite DB ? WCAG 2.2 AA Accessible ? 3D WebGL Powered
+          </div>
+        </div>
+
+        <div style="text-align: center; font-size: 0.8rem; color: var(--text-muted);">
+          &copy; 2026 Sri J.J.R. Physiotherapy Clinic, Marripalem, Visakhapatnam. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- MODAL: KNOWLEDGE BASE DOCUMENT INSPECTOR -->
+  <div class="modal-overlay" id="docModal" onclick="closeDocModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeDocModal()">&times;</button>
+      <div id="modalBody">
+        <!-- Injected dynamically via JS -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. INJECT COMPLETE DATABASE INVENTORY (29 Documents from SQLite web_dev_knowledge.db)
+    const DB_INVENTORY = [{"id": 30, "filename": "00_MASTER_INDEX.md", "title": "00 \u2014 Master Tool Index (GitHub Stars Reference 2025\u20132026)", "category": "Index & Quick Reference", "description": "**Source**: Curated from sindresorhus/awesome, bradtraversy/design-resources-for-developers, enaqx/awesome-react, vuejs/awesome-vue, GitHub Trending", "tags": ["react", "vue", "angular", "svelte", "tailwind", "css", "animation", "gsap", "framer", "3d", "postgres", "prisma", "drizzle", "auth", "jwt", "clerk", "zustand", "redux", "vitest", "playwright", "vite", "docker", "seo", "accessibility", "wcag", "stripe", "ai", "icons", "fonts"], "size_kb": 5.4, "sections": ["\u2b50 Complete Star Count Reference", "\ud83d\udcc1 Knowledge Base File Guide", "\ud83c\udfaf Decision Flowchart"]}, {"id": 31, "filename": "01_UI_UX_DESIGN.md", "title": "01 \u2014 UI/UX Design Principles & Modern Layout Patterns", "category": "UI/UX & Design Systems", "description": "**Source**: Curated from GitHub awesome lists, top-starred repositories, and professional design communities.", "tags": ["react", "vue", "angular", "svelte", "tailwind", "css", "animation", "gsap", "framer", "accessibility", "wcag", "ai"], "size_kb": 7.5, "sections": ["\ud83d\udcd0 Design Systems & Principles", "What Makes Great UI/UX?", "\ud83d\udd8c\ufe0f Design Tools (Software)", "Prototyping & Wireframing", "Design Handoff", "\ud83e\udde9 Component Library Ecosystems"]}, {"id": 32, "filename": "02_FRONTEND_FRAMEWORKS.md", "title": "02 \u2014 Frontend Frameworks: React, Next.js, Vue, Svelte & Astro", "category": "Frontend Frameworks", "description": "Choosing a frontend framework for a new project, or understanding the ecosystem.", "tags": ["react", "vue", "angular", "svelte", "tailwind", "css", "animation", "framer", "zustand", "redux", "vitest", "vite", "seo", "ai"], "size_kb": 6.8, "sections": ["\u26a1 Framework Comparison Matrix", "\u269b\ufe0f React Ecosystem", "Core", "Essential React Libraries", "\ud83d\udc9a Vue 3 Ecosystem", "Core Setup"]}, {"id": 33, "filename": "03_BACKEND_FRAMEWORKS.md", "title": "03 \u2014 Backend Architecture: Fastify, NestJS, FastAPI & Go", "category": "Backend Frameworks", "description": "Choosing a backend technology, building APIs, or architecting server-side logic.", "tags": ["react", "angular", "postgres", "auth", "jwt", "ai"], "size_kb": 6.9, "sections": ["\ud83c\udfd7\ufe0f Backend Framework Comparison", "\ud83d\udfe2 Node.js Backends", "Express.js", "Fastify (2x faster than Express)", "NestJS (Enterprise Node.js)", "Hono (Ultra-lightweight, Edge-ready)"]}, {"id": 34, "filename": "04_CSS_STYLING.md", "title": "04 \u2014 CSS & Styling: Tailwind CSS v4, Modern Tokens & CSS Vars", "category": "CSS & Styling", "description": "Styling any web project, choosing a CSS methodology, or setting up a styling system.", "tags": ["vue", "svelte", "tailwind", "css", "animation", "vite", "ai", "icons"], "size_kb": 7.4, "sections": ["\u26a1 CSS Framework Comparison", "\ud83c\udf0a Tailwind CSS (Most Popular Utility-First)", "Setup with Vite", "Essential Tailwind Plugins", "Tailwind Quick Reference", "\ud83c\udd71\ufe0f Bootstrap 5"]}, {"id": 35, "filename": "05_TYPOGRAPHY_FONTS.md", "title": "05 \u2014 Typography & Font Pairings: Plus Jakarta, Space Grotesk & Inter", "category": "Typography & Fonts", "description": "Choosing fonts, setting up type scales, or optimizing font loading.", "tags": ["tailwind", "css", "ai", "fonts"], "size_kb": 6.1, "sections": ["\ud83c\udfaf Typography Principles", "\ud83d\udd24 Google Fonts (Free, 1500+ fonts)", "Top Professional Font Pairings", "\ud83d\udc8e Premium & Variable Fonts", "Variable Fonts (Single file, all weights)", "Top Variable Fonts (Free)"]}, {"id": 36, "filename": "06_ICONS_ILLUSTRATIONS.md", "title": "06 \u2014 Modern Iconography: Lucide, FontAwesome & SVG Standards", "category": "Icons & Illustrations", "description": "Adding icons to any web project or selecting illustration styles.", "tags": ["react", "tailwind", "animation", "3d", "ai", "icons"], "size_kb": 5.8, "sections": ["\ud83d\udd37 Icon Libraries Comparison", "\u2b50 Top Recommended Icon Libraries", "1. Lucide React (Best Default Choice)", "2. Heroicons (Tailwind Team)", "3. Phosphor Icons (Most Variants)", "4. React Icons (Meta-library, 60k+ icons)"]}, {"id": 37, "filename": "07_ANIMATIONS_MOTION.md", "title": "07 \u2014 Motion Design: Framer Motion, GSAP & Micro-Interactions", "category": "Animations & Motion", "description": "Adding animations, transitions, scroll effects, or micro-interactions to a website.", "tags": ["react", "css", "animation", "gsap", "framer", "3d", "seo", "ai"], "size_kb": 6.3, "sections": ["\ud83c\udfac Animation Library Comparison", "\ud83c\udfaf Framer Motion (React)", "Basic Animations", "Scroll Animations", "Stagger Children", "\ud83c\udfaa GSAP (Professional Grade)"]}, {"id": 38, "filename": "08_3D_GRAPHICS_WEBGL.md", "title": "08 \u2014 3D & WebGL: Three.js Particles, Shaders & Kinetic Geometries", "category": "3D Graphics & WebGL", "description": "Adding 3D elements, WebGL effects, or immersive experiences to a website.", "tags": ["react", "animation", "gsap", "3d"], "size_kb": 6.1, "sections": ["\ud83d\udd3a 3D/WebGL Library Comparison", "\u26a1 React Three Fiber (R3F) \u2014 Recommended", "Basic Scene Setup", "Drei Helpers (100+ utilities)", "Loading GLTF Models", "\ud83c\udf0c Three.js Basics (Without React)"]}, {"id": 39, "filename": "09_DATABASE_ORM.md", "title": "09 \u2014 Database Architecture: PostgreSQL, SQLite FTS5 & Prisma", "category": "Databases & ORM", "description": "Choosing a database, setting up ORM, or designing data models.", "tags": ["postgres", "prisma", "drizzle", "auth", "docker", "ai"], "size_kb": 7.0, "sections": ["\ud83d\udd37 Database Types Overview", "\ud83d\udc18 PostgreSQL (Recommended SQL DB)", "Why PostgreSQL?", "Setup with Docker", "Connection", "\u26a1 Prisma ORM (Best Node.js ORM)"]}, {"id": 40, "filename": "10_AUTH_SECURITY.md", "title": "10 \u2014 Security & Auth: Environmental Secrets & Best Practices", "category": "Authentication & Security", "description": "Adding user authentication, managing sessions, or securing a web application.", "tags": ["nextjs", "postgres", "prisma", "auth", "jwt", "clerk", "ai"], "size_kb": 6.9, "sections": ["\ud83d\udd11 Authentication Methods", "\u2b50 Auth.js / NextAuth.js (Best for Next.js)", "Setup (Next.js App Router)", "\ud83d\udd25 Supabase Auth (All-in-One)", "\ud83d\udd10 Clerk (Fastest to Implement)", "\ud83d\udee1\ufe0f JWT (JSON Web Tokens)"]}, {"id": 41, "filename": "11_STATE_MANAGEMENT.md", "title": "11 \u2014 State Architecture: Reactive Stores, Zustand & State Flow", "category": "State Management", "description": "Managing global state in frontend applications.", "tags": ["react", "vue", "zustand", "redux", "ai"], "size_kb": 6.4, "sections": ["\ud83d\udd37 State Management Comparison", "\u2b50 Zustand (Recommended for Most)", "Basic Store", "Zustand with Persistence", "Zustand with Immer (Immutable updates)", "\u269b\ufe0f Jotai (Atomic State)"]}, {"id": 42, "filename": "12_TESTING_QA.md", "title": "12 \u2014 Quality Assurance: Vitest, Playwright & Cross-Browser QA", "category": "Testing & QA", "description": "Setting up tests, writing test cases, or ensuring code quality.", "tags": ["react", "css", "auth", "vitest", "playwright", "vite", "ai"], "size_kb": 6.1, "sections": ["\ud83d\udd37 Testing Strategy Pyramid", "\u26a1 Vitest (Recommended \u2014 Fast, Vite-native)", "\ud83e\udde9 React Testing Library", "\ud83c\udfad Playwright (E2E Testing \u2014 Recommended)", "\ud83c\udf32 Cypress (E2E Alternative)", "\ud83d\udd27 Jest (Classic Testing)"]}, {"id": 43, "filename": "13_BUILD_TOOLS.md", "title": "13 \u2014 Build Tooling: Vite, Bundling, Asset Pipeline & Tree Shaking", "category": "Build Tools & Bundlers", "description": "Configuring build pipelines, optimizing bundles, or setting up dev environments.", "tags": ["react", "vue", "tailwind", "css", "framer", "vitest", "playwright", "vite", "ai"], "size_kb": 5.8, "sections": ["\u26a1 Build Tool Comparison", "\u26a1 Vite (Recommended)", "vite.config.ts", "Vite Plugins", "\ud83d\udce6 Webpack 5 (Legacy but Powerful)", "webpack.config.js"]}, {"id": 44, "filename": "14_PERFORMANCE.md", "title": "14 \u2014 Performance Optimization & Core Web Vitals (LCP/FID/CLS)", "category": "Performance & CWV", "description": "Improving website speed, Core Web Vitals, or optimizing assets.", "tags": ["react", "css", "vite", "ai", "fonts"], "size_kb": 6.4, "sections": ["\ud83d\udcca Core Web Vitals Targets", "\ud83d\uddbc\ufe0f Image Optimization", "Next.js Image Component (Best Practice)", "Sharp (Node.js Image Processing)", "Modern Image Formats", "CSS for Images"]}, {"id": 45, "filename": "15_ACCESSIBILITY.md", "title": "15 \u2014 Accessibility (A11y): WCAG 2.2 AA Standards & ARIA Roles", "category": "Accessibility (A11y)", "description": "Ensuring your website is accessible to all users. WCAG compliance is required in many regions.", "tags": ["react", "tailwind", "css", "accessibility", "wcag", "ai"], "size_kb": 6.0, "sections": ["\ud83c\udfaf WCAG 2.2 Compliance Levels", "\ud83c\udfa8 Color Contrast Requirements", "Contrast Check Tools", "\ud83d\udcdd Semantic HTML", "\u2328\ufe0f Keyboard Navigation", "Keyboard Trap for Modals"]}, {"id": 46, "filename": "16_SEO_ANALYTICS.md", "title": "16 \u2014 SEO & Structured Data: Schema.org MedicalClinic JSON-LD", "category": "SEO & Analytics", "description": "Optimizing for search engines, setting up analytics, or improving discoverability.", "tags": ["auth", "seo", "ai"], "size_kb": 7.3, "sections": ["\ud83d\udd0d SEO Fundamentals", "HTML Meta Tags", "\ud83d\udcca Next.js Metadata API", "\ud83d\uddfa\ufe0f Sitemap & Robots.txt", "Next.js Sitemap (app/sitemap.ts)", "robots.txt (app/robots.ts)"]}, {"id": 47, "filename": "17_DEPLOYMENT_DEVOPS.md", "title": "17 \u2014 Production Deployment: Vercel CDN, Edge Networks & Headers", "category": "Deployment & DevOps", "description": "Deploying a website, setting up CI/CD, or configuring hosting infrastructure.", "tags": ["react", "nextjs", "css", "postgres", "docker", "ai"], "size_kb": 6.4, "sections": ["\ud83c\udf0d Hosting Platform Comparison", "\u25b2 Vercel (Recommended for Next.js)", "vercel.json Configuration", "Environment Variables in Vercel", "\ud83d\udc33 Docker", "Dockerfile (Node.js / Next.js)"]}, {"id": 48, "filename": "18_API_REST_GRAPHQL.md", "title": "18 \u2014 API Design: REST Protocols & Asynchronous Communications", "category": "APIs & WebSockets", "description": "Designing APIs, choosing between REST/GraphQL, or adding real-time features.", "tags": ["react", "prisma", "auth", "ai"], "size_kb": 7.2, "sections": ["\ud83d\udd37 API Technology Comparison", "\ud83c\udf10 REST API Best Practices", "URL Design", "HTTP Status Codes", "Standard Response Format", "\u26a1 tRPC (TypeScript Full-Stack)"]}, {"id": 49, "filename": "19_COMPONENT_LIBRARIES.md", "title": "19 \u2014 Component Architecture: Accessible Headless UI & Tokens", "category": "Component Libraries", "description": "Picking ready-made UI components, comparing UI kits, or finding specific component implementations.", "tags": ["react", "vue", "tailwind", "css", "framer", "ai", "icons"], "size_kb": 7.0, "sections": ["\u2b50 Top Component Libraries (2025)", "1. shadcn/ui \u2014 The Best Default Choice", "Available shadcn Components", "2. Material UI (MUI) \u2014 Google Material Design", "3. Mantine \u2014 Full-Featured, 100+ Components", "4. Chakra UI \u2014 Accessible & Themeable"]}, {"id": 50, "filename": "20_COLOR_DESIGN_TOKENS.md", "title": "20 \u2014 Color Systems: OKLCH, Contrast Ratios & Dark/Light Modes", "category": "Color & Design Tokens", "description": "Choosing colors, setting up a design token system, or building themes.", "tags": ["react", "tailwind", "css", "wcag", "ai"], "size_kb": 7.2, "sections": ["\ud83c\udf08 Color Theory Basics", "\ud83c\udfa8 Color Palette Systems", "Tailwind CSS Color Scale (Most Popular)", "Tailwind Color Reference", "Blues (Default: blue-600 for buttons)", "Greens (Success states)"]}, {"id": 51, "filename": "21_ENHANCED_UI_COMPONENTS.md", "title": "21 \u2014 Enhanced UI Components: Glassmorphism, Bento Grids & Cards", "category": "UI Components (Deep-Dive)", "description": "Source: bradtraversy/design-resources-for-developers, enaqx/awesome-react, vuejs/awesome-vue", "tags": ["react", "vue", "angular", "svelte", "tailwind", "css", "animation", "framer", "accessibility", "i18n", "ai", "icons"], "size_kb": 8.6, "sections": ["\u2b50 React Component Libraries \u2014 Full Reference", "shadcn/ui \u2b50 84k+", "Material UI (MUI) \u2b50 94k+", "Ant Design \u2b50 93k+", "Mantine \u2b50 28k+", "Chakra UI \u2b50 38k+"]}, {"id": 52, "filename": "22_ANIMATION_SCROLL_LIBS.md", "title": "22 \u2014 Scroll Effects & Kinetic Timeline Physics", "category": "Scroll & Animation Libs", "description": "Source: bradtraversy/design-resources-for-developers, GitHub Trending 2025", "tags": ["react", "css", "animation", "gsap", "framer", "3d", "seo", "ai", "icons"], "size_kb": 9.0, "sections": ["JavaScript Animation Libraries \u2014 Full Index", "CSS Animation Libraries", "Scroll Animation Libraries", "AOS Usage", "Lenis (Smooth Scroll)", "Background Animation Libraries"]}, {"id": 53, "filename": "23_ICON_FONT_TOOLS.md", "title": "23 \u2014 Icon Tooling & Typography Optimization", "category": "Icons & Fonts (Exhaustive)", "description": "Source: bradtraversy/design-resources-for-developers, GitHub awesome lists", "tags": ["react", "tailwind", "css", "3d", "ai", "icons", "fonts"], "size_kb": 9.1, "sections": ["\ud83d\udd37 Icon Libraries \u2014 Complete Reference", "SVG Icon Libraries", "Icon Usage Code Examples", "Lucide (Recommended)", "Heroicons", "React Icons (Meta-library)"]}, {"id": 54, "filename": "24_FORMS_VALIDATION_UPLOADS.md", "title": "24 \u2014 Forms & Validation: Multi-step Booking & Input Verification", "category": "Forms & File Uploads", "description": "Building user forms, validation pipelines, multi-step wizards, or file upload systems.", "tags": ["react", "vue", "auth", "zustand", "ai"], "size_kb": 5.5, "sections": ["\ud83d\udccb Form Library Comparison (React & Modern Web)", "\u26a1 React Hook Form + Zod (Industry Standard 2025)", "Complete Production Example", "\ud83d\udcc1 File Upload Libraries & Solutions", "Direct Cloud Upload Pattern (S3 / Cloudflare R2)", "\ud83e\uddd9\u200d\u2642\ufe0f Multi-Step Wizard Pattern"]}, {"id": 55, "filename": "25_ECOMMERCE_PAYMENTS.md", "title": "25 \u2014 E-Commerce & Patient Consultation Fee Workflows", "category": "E-Commerce & Payments", "description": "Building checkout flows, subscriptions, carts, Stripe webhooks, or product showcases.", "tags": ["zustand", "stripe", "ai"], "size_kb": 4.5, "sections": ["\ud83d\udecd\ufe0f Payment Gateway Comparison", "\u26a1 Stripe Integration (Next.js App Router)", "1. Stripe Client Checkout Session (API Route)", "2. Stripe Secure Webhook Handler", "\ud83d\uded2 Shopping Cart State with Zustand"]}, {"id": 56, "filename": "26_I18N_LOCALIZATION_RTL.md", "title": "26 \u2014 Localization & Regional Language Adaptability", "category": "i18n & Localization & RTL", "description": "Translating websites, handling multi-currency/dates, or building right-to-left (Arabic/Hebrew) UIs.", "tags": ["react", "vue", "tailwind", "css", "i18n", "ai"], "size_kb": 1.8, "sections": ["\ud83c\udf10 Top i18n Libraries", "\u26a1 Next.js App Router i18n with `next-intl`", "Folder Structure", "RTL (Right-to-Left) Support with Tailwind CSS", "Number, Currency & Date Formatting (Native Web API)"]}, {"id": 57, "filename": "27_AI_INTEGRATION_LLM_UI.md", "title": "27 \u2014 Generative AI & Clinical Conversational Interfaces", "category": "AI Integration & Generative UI", "description": "Integrating LLMs, streaming chats, AI assistants, or generative UI components.", "tags": ["react", "ai"], "size_kb": 2.6, "sections": ["\ud83d\udee0\ufe0f Essential AI Toolkits & SDKs", "\u26a1 Streaming AI Chat with Vercel AI SDK", "1. Backend Route Handler (Next.js)", "2. Frontend React Component (`useChat`)"]}, {"id": 58, "filename": "README.md", "title": "README \u2014 Master Knowledge Base Directory & SQLite FTS5 Engine", "category": "Master Directory & Guides", "description": "**Curated from top GitHub repositories, awesome lists, and industry standards (2025\u20132026)**", "tags": ["react", "vue", "svelte", "tailwind", "css", "animation", "gsap", "framer", "3d", "postgres", "prisma", "drizzle", "auth", "jwt", "clerk", "zustand", "redux", "vitest", "playwright", "vite", "docker", "seo", "accessibility", "wcag", "stripe", "i18n", "ai", "icons", "fonts"], "size_kb": 5.7, "sections": ["\ud83d\uddc4\ufe0f Database Quick Start", "\ud83d\udcc1 Complete Knowledge Base Files", "\ud83c\udfaf Architecture Decision Matrix"]}];
+
+    // 2. THREE.JS 3D KINETIC PARTICLE SPINE & MESH
+    let scene, camera, renderer, particles;
+    let mouseX = 0, mouseY = 0;
+    let windowHalfX = window.innerWidth / 2;
+    let windowHalfY = window.innerHeight / 2;
+
+    function initThree() {
+      const canvas = document.getElementById('three-canvas');
+      if (!canvas) return;
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
+      camera.position.z = 500;
+
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Create 3D Double-Helix Spine & Kinetic Nodes
+      const particleCount = 1200;
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      const colors = new Float32Array(particleCount * 3);
+
+      const color1 = new THREE.Color(0x00f2fe);
+      const color2 = new THREE.Color(0x00e676);
+
+      for (let i = 0; i < particleCount; i++) {
+        const t = (i / particleCount) * Math.PI * 8;
+        const radius = 90 + Math.sin(t * 3) * 35;
+        
+        const x = Math.cos(t) * radius + (Math.random() - 0.5) * 40;
+        const y = (i - particleCount / 2) * 1.2 + (Math.random() - 0.5) * 30;
+        const z = Math.sin(t) * radius + (Math.random() - 0.5) * 40;
+
+        positions[i * 3] = x;
+        positions[i * 3 + 1] = y;
+        positions[i * 3 + 2] = z;
+
+        const lerped = color1.clone().lerp(color2, i / particleCount);
+        colors[i * 3] = lerped.r;
+        colors[i * 3 + 1] = lerped.g;
+        colors[i * 3 + 2] = lerped.b;
+      }
+
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      const material = new THREE.PointsMaterial({
+        size: 3.5,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.75,
+        blending: THREE.AdditiveBlending
+      });
+
+      particles = new THREE.Points(geometry, material);
+      scene.add(particles);
+
+      window.addEventListener('resize', onWindowResize, false);
+      document.addEventListener('mousemove', onDocumentMouseMove, false);
+      animateThree();
+    }
+
+    function onWindowResize() {
+      windowHalfX = window.innerWidth / 2;
+      windowHalfY = window.innerHeight / 2;
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function onDocumentMouseMove(event) {
+      mouseX = (event.clientX - windowHalfX) * 0.15;
+      mouseY = (event.clientY - windowHalfY) * 0.15;
+    }
+
+    function animateThree() {
+      requestAnimationFrame(animateThree);
+      if (particles) {
+        particles.rotation.y += 0.002;
+        particles.rotation.x += 0.001;
+        particles.position.x += (mouseX - particles.position.x) * 0.04;
+        particles.position.y += (-mouseY - particles.position.y) * 0.04;
+      }
+      renderer.render(scene, camera);
+    }
+
+    // 3. TEMPLATE SWITCHER ENGINE
+    function setTemplate(themeName) {
+      document.body.setAttribute('data-theme', themeName);
+      localStorage.setItem('srijjr_theme', themeName);
+
+      document.querySelectorAll('.tmpl-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      const activeBtn = document.querySelector(`.tmpl-btn[onclick*="${themeName}"]`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      if (themeName === 'visiting-card') {
+        const cardSection = document.getElementById('card-showcase');
+        if (cardSection) cardSection.scrollIntoView({ behavior: 'smooth' });
+      } else if (themeName === 'patient-portal') {
+        const portalSection = document.getElementById('symptom-portal');
+        if (portalSection) portalSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // 4. 3D VISITING CARD TILT & FLIP PHYSICS
+    const cardWrapper = document.getElementById('visitingCardWrapper');
+    const cardElement = document.getElementById('main3DCard');
+
+    if (cardWrapper && cardElement) {
+      cardWrapper.addEventListener('mousemove', (e) => {
+        const rect = cardWrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -14;
+        const rotateY = ((x - centerX) / centerX) * 14;
+
+        if (!cardElement.classList.contains('flipped')) {
+          cardElement.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
+      });
+
+      cardWrapper.addEventListener('mouseleave', () => {
+        if (!cardElement.classList.contains('flipped')) {
+          cardElement.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        }
+      });
+
+      cardWrapper.addEventListener('click', () => {
+        flipMainCard();
+      });
+    }
+
+    function flipMainCard() {
+      if (cardElement) {
+        cardElement.classList.toggle('flipped');
+        if (cardElement.classList.contains('flipped')) {
+          cardElement.style.transform = 'rotateY(180deg)';
+        } else {
+          cardElement.style.transform = 'rotateY(0deg)';
+        }
+      }
+    }
+
+    function toggleCardFlip(elem) {
+      elem.classList.toggle('flipped');
+    }
+
+    // 5. VCARD (.VCF) GENERATOR
+    function downloadVCard() {
+      const vcardData = 
+`BEGIN:VCARD
+VERSION:3.0
+N:Gayathri;Dr. S.;;;
+FN:Dr. S. Gayathri
+TITLE:Consultant Physiotherapist
+ORG:Sri J.J.R. Physiotherapy Clinic
+TEL;TYPE=WORK,VOICE:+919493791045
+TEL;TYPE=CELL:+918247532422
+EMAIL:srijjrphysio@gmail.com
+ADR;TYPE=WORK:;;Shop No-3, #38-16-77/1, Jyothi Nagar Road, Raman School Down;Marripalem;Visakhapatnam;530018;India
+NOTE:Reg No: L-52781 | B.P.T, M.I.A.P, M.P.T (Ortho). Specializing in Orthopaedic, Spinal, Neurological and Paediatric Rehabilitation.
+URL:https://srijjr-physiotherapy.vercel.app
+END:VCARD`;
+
+      const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'Dr_S_Gayathri_Sri_JJR_Physiotherapy.vcf');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
+    }
+
+    // 6. SYMPTOM NAVIGATOR DATA & LOGIC
+    const SYMPTOMS_DATA = {
+      knee: {
+        title: "Knee Joint Pain & Osteoarthritis",
+        subtitle: "Relief for grinding sensations, stiffness, meniscus strain, and post-op knee mobilization.",
+        symptoms: [
+          "Pain while climbing or descending stairs",
+          "Swelling and reduced range of motion in knee",
+          "Crepitus (clicking or grinding sensations)",
+          "Post-operative joint stiffness following arthroscopy or replacement"
+        ],
+        therapy: "Targeted ultrasound joint therapy, patellar mobilization, quadriceps strengthening, and neuromuscular kinetic alignment.",
+        timeline: "Significant pain reduction within 2 to 3 weeks of conservative therapy.",
+        conditionKey: "Orthopaedic Conditions (Knee/Shoulder/Elbow/Joint)"
+      },
+      spine: {
+        title: "Spinal Spondylosis, Sciatica & Slip Disc",
+        subtitle: "Non-surgical decompression for cervical neck strain, radiating arm pain, and lumbar disc herniation.",
+        symptoms: [
+          "Sharp shooting pain radiating down buttocks to legs (Sciatica)",
+          "Cervical spondylosis radiating into shoulders and hands",
+          "Morning stiffness and difficulty bending forwards",
+          "Postural muscle spasms from prolonged desk work"
+        ],
+        therapy: "Negative-pressure spinal traction, core transverse abdominis retraining, and nerve root mobilization.",
+        timeline: "Noticeable radiation relief within 5 to 7 sessions without surgical intervention.",
+        conditionKey: "Spinal Conditions (Spondylosis/Sciatica/Slip Disc)"
+      },
+      shoulder: {
+        title: "Frozen Shoulder & Rotator Cuff Capsulitis",
+        subtitle: "Gentle grade III-IV capsular stretching, pain relief, and regaining overhead arm reaching.",
+        symptoms: [
+          "Inability to lift arm overhead or fasten clothes behind back",
+          "Deep aching pain at night disrupting sleep",
+          "Tennis / Golfer's elbow pain radiating from forearm",
+          "Post-fracture joint tightness"
+        ],
+        therapy: "Maitland joint mobilizations, moist therapeutic heat, TENS pain blockage, and scapular stabilizer retraining.",
+        timeline: "Progressive functional range restored across 4 to 6 weeks.",
+        conditionKey: "Orthopaedic Conditions (Knee/Shoulder/Elbow/Joint)"
+      },
+      neuro: {
+        title: "Stroke Paralysis, Facial Palsy & GBS",
+        subtitle: "Evidence-based neuro-plasticity motor re-education and facial muscle stimulation.",
+        symptoms: [
+          "Hemiplegia / weakness on one side of the body after stroke",
+          "Bell's palsy facial drooping and difficulty closing eye or smiling",
+          "Guillain-Barr? Syndrome (GBS) ascending muscle weakness",
+          "Parkinson's gait freezing and balance instability"
+        ],
+        therapy: "Faradic/Galvanic neuromuscular electrical stimulation, mirror therapy, gait training, and proprioceptive drills.",
+        timeline: "Continuous motor milestone gains over structured 3 to 6-month clinical rehabilitation.",
+        conditionKey: "Neurological Conditions (Stroke/Paralysis/Bell's Palsy/GBS)"
+      },
+      paediatric: {
+        title: "Paediatric Cerebral Palsy & Developmental Delays",
+        subtitle: "Compassionate, play-integrated physiotherapy for infants, toddlers, and young children.",
+        symptoms: [
+          "Delayed motor milestones (sitting, standing, walking)",
+          "Hypertonic muscle spasticity or hypotonic floppiness in CP",
+          "Muscular Dystrophy progression",
+          "Autism Spectrum Disorder sensory-motor clumsiness"
+        ],
+        therapy: "Neuro-Developmental Treatment (NDT), sensory integration, balance board coordination, and caregiver home handling education.",
+        timeline: "Goal-directed milestone progression monitored every month.",
+        conditionKey: "Paediatric Conditions (Cerebral Palsy/Muscular Dystrophy)"
+      }
+    };
+
+    function selectSymptom(key) {
+      document.querySelectorAll('.portal-tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      const activeBtn = document.querySelector(`.portal-tab-btn[onclick*="${key}"]`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const data = SYMPTOMS_DATA[key];
+      const box = document.getElementById('portalDetailsBox');
+      if (box && data) {
+        box.innerHTML = `
+          <div class="portal-detail-card">
+            <h4>${data.title}</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">${data.subtitle}</p>
+            <ul class="portal-features-list">
+              ${data.symptoms.map(s => `<li><i class="fa-solid fa-circle-exclamation"></i> <span>${s}</span></li>`).join('')}
+            </ul>
+          </div>
+          <div class="portal-detail-card">
+            <h4>Clinical Protocol & Recovery</h4>
+            <p style="font-size: 0.95rem; color: var(--text-head); margin-bottom: 16px;">
+              <strong>Rehabilitation Method:</strong> ${data.therapy}
+            </p>
+            <div style="background: var(--badge-bg); border: 1px solid var(--badge-border); padding: 12px; border-radius: 10px; margin-bottom: 20px;">
+              <strong style="color: var(--primary); font-size: 0.85rem;"><i class="fa-solid fa-hourglass-half"></i> Expected Timeline:</strong>
+              <p style="font-size: 0.86rem; color: var(--text-head); margin-top: 4px;">${data.timeline}</p>
+            </div>
+            <button class="btn-cta" style="width: 100%; justify-content: center;" onclick="preselectCondition('${data.conditionKey}')">
+              <i class="fa-brands fa-whatsapp"></i> Book Evaluation for This Condition
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function preselectCondition(conditionVal) {
+      const select = document.getElementById('conditionSelect');
+      if (select) {
+        select.value = conditionVal;
+        const bookSection = document.getElementById('book');
+        if (bookSection) bookSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // 7. ONLINE APPOINTMENT FORM & WHATSAPP GENERATION
+    function handleAppointmentSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('patientName').value.trim();
+      const phone = document.getElementById('patientPhone').value.trim();
+      const condition = document.getElementById('conditionSelect').value;
+      const date = document.getElementById('prefDate').value;
+      const slot = document.getElementById('prefTime').value;
+      const notes = document.getElementById('patientNotes').value.trim();
+
+      const message = `Hello Dr. S. Gayathri / Sri J.J.R. Physiotherapy Clinic,
+
+I would like to book a physiotherapy consultation appointment.
+
+?? *Patient Name:* ${name}
+?? *Phone:* ${phone}
+?? *Condition / Concern:* ${condition}
+?? *Preferred Date:* ${date}
+? *Preferred Time Slot:* ${slot}
+?? *Notes:* ${notes || 'None'}
+
+Please confirm my appointment slot. Thank you!`;
+
+      const encoded = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/919493791045?text=${encoded}`;
+
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // 8. RENDER CURATED .MD DATABASE INVENTORY (29 Documents)
+    let currentCategory = 'All';
+
+    function renderInventory(docs) {
+      const grid = document.getElementById('inventoryCardsGrid');
+      if (!grid) return;
+
+      if (!docs.length) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-muted);">No documents match your query.</p>';
+        return;
+      }
+
+      grid.innerHTML = docs.map(doc => `
+        <div class="doc-card" onclick="openDocModal(${doc.id})">
+          <div>
+            <div class="doc-card-top">
+              <span class="doc-file-badge">${doc.filename}</span>
+              <span class="doc-size-badge">${doc.size_kb} KB</span>
+            </div>
+            <h4>${doc.title}</h4>
+            <p>${doc.description}</p>
+            <div class="doc-tag-pills">
+              ${doc.tags.slice(0, 4).map(t => `<span class="tag-pill">#${t}</span>`).join('')}
+            </div>
+          </div>
+          <button class="doc-card-btn">
+            <span>View Architecture Spec</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function filterInventory() {
+      const query = document.getElementById('inventorySearch').value.toLowerCase();
+      const filtered = DB_INVENTORY.filter(doc => {
+        const matchesCat = (currentCategory === 'All') || 
+                           (doc.category.toLowerCase().includes(currentCategory.toLowerCase())) ||
+                           (doc.filename.toLowerCase().includes(currentCategory.toLowerCase()));
+        const matchesQuery = doc.filename.toLowerCase().includes(query) ||
+                             doc.title.toLowerCase().includes(query) ||
+                             doc.category.toLowerCase().includes(query) ||
+                             doc.tags.some(t => t.toLowerCase().includes(query));
+        return matchesCat && matchesQuery;
+      });
+      renderInventory(filtered);
+    }
+
+    function setDocCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+      const active = Array.from(document.querySelectorAll('.cat-chip')).find(c => c.textContent.includes(cat));
+      if (active) active.classList.add('active');
+      filterInventory();
+    }
+
+    function scrollToInventory() {
+      const inv = document.getElementById('inventory');
+      if (inv) inv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 9. MODAL VIEW FOR DATABASE DOCUMENTS
+    function openDocModal(docId) {
+      const doc = DB_INVENTORY.find(d => d.id === docId);
+      if (!doc) return;
+
+      const modal = document.getElementById('docModal');
+      const body = document.getElementById('modalBody');
+
+      body.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+          <div>
+            <span class="doc-file-badge" style="font-size: 0.9rem;">${doc.filename}</span>
+            <h3 style="font-size: 1.4rem; color: var(--text-head); margin-top: 8px;">${doc.title}</h3>
+            <p style="color: var(--secondary); font-weight: 700; font-size: 0.88rem;">Category: ${doc.category} ? Size: ${doc.size_kb} KB</p>
+          </div>
+        </div>
+
+        <p style="color: var(--text-body); font-size: 0.95rem; margin-bottom: 20px;">
+          ${doc.description}
+        </p>
+
+        <h4 style="color: var(--text-head); font-size: 1rem; margin-bottom: 10px;">Primary Sections in SQLite Database:</h4>
+        <ul style="list-style: disc; margin-left: 20px; color: var(--text-body); font-size: 0.9rem; margin-bottom: 20px;">
+          ${doc.sections.map(s => `<li><strong>${s}</strong></li>`).join('')}
+        </ul>
+
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-main); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+          <h5 style="color: var(--primary); font-size: 0.9rem; margin-bottom: 6px;">Implementation in this Clinic Application:</h5>
+          <p style="font-size: 0.86rem; color: var(--text-body);">
+            This document directly establishes the technical standards used throughout this website, ensuring zero layout shifts, high contrast readability for clinical accessibility, and instantaneous client-side performance.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          ${doc.tags.map(t => `<span class="tag-pill" style="background: var(--badge-bg); color: var(--primary);">#${t}</span>`).join('')}
+        </div>
+      `;
+
+      modal.classList.add('open');
+    }
+
+    function closeDocModal(e) {
+      if (!e || e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close-btn')) {
+        const modal = document.getElementById('docModal');
+        if (modal) modal.classList.remove('open');
+      }
+    }
+
+    // 10. INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+      initThree();
+      selectSymptom('knee');
+      renderInventory(DB_INVENTORY);
+
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const dateInput = document.getElementById('prefDate');
+      if (dateInput) dateInput.value = tomorrow.toISOString().split('T')[0];
+
+      const savedTheme = localStorage.getItem('srijjr_theme');
+      if (savedTheme) {
+        setTemplate(savedTheme);
+      }
+    });
+  </script>
+</body>
+</html>

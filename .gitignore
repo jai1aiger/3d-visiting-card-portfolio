@@ -1,9 +1,20 @@
-﻿# Virtual Environment
+# Virtual Environment
 .venv/
 venv/
 env/
 __pycache__/
 *.pyc
+
+# Large Media & Archives
+*.zip
+*.mp4
+
+# Temporary test outputs
+test*.png
+screenshot*.png
+back_m1.png
+back_m2.png
+test_view_back.jpg
 
 # IDE & System Cache
 .vscode/
@@ -14,5 +25,6 @@ Desktop.ini
 $RECYCLE.BIN/
 .DS_Store
 
-# Logs
+# Logs & Deployment
 *.log
+.vercel

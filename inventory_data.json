@@ -1,0 +1,748 @@
+[
+  {
+    "id": 30,
+    "filename": "00_MASTER_INDEX.md",
+    "title": "00 \u2014 Master Tool Index (GitHub Stars Reference 2025\u20132026)",
+    "category": "Index & Quick Reference",
+    "description": "**Source**: Curated from sindresorhus/awesome, bradtraversy/design-resources-for-developers, enaqx/awesome-react, vuejs/awesome-vue, GitHub Trending",
+    "tags": [
+      "react",
+      "vue",
+      "angular",
+      "svelte",
+      "tailwind",
+      "css",
+      "animation",
+      "gsap",
+      "framer",
+      "3d",
+      "postgres",
+      "prisma",
+      "drizzle",
+      "auth",
+      "jwt",
+      "clerk",
+      "zustand",
+      "redux",
+      "vitest",
+      "playwright",
+      "vite",
+      "docker",
+      "seo",
+      "accessibility",
+      "wcag",
+      "stripe",
+      "ai",
+      "icons",
+      "fonts"
+    ],
+    "size_kb": 5.4,
+    "sections": [
+      "\u2b50 Complete Star Count Reference",
+      "\ud83d\udcc1 Knowledge Base File Guide",
+      "\ud83c\udfaf Decision Flowchart"
+    ]
+  },
+  {
+    "id": 31,
+    "filename": "01_UI_UX_DESIGN.md",
+    "title": "01 \u2014 UI/UX Design Principles & Modern Layout Patterns",
+    "category": "UI/UX & Design Systems",
+    "description": "**Source**: Curated from GitHub awesome lists, top-starred repositories, and professional design communities.",
+    "tags": [
+      "react",
+      "vue",
+      "angular",
+      "svelte",
+      "tailwind",
+      "css",
+      "animation",
+      "gsap",
+      "framer",
+      "accessibility",
+      "wcag",
+      "ai"
+    ],
+    "size_kb": 7.5,
+    "sections": [
+      "\ud83d\udcd0 Design Systems & Principles",
+      "What Makes Great UI/UX?",
+      "\ud83d\udd8c\ufe0f Design Tools (Software)",
+      "Prototyping & Wireframing",
+      "Design Handoff",
+      "\ud83e\udde9 Component Library Ecosystems"
+    ]
+  },
+  {
+    "id": 32,
+    "filename": "02_FRONTEND_FRAMEWORKS.md",
+    "title": "02 \u2014 Frontend Frameworks: React, Next.js, Vue, Svelte & Astro",
+    "category": "Frontend Frameworks",
+    "description": "Choosing a frontend framework for a new project, or understanding the ecosystem.",
+    "tags": [
+      "react",
+      "vue",
+      "angular",
+      "svelte",
+      "tailwind",
+      "css",
+      "animation",
+      "framer",
+      "zustand",
+      "redux",
+      "vitest",
+      "vite",
+      "seo",
+      "ai"
+    ],
+    "size_kb": 6.8,
+    "sections": [
+      "\u26a1 Framework Comparison Matrix",
+      "\u269b\ufe0f React Ecosystem",
+      "Core",
+      "Essential React Libraries",
+      "\ud83d\udc9a Vue 3 Ecosystem",
+      "Core Setup"
+    ]
+  },
+  {
+    "id": 33,
+    "filename": "03_BACKEND_FRAMEWORKS.md",
+    "title": "03 \u2014 Backend Architecture: Fastify, NestJS, FastAPI & Go",
+    "category": "Backend Frameworks",
+    "description": "Choosing a backend technology, building APIs, or architecting server-side logic.",
+    "tags": [
+      "react",
+      "angular",
+      "postgres",
+      "auth",
+      "jwt",
+      "ai"
+    ],
+    "size_kb": 6.9,
+    "sections": [
+      "\ud83c\udfd7\ufe0f Backend Framework Comparison",
+      "\ud83d\udfe2 Node.js Backends",
+      "Express.js",
+      "Fastify (2x faster than Express)",
+      "NestJS (Enterprise Node.js)",
+      "Hono (Ultra-lightweight, Edge-ready)"
+    ]
+  },
+  {
+    "id": 34,
+    "filename": "04_CSS_STYLING.md",
+    "title": "04 \u2014 CSS & Styling: Tailwind CSS v4, Modern Tokens & CSS Vars",
+    "category": "CSS & Styling",
+    "description": "Styling any web project, choosing a CSS methodology, or setting up a styling system.",
+    "tags": [
+      "vue",
+      "svelte",
+      "tailwind",
+      "css",
+      "animation",
+      "vite",
+      "ai",
+      "icons"
+    ],
+    "size_kb": 7.4,
+    "sections": [
+      "\u26a1 CSS Framework Comparison",
+      "\ud83c\udf0a Tailwind CSS (Most Popular Utility-First)",
+      "Setup with Vite",
+      "Essential Tailwind Plugins",
+      "Tailwind Quick Reference",
+      "\ud83c\udd71\ufe0f Bootstrap 5"
+    ]
+  },
+  {
+    "id": 35,
+    "filename": "05_TYPOGRAPHY_FONTS.md",
+    "title": "05 \u2014 Typography & Font Pairings: Plus Jakarta, Space Grotesk & Inter",
+    "category": "Typography & Fonts",
+    "description": "Choosing fonts, setting up type scales, or optimizing font loading.",
+    "tags": [
+      "tailwind",
+      "css",
+      "ai",
+      "fonts"
+    ],
+    "size_kb": 6.1,
+    "sections": [
+      "\ud83c\udfaf Typography Principles",
+      "\ud83d\udd24 Google Fonts (Free, 1500+ fonts)",
+      "Top Professional Font Pairings",
+      "\ud83d\udc8e Premium & Variable Fonts",
+      "Variable Fonts (Single file, all weights)",
+      "Top Variable Fonts (Free)"
+    ]
+  },
+  {
+    "id": 36,
+    "filename": "06_ICONS_ILLUSTRATIONS.md",
+    "title": "06 \u2014 Modern Iconography: Lucide, FontAwesome & SVG Standards",
+    "category": "Icons & Illustrations",
+    "description": "Adding icons to any web project or selecting illustration styles.",
+    "tags": [
+      "react",
+      "tailwind",
+      "animation",
+      "3d",
+      "ai",
+      "icons"
+    ],
+    "size_kb": 5.8,
+    "sections": [
+      "\ud83d\udd37 Icon Libraries Comparison",
+      "\u2b50 Top Recommended Icon Libraries",
+      "1. Lucide React (Best Default Choice)",
+      "2. Heroicons (Tailwind Team)",
+      "3. Phosphor Icons (Most Variants)",
+      "4. React Icons (Meta-library, 60k+ icons)"
+    ]
+  },
+  {
+    "id": 37,
+    "filename": "07_ANIMATIONS_MOTION.md",
+    "title": "07 \u2014 Motion Design: Framer Motion, GSAP & Micro-Interactions",
+    "category": "Animations & Motion",
+    "description": "Adding animations, transitions, scroll effects, or micro-interactions to a website.",
+    "tags": [
+      "react",
+      "css",
+      "animation",
+      "gsap",
+      "framer",
+      "3d",
+      "seo",
+      "ai"
+    ],
+    "size_kb": 6.3,
+    "sections": [
+      "\ud83c\udfac Animation Library Comparison",
+      "\ud83c\udfaf Framer Motion (React)",
+      "Basic Animations",
+      "Scroll Animations",
+      "Stagger Children",
+      "\ud83c\udfaa GSAP (Professional Grade)"
+    ]
+  },
+  {
+    "id": 38,
+    "filename": "08_3D_GRAPHICS_WEBGL.md",
+    "title": "08 \u2014 3D & WebGL: Three.js Particles, Shaders & Kinetic Geometries",
+    "category": "3D Graphics & WebGL",
+    "description": "Adding 3D elements, WebGL effects, or immersive experiences to a website.",
+    "tags": [
+      "react",
+      "animation",
+      "gsap",
+      "3d"
+    ],
+    "size_kb": 6.1,
+    "sections": [
+      "\ud83d\udd3a 3D/WebGL Library Comparison",
+      "\u26a1 React Three Fiber (R3F) \u2014 Recommended",
+      "Basic Scene Setup",
+      "Drei Helpers (100+ utilities)",
+      "Loading GLTF Models",
+      "\ud83c\udf0c Three.js Basics (Without React)"
+    ]
+  },
+  {
+    "id": 39,
+    "filename": "09_DATABASE_ORM.md",
+    "title": "09 \u2014 Database Architecture: PostgreSQL, SQLite FTS5 & Prisma",
+    "category": "Databases & ORM",
+    "description": "Choosing a database, setting up ORM, or designing data models.",
+    "tags": [
+      "postgres",
+      "prisma",
+      "drizzle",
+      "auth",
+      "docker",
+      "ai"
+    ],
+    "size_kb": 7.0,
+    "sections": [
+      "\ud83d\udd37 Database Types Overview",
+      "\ud83d\udc18 PostgreSQL (Recommended SQL DB)",
+      "Why PostgreSQL?",
+      "Setup with Docker",
+      "Connection",
+      "\u26a1 Prisma ORM (Best Node.js ORM)"
+    ]
+  },
+  {
+    "id": 40,
+    "filename": "10_AUTH_SECURITY.md",
+    "title": "10 \u2014 Security & Auth: Environmental Secrets & Best Practices",
+    "category": "Authentication & Security",
+    "description": "Adding user authentication, managing sessions, or securing a web application.",
+    "tags": [
+      "nextjs",
+      "postgres",
+      "prisma",
+      "auth",
+      "jwt",
+      "clerk",
+      "ai"
+    ],
+    "size_kb": 6.9,
+    "sections": [
+      "\ud83d\udd11 Authentication Methods",
+      "\u2b50 Auth.js / NextAuth.js (Best for Next.js)",
+      "Setup (Next.js App Router)",
+      "\ud83d\udd25 Supabase Auth (All-in-One)",
+      "\ud83d\udd10 Clerk (Fastest to Implement)",
+      "\ud83d\udee1\ufe0f JWT (JSON Web Tokens)"
+    ]
+  },
+  {
+    "id": 41,
+    "filename": "11_STATE_MANAGEMENT.md",
+    "title": "11 \u2014 State Architecture: Reactive Stores, Zustand & State Flow",
+    "category": "State Management",
+    "description": "Managing global state in frontend applications.",
+    "tags": [
+      "react",
+      "vue",
+      "zustand",
+      "redux",
+      "ai"
+    ],
+    "size_kb": 6.4,
+    "sections": [
+      "\ud83d\udd37 State Management Comparison",
+      "\u2b50 Zustand (Recommended for Most)",
+      "Basic Store",
+      "Zustand with Persistence",
+      "Zustand with Immer (Immutable updates)",
+      "\u269b\ufe0f Jotai (Atomic State)"
+    ]
+  },
+  {
+    "id": 42,
+    "filename": "12_TESTING_QA.md",
+    "title": "12 \u2014 Quality Assurance: Vitest, Playwright & Cross-Browser QA",
+    "category": "Testing & QA",
+    "description": "Setting up tests, writing test cases, or ensuring code quality.",
+    "tags": [
+      "react",
+      "css",
+      "auth",
+      "vitest",
+      "playwright",
+      "vite",
+      "ai"
+    ],
+    "size_kb": 6.1,
+    "sections": [
+      "\ud83d\udd37 Testing Strategy Pyramid",
+      "\u26a1 Vitest (Recommended \u2014 Fast, Vite-native)",
+      "\ud83e\udde9 React Testing Library",
+      "\ud83c\udfad Playwright (E2E Testing \u2014 Recommended)",
+      "\ud83c\udf32 Cypress (E2E Alternative)",
+      "\ud83d\udd27 Jest (Classic Testing)"
+    ]
+  },
+  {
+    "id": 43,
+    "filename": "13_BUILD_TOOLS.md",
+    "title": "13 \u2014 Build Tooling: Vite, Bundling, Asset Pipeline & Tree Shaking",
+    "category": "Build Tools & Bundlers",
+    "description": "Configuring build pipelines, optimizing bundles, or setting up dev environments.",
+    "tags": [
+      "react",
+      "vue",
+      "tailwind",
+      "css",
+      "framer",
+      "vitest",
+      "playwright",
+      "vite",
+      "ai"
+    ],
+    "size_kb": 5.8,
+    "sections": [
+      "\u26a1 Build Tool Comparison",
+      "\u26a1 Vite (Recommended)",
+      "vite.config.ts",
+      "Vite Plugins",
+      "\ud83d\udce6 Webpack 5 (Legacy but Powerful)",
+      "webpack.config.js"
+    ]
+  },
+  {
+    "id": 44,
+    "filename": "14_PERFORMANCE.md",
+    "title": "14 \u2014 Performance Optimization & Core Web Vitals (LCP/FID/CLS)",
+    "category": "Performance & CWV",
+    "description": "Improving website speed, Core Web Vitals, or optimizing assets.",
+    "tags": [
+      "react",
+      "css",
+      "vite",
+      "ai",
+      "fonts"
+    ],
+    "size_kb": 6.4,
+    "sections": [
+      "\ud83d\udcca Core Web Vitals Targets",
+      "\ud83d\uddbc\ufe0f Image Optimization",
+      "Next.js Image Component (Best Practice)",
+      "Sharp (Node.js Image Processing)",
+      "Modern Image Formats",
+      "CSS for Images"
+    ]
+  },
+  {
+    "id": 45,
+    "filename": "15_ACCESSIBILITY.md",
+    "title": "15 \u2014 Accessibility (A11y): WCAG 2.2 AA Standards & ARIA Roles",
+    "category": "Accessibility (A11y)",
+    "description": "Ensuring your website is accessible to all users. WCAG compliance is required in many regions.",
+    "tags": [
+      "react",
+      "tailwind",
+      "css",
+      "accessibility",
+      "wcag",
+      "ai"
+    ],
+    "size_kb": 6.0,
+    "sections": [
+      "\ud83c\udfaf WCAG 2.2 Compliance Levels",
+      "\ud83c\udfa8 Color Contrast Requirements",
+      "Contrast Check Tools",
+      "\ud83d\udcdd Semantic HTML",
+      "\u2328\ufe0f Keyboard Navigation",
+      "Keyboard Trap for Modals"
+    ]
+  },
+  {
+    "id": 46,
+    "filename": "16_SEO_ANALYTICS.md",
+    "title": "16 \u2014 SEO & Structured Data: Schema.org MedicalClinic JSON-LD",
+    "category": "SEO & Analytics",
+    "description": "Optimizing for search engines, setting up analytics, or improving discoverability.",
+    "tags": [
+      "auth",
+      "seo",
+      "ai"
+    ],
+    "size_kb": 7.3,
+    "sections": [
+      "\ud83d\udd0d SEO Fundamentals",
+      "HTML Meta Tags",
+      "\ud83d\udcca Next.js Metadata API",
+      "\ud83d\uddfa\ufe0f Sitemap & Robots.txt",
+      "Next.js Sitemap (app/sitemap.ts)",
+      "robots.txt (app/robots.ts)"
+    ]
+  },
+  {
+    "id": 47,
+    "filename": "17_DEPLOYMENT_DEVOPS.md",
+    "title": "17 \u2014 Production Deployment: Vercel CDN, Edge Networks & Headers",
+    "category": "Deployment & DevOps",
+    "description": "Deploying a website, setting up CI/CD, or configuring hosting infrastructure.",
+    "tags": [
+      "react",
+      "nextjs",
+      "css",
+      "postgres",
+      "docker",
+      "ai"
+    ],
+    "size_kb": 6.4,
+    "sections": [
+      "\ud83c\udf0d Hosting Platform Comparison",
+      "\u25b2 Vercel (Recommended for Next.js)",
+      "vercel.json Configuration",
+      "Environment Variables in Vercel",
+      "\ud83d\udc33 Docker",
+      "Dockerfile (Node.js / Next.js)"
+    ]
+  },
+  {
+    "id": 48,
+    "filename": "18_API_REST_GRAPHQL.md",
+    "title": "18 \u2014 API Design: REST Protocols & Asynchronous Communications",
+    "category": "APIs & WebSockets",
+    "description": "Designing APIs, choosing between REST/GraphQL, or adding real-time features.",
+    "tags": [
+      "react",
+      "prisma",
+      "auth",
+      "ai"
+    ],
+    "size_kb": 7.2,
+    "sections": [
+      "\ud83d\udd37 API Technology Comparison",
+      "\ud83c\udf10 REST API Best Practices",
+      "URL Design",
+      "HTTP Status Codes",
+      "Standard Response Format",
+      "\u26a1 tRPC (TypeScript Full-Stack)"
+    ]
+  },
+  {
+    "id": 49,
+    "filename": "19_COMPONENT_LIBRARIES.md",
+    "title": "19 \u2014 Component Architecture: Accessible Headless UI & Tokens",
+    "category": "Component Libraries",
+    "description": "Picking ready-made UI components, comparing UI kits, or finding specific component implementations.",
+    "tags": [
+      "react",
+      "vue",
+      "tailwind",
+      "css",
+      "framer",
+      "ai",
+      "icons"
+    ],
+    "size_kb": 7.0,
+    "sections": [
+      "\u2b50 Top Component Libraries (2025)",
+      "1. shadcn/ui \u2014 The Best Default Choice",
+      "Available shadcn Components",
+      "2. Material UI (MUI) \u2014 Google Material Design",
+      "3. Mantine \u2014 Full-Featured, 100+ Components",
+      "4. Chakra UI \u2014 Accessible & Themeable"
+    ]
+  },
+  {
+    "id": 50,
+    "filename": "20_COLOR_DESIGN_TOKENS.md",
+    "title": "20 \u2014 Color Systems: OKLCH, Contrast Ratios & Dark/Light Modes",
+    "category": "Color & Design Tokens",
+    "description": "Choosing colors, setting up a design token system, or building themes.",
+    "tags": [
+      "react",
+      "tailwind",
+      "css",
+      "wcag",
+      "ai"
+    ],
+    "size_kb": 7.2,
+    "sections": [
+      "\ud83c\udf08 Color Theory Basics",
+      "\ud83c\udfa8 Color Palette Systems",
+      "Tailwind CSS Color Scale (Most Popular)",
+      "Tailwind Color Reference",
+      "Blues (Default: blue-600 for buttons)",
+      "Greens (Success states)"
+    ]
+  },
+  {
+    "id": 51,
+    "filename": "21_ENHANCED_UI_COMPONENTS.md",
+    "title": "21 \u2014 Enhanced UI Components: Glassmorphism, Bento Grids & Cards",
+    "category": "UI Components (Deep-Dive)",
+    "description": "Source: bradtraversy/design-resources-for-developers, enaqx/awesome-react, vuejs/awesome-vue",
+    "tags": [
+      "react",
+      "vue",
+      "angular",
+      "svelte",
+      "tailwind",
+      "css",
+      "animation",
+      "framer",
+      "accessibility",
+      "i18n",
+      "ai",
+      "icons"
+    ],
+    "size_kb": 8.6,
+    "sections": [
+      "\u2b50 React Component Libraries \u2014 Full Reference",
+      "shadcn/ui \u2b50 84k+",
+      "Material UI (MUI) \u2b50 94k+",
+      "Ant Design \u2b50 93k+",
+      "Mantine \u2b50 28k+",
+      "Chakra UI \u2b50 38k+"
+    ]
+  },
+  {
+    "id": 52,
+    "filename": "22_ANIMATION_SCROLL_LIBS.md",
+    "title": "22 \u2014 Scroll Effects & Kinetic Timeline Physics",
+    "category": "Scroll & Animation Libs",
+    "description": "Source: bradtraversy/design-resources-for-developers, GitHub Trending 2025",
+    "tags": [
+      "react",
+      "css",
+      "animation",
+      "gsap",
+      "framer",
+      "3d",
+      "seo",
+      "ai",
+      "icons"
+    ],
+    "size_kb": 9.0,
+    "sections": [
+      "JavaScript Animation Libraries \u2014 Full Index",
+      "CSS Animation Libraries",
+      "Scroll Animation Libraries",
+      "AOS Usage",
+      "Lenis (Smooth Scroll)",
+      "Background Animation Libraries"
+    ]
+  },
+  {
+    "id": 53,
+    "filename": "23_ICON_FONT_TOOLS.md",
+    "title": "23 \u2014 Icon Tooling & Typography Optimization",
+    "category": "Icons & Fonts (Exhaustive)",
+    "description": "Source: bradtraversy/design-resources-for-developers, GitHub awesome lists",
+    "tags": [
+      "react",
+      "tailwind",
+      "css",
+      "3d",
+      "ai",
+      "icons",
+      "fonts"
+    ],
+    "size_kb": 9.1,
+    "sections": [
+      "\ud83d\udd37 Icon Libraries \u2014 Complete Reference",
+      "SVG Icon Libraries",
+      "Icon Usage Code Examples",
+      "Lucide (Recommended)",
+      "Heroicons",
+      "React Icons (Meta-library)"
+    ]
+  },
+  {
+    "id": 54,
+    "filename": "24_FORMS_VALIDATION_UPLOADS.md",
+    "title": "24 \u2014 Forms & Validation: Multi-step Booking & Input Verification",
+    "category": "Forms & File Uploads",
+    "description": "Building user forms, validation pipelines, multi-step wizards, or file upload systems.",
+    "tags": [
+      "react",
+      "vue",
+      "auth",
+      "zustand",
+      "ai"
+    ],
+    "size_kb": 5.5,
+    "sections": [
+      "\ud83d\udccb Form Library Comparison (React & Modern Web)",
+      "\u26a1 React Hook Form + Zod (Industry Standard 2025)",
+      "Complete Production Example",
+      "\ud83d\udcc1 File Upload Libraries & Solutions",
+      "Direct Cloud Upload Pattern (S3 / Cloudflare R2)",
+      "\ud83e\uddd9\u200d\u2642\ufe0f Multi-Step Wizard Pattern"
+    ]
+  },
+  {
+    "id": 55,
+    "filename": "25_ECOMMERCE_PAYMENTS.md",
+    "title": "25 \u2014 E-Commerce & Patient Consultation Fee Workflows",
+    "category": "E-Commerce & Payments",
+    "description": "Building checkout flows, subscriptions, carts, Stripe webhooks, or product showcases.",
+    "tags": [
+      "zustand",
+      "stripe",
+      "ai"
+    ],
+    "size_kb": 4.5,
+    "sections": [
+      "\ud83d\udecd\ufe0f Payment Gateway Comparison",
+      "\u26a1 Stripe Integration (Next.js App Router)",
+      "1. Stripe Client Checkout Session (API Route)",
+      "2. Stripe Secure Webhook Handler",
+      "\ud83d\uded2 Shopping Cart State with Zustand"
+    ]
+  },
+  {
+    "id": 56,
+    "filename": "26_I18N_LOCALIZATION_RTL.md",
+    "title": "26 \u2014 Localization & Regional Language Adaptability",
+    "category": "i18n & Localization & RTL",
+    "description": "Translating websites, handling multi-currency/dates, or building right-to-left (Arabic/Hebrew) UIs.",
+    "tags": [
+      "react",
+      "vue",
+      "tailwind",
+      "css",
+      "i18n",
+      "ai"
+    ],
+    "size_kb": 1.8,
+    "sections": [
+      "\ud83c\udf10 Top i18n Libraries",
+      "\u26a1 Next.js App Router i18n with `next-intl`",
+      "Folder Structure",
+      "RTL (Right-to-Left) Support with Tailwind CSS",
+      "Number, Currency & Date Formatting (Native Web API)"
+    ]
+  },
+  {
+    "id": 57,
+    "filename": "27_AI_INTEGRATION_LLM_UI.md",
+    "title": "27 \u2014 Generative AI & Clinical Conversational Interfaces",
+    "category": "AI Integration & Generative UI",
+    "description": "Integrating LLMs, streaming chats, AI assistants, or generative UI components.",
+    "tags": [
+      "react",
+      "ai"
+    ],
+    "size_kb": 2.6,
+    "sections": [
+      "\ud83d\udee0\ufe0f Essential AI Toolkits & SDKs",
+      "\u26a1 Streaming AI Chat with Vercel AI SDK",
+      "1. Backend Route Handler (Next.js)",
+      "2. Frontend React Component (`useChat`)"
+    ]
+  },
+  {
+    "id": 58,
+    "filename": "README.md",
+    "title": "README \u2014 Master Knowledge Base Directory & SQLite FTS5 Engine",
+    "category": "Master Directory & Guides",
+    "description": "**Curated from top GitHub repositories, awesome lists, and industry standards (2025\u20132026)**",
+    "tags": [
+      "react",
+      "vue",
+      "svelte",
+      "tailwind",
+      "css",
+      "animation",
+      "gsap",
+      "framer",
+      "3d",
+      "postgres",
+      "prisma",
+      "drizzle",
+      "auth",
+      "jwt",
+      "clerk",
+      "zustand",
+      "redux",
+      "vitest",
+      "playwright",
+      "vite",
+      "docker",
+      "seo",
+      "accessibility",
+      "wcag",
+      "stripe",
+      "i18n",
+      "ai",
+      "icons",
+      "fonts"
+    ],
+    "size_kb": 5.7,
+    "sections": [
+      "\ud83d\uddc4\ufe0f Database Quick Start",
+      "\ud83d\udcc1 Complete Knowledge Base Files",
+      "\ud83c\udfaf Architecture Decision Matrix"
+    ]
+  }
+]

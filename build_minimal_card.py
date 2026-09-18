@@ -1,20 +1,7 @@
 import base64
 from PIL import Image
 
-im_front = Image.open('C:/Users/pedin/.gemini/antigravity/brain/09bb67ba-a572-46c6-a166-d2db1da7b9f8/.user_uploaded/media_1789750629830.png').convert('RGB')
-im_back = Image.open('C:/Users/pedin/.gemini/antigravity/brain/09bb67ba-a572-46c6-a166-d2db1da7b9f8/.user_uploaded/media_1789750622254.png').convert('RGB')
-
-target_w, target_h = 1024, 350
-
-# Front resized directly to 1024x350
-front_final = im_front.resize((target_w, target_h), Image.Resampling.LANCZOS)
-front_final.save('card_front_normalized.png', 'PNG', quality=98)
-
-# Back resized directly to 1024x350 - NO black border padding, covers entire card face!
-back_final = im_back.resize((target_w, target_h), Image.Resampling.LANCZOS)
-back_final.save('card_back_normalized.png', 'PNG', quality=98)
-
-# Read front and back normalized images for base64 offline embedding
+# Read 100x70 normalized images for base64 offline embedding
 with open('card_front_normalized.png', 'rb') as f:
     front_b64 = 'data:image/png;base64,' + base64.b64encode(f.read()).decode('ascii')
 
@@ -26,7 +13,7 @@ html_content = f"""<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>VTKRO | 3D Interactive Visiting Card</title>
+  <title>VTKRO | 3D Interactive Digital Visiting Card</title>
   
   <style>
     *, *::before, *::after {{
@@ -41,8 +28,8 @@ html_content = f"""<!DOCTYPE html>
     :root {{
       --bg-dark: #020611;
       --cyan-neon: #00e5ff;
-      --card-radius: 18px;
-      --card-ratio: 1024 / 350; /* 2.925 : 1 Aspect Ratio */
+      --card-radius: 16px;
+      --card-ratio: 1024 / 350; /* Authentic 1024x350 Business Card Proportion */
     }}
 
     html, body {{
@@ -96,7 +83,7 @@ html_content = f"""<!DOCTYPE html>
 
     /* POP-UP ENTRANCE FROM BELOW TO ABOVE (ENLARGED FOR MOBILE COMFORT) */
     .stage-wrapper {{
-      width: min(96vw, 680px);
+      width: min(95vw, 660px);
       max-height: 52vh;
       display: flex;
       justify-content: center;
@@ -136,7 +123,7 @@ html_content = f"""<!DOCTYPE html>
       will-change: transform;
     }}
 
-    /* ─── CARD FACES (Front & Back) ─── */
+    /* ─── CARD FACES (Front & Back - CLEAN BORDERLESS PROFESSIONAL DESIGN) ─── */
     .face {{
       position: absolute;
       inset: 0;
@@ -145,12 +132,13 @@ html_content = f"""<!DOCTYPE html>
       border-radius: var(--card-radius);
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      border: 1.5px solid rgba(0, 229, 255, 0.5);
-      background-color: #020712;
+      border: none;
+      outline: none;
+      background-color: transparent;
       box-shadow: 
-        0 25px 50px rgba(0, 0, 0, 0.9),
-        0 0 30px rgba(0, 229, 255, 0.28),
-        inset 0 0 20px rgba(0, 229, 255, 0.2);
+        0 28px 55px rgba(0, 0, 0, 0.9),
+        0 8px 22px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
     }}
 
     .face img {{
@@ -158,17 +146,19 @@ html_content = f"""<!DOCTYPE html>
       height: 100%;
       object-fit: cover;
       display: block;
-      border-radius: calc(var(--card-radius) - 1.5px);
+      border-radius: var(--card-radius);
       pointer-events: none;
+      border: none;
+      outline: none;
     }}
 
-    /* FRONT FACE: Logo Image */
+    /* FRONT FACE: Logo & Contact Image */
     .face-front {{
       transform: rotateY(0deg) translateZ(1.5px);
       -webkit-transform: rotateY(0deg) translateZ(1.5px);
     }}
 
-    /* BACK FACE: QR Code Image (Covers entire card face) */
+    /* BACK FACE: QR Code Image */
     .face-back {{
       transform: rotateY(180deg) translateZ(1.5px);
       -webkit-transform: rotateY(180deg) translateZ(1.5px);
@@ -178,10 +168,10 @@ html_content = f"""<!DOCTYPE html>
     .specular-sheen {{
       position: absolute;
       inset: 0;
-      border-radius: calc(var(--card-radius) - 1.5px);
+      border-radius: var(--card-radius);
       pointer-events: none;
       z-index: 5;
-      opacity: 0.16; /* Slight reflection only */
+      opacity: 0.16;
       mix-blend-mode: overlay;
       transition: opacity 0.25s ease;
       background: radial-gradient(
@@ -195,7 +185,7 @@ html_content = f"""<!DOCTYPE html>
     .glint-band {{
       position: absolute;
       inset: 0;
-      border-radius: calc(var(--card-radius) - 1.5px);
+      border-radius: var(--card-radius);
       pointer-events: none;
       z-index: 6;
       background: linear-gradient(
@@ -214,8 +204,8 @@ html_content = f"""<!DOCTYPE html>
     .floor-reflection {{
       position: absolute;
       bottom: -45px;
-      left: 8%;
-      width: 84%;
+      left: 10%;
+      width: 80%;
       height: 30px;
       border-radius: 50%;
       background: radial-gradient(ellipse at center, rgba(0, 229, 255, 0.32) 0%, rgba(2, 132, 199, 0.08) 40%, transparent 75%);
@@ -225,14 +215,14 @@ html_content = f"""<!DOCTYPE html>
       transition: opacity 0.3s ease, transform 0.3s ease;
     }}
 
-    /* Mobile screens: Generous sizing that fits comfortably on any mobile */
+    /* Mobile screens: Generous 100x70 proportions */
     @media (max-width: 600px) {{
       .stage-wrapper {{
-        width: 96vw;
-        max-width: none;
+        width: 90vw;
+        max-width: 420px;
       }}
       :root {{
-        --card-radius: 14px;
+        --card-radius: 16px;
       }}
     }}
 
@@ -483,4 +473,4 @@ with open('index.html', 'w', encoding='utf-8') as f:
 with open('vtkro-digital-card.html', 'w', encoding='utf-8') as f:
     f.write(html_content)
 
-print("Successfully updated with enlarged mobile size and full edge-to-edge back coverage!")
+print("Successfully updated with 100x70 proportion!")

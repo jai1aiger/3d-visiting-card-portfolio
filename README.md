@@ -2,13 +2,27 @@
 
 > ### 🌐 [👉 CLICK HERE TO OPEN AND VIEW THE LIVE 3D CARD 👈](https://jai1aiger.github.io/vtkro-3d-digital-card/)
 > **Live URL**: `https://jai1aiger.github.io/vtkro-3d-digital-card/`
+> 
+> **📥 Downloadable Standalone File**: [VTKRO-3D-Digital-Card.html](VTKRO-3D-Digital-Card.html) (Double-click to view offline anytime!)
+> 
+> **📇 1-Click Phone Contact**: [VTKRO-Contact.vcf](VTKRO-Contact.vcf) (Save to smartphone contacts)
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Card-00e5ff?style=for-the-badge&logo=github)](https://jai1aiger.github.io/vtkro-3d-digital-card/)
+[![Download Card](https://img.shields.io/badge/Download-Standalone%20File-0284c7?style=for-the-badge&logo=html5)](https://jai1aiger.github.io/vtkro-3d-digital-card/VTKRO-3D-Digital-Card.html)
 [![Platform](https://img.shields.io/badge/platform-Mobile%20%7C%20Tablet%20%7C%20Desktop-00e5ff?style=flat-square)](#)
-[![Tech Stack](https://img.shields.io/badge/tech-HTML5%20%7C%20CSS%203D%20%7C%20Vanilla%20JS-0284c7?style=flat-square)](#)
 [![Dependency](https://img.shields.io/badge/dependencies-Zero%20(100%25%20Offline)-10b981?style=flat-square)](#)
 
 An executive, high-performance **360° Interactive 3D Digital Visiting Card** engineered for **VTKRO — Virtual Tour Kro**. Designed to deliver an immersive, tactile physical card feel with smooth multi-axis swipe gestures, momentum physics, and instant dual-face flipping.
+
+---
+
+## 📥 Download as a File & View Anytime
+
+You can now download the 3D visiting card as a standalone file (`VTKRO-3D-Digital-Card.html`):
+1. **Download the File**: Click **"Download Card File"** on the [Live Site](https://jai1aiger.github.io/vtkro-3d-digital-card/) or download [VTKRO-3D-Digital-Card.html](VTKRO-3D-Digital-Card.html).
+2. **Click to Open**: Simply click or double-click the downloaded file in your file manager / Downloads on Windows, Mac, Android, or iOS.
+3. **Pop-up Card Reveal**: The VTKRO 3D digital card instantly **pops up on your screen** with full 360° swipe rotation, specular sheen, and tap-to-flip.
+4. **100% Offline**: Zero internet connection and zero external files needed. All visuals are 100% self-contained.
 
 ---
 
